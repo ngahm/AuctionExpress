@@ -16,6 +16,6 @@ namespace AuctionExpress.Models
         public bool IsPaid { get; set; }
         public DateTimeOffset PaymentDate { get; set; }
 
-        //Test
+
     }
 }
