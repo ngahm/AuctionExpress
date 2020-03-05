@@ -10,7 +10,7 @@ namespace AuctionExpress.Models
     {
         public int BidId { get; set; }
         public int ProductId { get; set; }
-        public int BidderId { get; set; }
+        public string BidderId { get; set; }
         public DateTimeOffset TimeOfBid { get; set; }
         public double BidPrice { get; set; }
 

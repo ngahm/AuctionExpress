@@ -10,9 +10,9 @@ namespace AuctionExpress.Service
 {
     public class ProductService
     {
-        private readonly int _userId;
+        private readonly Guid _userId;
 
-        public ProductService(int userId)
+        public ProductService(Guid userId)
         {
             _userId = userId;
         }
@@ -26,7 +26,8 @@ namespace AuctionExpress.Service
                 ProductDescription = model.ProductDescription,
                 ProductQuantity = model.ProductQuantity,
                 ProductStartTime = model.ProductStartTime,
-                ProductCloseTime = model.ProductCloseTime
+                ProductCloseTime = model.ProductCloseTime,
+                ProductSeller = _userId.ToString()
             };
 
             using (var ctx = new ApplicationDbContext())
@@ -43,7 +44,7 @@ namespace AuctionExpress.Service
                 var query =
                     ctx
                     .Product
-                    .Where(e => e.ProductSeller == _userId)
+                    .Where(e => e.ProductSeller == _userId.ToString())
                     .Select(e => new ProductListItem
                     {
                         ProductId = e.ProductId,
@@ -88,7 +89,7 @@ namespace AuctionExpress.Service
                 var entity =
                     ctx
                     .Product
-                    .Single(e => e.ProductId == model.ProductId);
+                    .Single(e => e.ProductId == model.ProductId && e.ProductSeller==_userId.ToString());
 
                 entity.ProductId = model.ProductId;
                 entity.ProductName = model.ProductName;

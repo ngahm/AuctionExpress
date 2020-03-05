@@ -37,19 +37,19 @@ namespace AuctionExpress.WebAPI.Controllers
         }
 
         //GET COMMENT ()
-        public IHttpActionResult Get()
-        {
-            BidService bidService = CreateBidService();
-            var notes = bidService.GetBid();
-            return Ok(notes);
+       public IHttpActionResult GetBid(int productId)
+       {
+           BidService bidService = CreateBidService();
+           var bids = bidService.GetBid(productId);
+           return Ok(bids);
         }
 
         //GET COMMENT BY ID
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult GetBidById(int id)
         {
             BidService bidService = CreateBidService();
-            var note = bidService.GetBidById(id);
-            return Ok(note);
+            var bid = bidService.GetBidById(id);
+            return Ok(bid);
         }
 
 

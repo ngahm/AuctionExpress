@@ -26,7 +26,7 @@ namespace AuctionExpress.Service
             {
                 
                 ProductId = model.ProductId,
-                BidderId = model.BidderId,
+                BidderId = _userId.ToString(),
                 BidPrice = model.BidPrice,
             };
 

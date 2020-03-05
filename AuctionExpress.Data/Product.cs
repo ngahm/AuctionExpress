@@ -25,17 +25,17 @@ namespace AuctionExpress.Data
         public bool ProductIsActive { get; set; }
 
         [ForeignKey(nameof(ProductTransaction))]
-        public int ProductTransactionKey { get; set; }
+        public int? ProductTransactionKey { get; set; }
         public virtual Transaction ProductTransaction { get; set; }
 
         [ForeignKey(nameof(ProductCategoryCombo))]
-        public int ProductCategoryId { get; set; }
+        public int? ProductCategoryId { get; set; }
         public virtual Category ProductCategoryCombo { get; set; }
 
         [ForeignKey(nameof(Seller))]
         [Required]
-        public int ProductSeller { get; set; }
-        public virtual User Seller { get; set; }
+        public string ProductSeller { get; set; }
+        public virtual ApplicationUser Seller { get; set; }
 
     }
 }
