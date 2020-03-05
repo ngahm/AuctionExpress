@@ -20,6 +20,6 @@ namespace AuctionExpress.Data
 
         [Required]
         public bool IsPaid { get; set; }
-        public DateTime PaymentDate { get; set; }
+        public DateTimeOffset PaymentDate { get; set; }
     }
 }
