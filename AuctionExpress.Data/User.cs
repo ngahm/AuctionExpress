@@ -10,20 +10,17 @@ namespace AuctionExpress.Data
 {
     public class User
     {
-        [Key]
+       // [Key]
         
-        public int UserId { get; set; }
-        
-        [ForeignKey(nameof(ApplicationUser))]
-        public Guid ForeignUserID { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
-        public Guid UserGuid { get; set; }
-        [Required]
-        public string UserName { get; set; }
-        [Required]
-        public string Email { get; set; }
-        public bool IsActive { get; set; }
-        public string BusinessName { get; set; }
+
+
+       // public Guid UserGuid { get; set; }
+        //[Required]
+        //public string UserName { get; set; }
+       // [Required]
+       // public string Email { get; set; }
+        //public bool IsActive { get; set; }
+       // public string BusinessName { get; set; }
 
 
 
