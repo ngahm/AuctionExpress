@@ -10,6 +10,15 @@ namespace AuctionExpress.Service
 {
     public class BidService
     {
+        private readonly Guid _userId;         /*ApplicationUser*/
+
+        public BidService(Guid userId)
+        {
+            _userId = userId;
+        }
+
+
+
 
         public bool CreateBid(BidCreate model)
         {
