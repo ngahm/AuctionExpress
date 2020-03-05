@@ -328,8 +328,16 @@ namespace AuctionExpress.WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
+            
+            var user = new ApplicationUser() { UserName = model.UserName, Email = model.Email };
+            var newUser = new User() { 
+                UserName = user.UserName, 
+                Email = model.Email, 
+                BusinessName = model.BusinessName, 
+                IsActive=true };
+            
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
