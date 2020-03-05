@@ -330,11 +330,7 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             
             var user = new ApplicationUser() { UserName = model.UserName, Email = model.Email };
-            var newUser = new User() { 
-                UserName = user.UserName, 
-                Email = model.Email, 
-                BusinessName = model.BusinessName, 
-                IsActive=true };
+            
             
 
 

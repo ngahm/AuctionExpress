@@ -37,7 +37,6 @@ namespace AuctionExpress.Data
             return new ApplicationDbContext();
         }
 
-        public DbSet<User> User { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Bid> Bid { get; set; }
