@@ -15,5 +15,7 @@ namespace AuctionExpress.Models
         public string ProductName { get; set; }
         public bool IsPaid { get; set; }
         public DateTimeOffset PaymentDate { get; set; }
+
+        //Test
     }
 }
