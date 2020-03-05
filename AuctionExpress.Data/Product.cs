@@ -19,9 +19,9 @@ namespace AuctionExpress.Data
         [Required]
         [Range(0, int.MaxValue)]
         public int ProductQuantity { get; set; }
-        public DateTime ProductStartTime { get; set; } = DateTime.Now;
+        public DateTimeOffset ProductStartTime { get; set; } = DateTimeOffset.Now;
         [Required]
-        public DateTime ProductCloseTime { get; set; }
+        public DateTimeOffset ProductCloseTime { get; set; }
         public bool ProductIsActive { get; set; }
 
         [ForeignKey(nameof(ProductTransaction))]
