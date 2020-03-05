@@ -9,16 +9,12 @@ namespace AuctionExpress.Models
 {
     public class ProductCreate
     {
-        [Required]
+      
         public string ProductName { get; set; }
-        [Required]
         public int ProductCategoryId { get; set; }
-        [Required]
         public string ProductDescription { get; set; }
-        [Required]
         public int ProductQuantity { get; set; }
-        public DateTime ProductStartTime { get; set; }
-        [Required]
-        public DateTime ProductCloseTime { get; set; }
+        public DateTimeOffset ProductStartTime { get; set; }
+        public DateTimeOffset ProductCloseTime { get; set; }
     }
 }

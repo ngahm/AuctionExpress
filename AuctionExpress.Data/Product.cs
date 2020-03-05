@@ -12,10 +12,15 @@ namespace AuctionExpress.Data
     {
         [Key]
         public int ProductId { get; set; }
+        [Required]
         public string ProductName { get; set; }
+        [Required]
         public string ProductDescription { get; set; }
+        [Required]
+        [Range(0, int.MaxValue)]
         public int ProductQuantity { get; set; }
-        public DateTime ProductStartTime { get; set; }
+        public DateTime ProductStartTime { get; set; } = DateTime.Now;
+        [Required]
         public DateTime ProductCloseTime { get; set; }
         public bool ProductIsActive { get; set; }
 
@@ -28,6 +33,7 @@ namespace AuctionExpress.Data
         public virtual Category ProductCategoryCombo { get; set; }
 
         [ForeignKey(nameof(Seller))]
+        [Required]
         public int ProductSeller { get; set; }
         public virtual User Seller { get; set; }
 

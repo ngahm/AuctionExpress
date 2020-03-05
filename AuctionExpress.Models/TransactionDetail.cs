@@ -15,6 +15,6 @@ namespace AuctionExpress.Models
         public string UserName { get; set; }
         public double BidPrice { get; set; }
         public bool IsPaid { get; set; }
-        public DateTime PaymentDate { get; set; }
+        public DateTimeOffset PaymentDate { get; set; }
     }
 }

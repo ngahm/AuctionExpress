@@ -14,6 +14,6 @@ namespace AuctionExpress.Models
         public bool ProductIsActive { get; set; }
         public string ProductDescription { get; set; }
         public int ProductQuantity { get; set; }
-        public DateTime ProductCloseTime { get; set; }
+        public DateTimeOffset ProductCloseTime { get; set; }
     }
 }

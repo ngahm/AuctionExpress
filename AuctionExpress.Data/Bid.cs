@@ -14,14 +14,19 @@ namespace AuctionExpress.Data
         public int BidId { get; set; }
 
         [ForeignKey(nameof(Auction))]
+        [Required]
         public int ProductId { get; set; }
         public virtual Product Auction { get; set; }
 
         [ForeignKey(nameof(Buyer))]
+        [Required]
         public int BidderId { get; set; }
         public virtual User Buyer { get; set; }
 
-        public DateTime TimeOfBid { get; set; }
+        public DateTime TimeOfBid { get; set; } = DateTime.Now;
+        [Required]
+        [DataType(DataType.Currency)]
         public double BidPrice { get; set; }
+
     }
 }
