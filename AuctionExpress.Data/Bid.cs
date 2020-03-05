@@ -23,7 +23,7 @@ namespace AuctionExpress.Data
         public int BidderId { get; set; }
         public virtual User Buyer { get; set; }
 
-        public DateTime TimeOfBid { get; set; } = DateTime.Now;
+        public DateTimeOffset TimeOfBid { get; set; } = DateTimeOffset.Now;
         [Required]
         [DataType(DataType.Currency)]
         public double BidPrice { get; set; }
