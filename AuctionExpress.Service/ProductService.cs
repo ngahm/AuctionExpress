@@ -8,5 +8,6 @@ namespace AuctionExpress.Service
 {
     public class ProductService
     {
+
     }
 }
