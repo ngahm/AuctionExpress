@@ -137,8 +137,8 @@ namespace AuctionExpress.WebAPI.Controllers
         }
 
         //DeleteUser
-        [Route("DeleteUser")]
-        public async Task<IHttpActionResult> DeleteUser()
+        [Route("DeactivateUser")]
+        public async Task<IHttpActionResult> DeactivateUser()
         {
           if (!ModelState.IsValid)
             {
