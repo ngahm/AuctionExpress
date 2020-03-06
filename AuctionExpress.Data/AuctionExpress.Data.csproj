@@ -86,17 +86,9 @@
   <ItemGroup>
     <Compile Include="Category.cs" />
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\202003052108240_InitialMigration.cs" />
-    <Compile Include="Migrations\202003052108240_InitialMigration.Designer.cs">
-      <DependentUpon>202003052108240_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003052128251_SecondMigration.cs" />
-    <Compile Include="Migrations\202003052128251_SecondMigration.Designer.cs">
-      <DependentUpon>202003052128251_SecondMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003052130014_ThirdMigration.cs" />
-    <Compile Include="Migrations\202003052130014_ThirdMigration.Designer.cs">
-      <DependentUpon>202003052130014_ThirdMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202003061605494_ProductTransactionFK.cs" />
+    <Compile Include="Migrations\202003061605494_ProductTransactionFK.Designer.cs">
+      <DependentUpon>202003061605494_ProductTransactionFK.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Product.cs" />
@@ -109,14 +101,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202003052108240_InitialMigration.resx">
-      <DependentUpon>202003052108240_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003052128251_SecondMigration.resx">
-      <DependentUpon>202003052128251_SecondMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003052130014_ThirdMigration.resx">
-      <DependentUpon>202003052130014_ThirdMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003061605494_ProductTransactionFK.resx">
+      <DependentUpon>202003061605494_ProductTransactionFK.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
