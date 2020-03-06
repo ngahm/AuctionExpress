@@ -9,7 +9,6 @@ namespace AuctionExpress.Models
 {
     public class CategoryCreate
     {
-        [Required]
         public string CategoryName { get; set; }
     }
 }
