@@ -24,9 +24,9 @@ namespace AuctionExpress.Data
         public DateTimeOffset ProductCloseTime { get; set; }
         public bool ProductIsActive { get; set; }
 
-        [ForeignKey(nameof(ProductTransaction))]
-        public int? ProductTransactionKey { get; set; }
-        public virtual Transaction ProductTransaction { get; set; }
+       // [ForeignKey(nameof(ProductTransaction))]
+       // public int? ProductTransactionKey { get; set; }
+       //public virtual Transaction ProductTransaction { get; set; }
 
         [ForeignKey(nameof(ProductCategoryCombo))]
         public int? ProductCategoryId { get; set; }
@@ -37,6 +37,19 @@ namespace AuctionExpress.Data
         public string ProductSeller { get; set; }
         public virtual ApplicationUser Seller { get; set; }
 
+<<<<<<< HEAD
+=======
+        public ICollection<Bid> ProductBids { get; set; }
+
+        public double HighestBid 
+        { 
+            get 
+            {
+                var item = ProductBids.Max(x => x.BidPrice);
+                    return item;
+            } 
+        }
+>>>>>>> 12c35cd8f56dc17ca46d5bae58f8bbb92ef4e94c
 
     }
 }

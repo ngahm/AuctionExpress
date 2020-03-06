@@ -13,10 +13,10 @@ namespace AuctionExpress.Data
         [Key]
         public int TransactionId { get; set; }
 
-        [ForeignKey(nameof(WinningBid))]
-        [Required]
-        public int BidId { get; set; }
-        public virtual Bid WinningBid { get; set; }
+       [ForeignKey(nameof(TransactionProduct))]
+        //[Required]
+        public int ProductId { get; set; }
+        public virtual Product TransactionProduct { get; set; }
 
         [Required]
         public bool IsPaid { get; set; }
