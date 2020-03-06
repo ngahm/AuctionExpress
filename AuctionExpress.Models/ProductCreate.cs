@@ -11,7 +11,7 @@ namespace AuctionExpress.Models
     {
       
         public string ProductName { get; set; }
-        public int ProductCategoryId { get; set; }
+        public int? ProductCategoryId { get; set; }
         public string ProductDescription { get; set; }
         public int ProductQuantity { get; set; }
         public DateTimeOffset ProductStartTime { get; set; }

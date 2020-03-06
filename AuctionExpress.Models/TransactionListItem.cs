@@ -11,11 +11,11 @@ namespace AuctionExpress.Models
     {
         public int TransactionId { get; set; }
         public int BidId { get; set; }
-        public int BidderId { get; set; }
+        public string BidderId { get; set; }
         public string ProductName { get; set; }
         public bool IsPaid { get; set; }
         public DateTimeOffset PaymentDate { get; set; }
 
-        //Test2
+
     }
 }

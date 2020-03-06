@@ -9,11 +9,9 @@ namespace AuctionExpress.Models
 {
     public class BidCreate
     {
-        [Required]
+       
         public int ProductId { get; set; }
-        [Required]
-        public int BidderId { get; set; }
-        [Required]
+        //public string BidderId { get; set; }
         public double BidPrice { get; set; }
     }
 }
