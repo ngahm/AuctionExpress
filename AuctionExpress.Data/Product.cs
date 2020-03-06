@@ -37,5 +37,6 @@ namespace AuctionExpress.Data
         public string ProductSeller { get; set; }
         public virtual ApplicationUser Seller { get; set; }
 
+
     }
 }
