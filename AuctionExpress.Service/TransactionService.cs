@@ -18,7 +18,7 @@ namespace AuctionExpress.Service
         }
         //POST Transaction
 
-        public bool PostTransaction(TransactionCreate model)
+        public bool CreateTransaction(TransactionCreate model)
         {
             var entity = new Transaction()
             {
