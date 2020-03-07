@@ -37,19 +37,19 @@ namespace AuctionExpress.Data
         public string ProductSeller { get; set; }
         public virtual ApplicationUser Seller { get; set; }
 
-<<<<<<< HEAD
-=======
-        public ICollection<Bid> ProductBids { get; set; }
+        public virtual ICollection<Bid> ProductBids { get; set; }
 
         public double HighestBid 
         { 
             get 
             {
+                if (ProductBids.Count()>0)
+               {
                 var item = ProductBids.Max(x => x.BidPrice);
-                    return item;
+               return item;
+                }
+                return 0;
             } 
         }
->>>>>>> 12c35cd8f56dc17ca46d5bae58f8bbb92ef4e94c
-
     }
 }
