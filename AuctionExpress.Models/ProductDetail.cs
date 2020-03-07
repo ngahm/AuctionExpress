@@ -16,5 +16,6 @@ namespace AuctionExpress.Models
         public DateTimeOffset ProductStartTime { get; set; }
         public DateTimeOffset ProductCloseTime { get; set; }
         public string ProductSeller { get; set; }
+        public double HighestBid { get; set; }
     }
 }

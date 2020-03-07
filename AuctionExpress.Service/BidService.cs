@@ -17,9 +17,6 @@ namespace AuctionExpress.Service
             _userId = userId;
         }
 
-
-
-
         public bool CreateBid(BidCreate model)
         {
             var entity = new Bid()

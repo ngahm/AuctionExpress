@@ -77,7 +77,8 @@ namespace AuctionExpress.Service
                         ProductIsActive = entity.ProductIsActive,
                         ProductStartTime = entity.ProductStartTime,
                         ProductCloseTime = entity.ProductCloseTime,
-                        ProductSeller = entity.ProductSeller
+                        ProductSeller = entity.ProductSeller,
+                        HighestBid = entity.HighestBid
 
                     };
             }

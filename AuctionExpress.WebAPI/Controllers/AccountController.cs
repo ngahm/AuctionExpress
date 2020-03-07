@@ -67,6 +67,7 @@ namespace AuctionExpress.WebAPI.Controllers
             };
         }
 
+
         // POST api/Account/Logout
         [Route("Logout")]
         public IHttpActionResult Logout()
@@ -131,6 +132,26 @@ namespace AuctionExpress.WebAPI.Controllers
             {
                 return GetErrorResult(result);
             }
+
+            return Ok();
+        }
+
+        //DeleteUser
+        [Route("DeactivateUser")]
+        public async Task<IHttpActionResult> DeactivateUser()
+        {
+          if (!ModelState.IsValid)
+            {
+              return BadRequest(ModelState);
+           }
+            var userId = User.Identity.GetUserId();
+            ApplicationUser user = new ApplicationUser() { Id = userId };
+            IdentityResult result = await UserManager.DeleteAsync(user);
+
+            if (!result.Succeeded)
+            {
+               return GetErrorResult(result);
+           }
 
             return Ok();
         }
