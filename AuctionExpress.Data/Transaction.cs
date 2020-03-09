@@ -18,7 +18,7 @@ namespace AuctionExpress.Data
         public int ProductId { get; set; }
         public virtual Product TransactionProduct { get; set; }
 
-        public Bid WinningBid
+        public virtual Bid WinningBid
         {
             get
             {
@@ -28,6 +28,7 @@ namespace AuctionExpress.Data
                 return _winningBid;
             }
         }
+
         [Required]
         public bool IsPaid { get; set; }
         public DateTimeOffset? PaymentDate { get; set; }

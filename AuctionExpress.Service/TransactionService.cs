@@ -42,6 +42,7 @@ namespace AuctionExpress.Service
                 var query =
                     ctx
                     .Transaction
+                    .ToList()
                     .Where(e => e.WinningBid.BidderId == _userId.ToString())
                     .Select(e => new TransactionListItem
                     {
