@@ -29,8 +29,11 @@ namespace AuctionExpress.WebAPI.Controllers
                 return BadRequest(ModelState);
 
             var service = CreateBidService();
+            var entity = service.ValidateBid(bid);
+            if (entity == null)
+                return BadRequest("Invalid bid due to auciton being closed or bid being below product price.");
 
-            if (!service.CreateBid(bid))
+            if (!service.CreateBid(entity))
                 return InternalServerError();
 
             return Ok();
