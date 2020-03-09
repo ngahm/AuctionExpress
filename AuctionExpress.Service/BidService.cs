@@ -17,15 +17,23 @@ namespace AuctionExpress.Service
             _userId = userId;
         }
 
-        public bool CreateBid(BidCreate model)
+        public Bid ValidateBid(BidCreate model)
         {
             var entity = new Bid()
             {
-                
+
                 ProductId = model.ProductId,
                 BidderId = _userId.ToString(),
                 BidPrice = model.BidPrice,
             };
+
+            if (entity.Auction.HighestBid >= entity.BidPrice)
+                return null;
+            return entity;
+        }
+
+        public bool CreateBid(Bid entity)
+        {
 
             using (var ctx = new ApplicationDbContext())
             {
