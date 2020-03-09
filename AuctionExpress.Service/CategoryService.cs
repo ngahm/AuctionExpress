@@ -10,12 +10,7 @@ namespace AuctionExpress.Service
 {
     public class CategoryService
     {
-        private readonly Guid _userId; 
-
-        public CategoryService(Guid userId)                             
-        {
-            _userId = userId;
-        }
+       
 
 
 
@@ -42,7 +37,6 @@ namespace AuctionExpress.Service
                 var query =
                     ctx
                         .Category
-                        .Where(e => e.CategoryId == _userId)        
                         .Select(
                             e =>
                                 new CategoryListItem                          
@@ -61,14 +55,14 @@ namespace AuctionExpress.Service
             using (var ctx = new ApplicationDbContext())                            
             {
                 var entity =
-                    ctx
-                        .Category                                                          
-                        .Single(e => e.CategoryId == id && e.OwnerId == _userId);         
+                     ctx
+                    .Category                                                          
+                    .Single(e => e.CategoryId == id);         
                 return
                     new CategoryDetail                                                  
                     {
-                        CategoryId = e.CategoryId,
-                        CategoryName = e.CategoryName,
+                        CategoryId = entity.CategoryId,
+                        CategoryName = entity.CategoryName,
                     };
             }
         }
@@ -80,7 +74,7 @@ namespace AuctionExpress.Service
                 var entity =
                     ctx                                      
                         .Category                           
-                        .Single(e => e.CategoryId == model.CategoryId && e.OwnerId == _userId);
+                        .Single(e => e.CategoryId == model.CategoryId);
 
                 entity.CategoryId = model.CategoryId;
                 entity.CategoryName = model.CategoryName;
@@ -96,7 +90,7 @@ namespace AuctionExpress.Service
                 var entity =
                     ctx
                         .Category                       
-                        .Single(e => e.CategoryId == CategoryId && e.OwnerId == _userId);
+                        .Single(e => e.CategoryId == categoryId);
 
                 ctx.Category.Remove(entity);
 
