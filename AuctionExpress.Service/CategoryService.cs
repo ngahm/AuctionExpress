@@ -10,7 +10,12 @@ namespace AuctionExpress.Service
 {
     public class CategoryService
     {
-       
+        private readonly Guid _userId;
+
+        public CategoryService(Guid userId)                             
+        {
+            _userId = userId;
+        }
 
 
 
