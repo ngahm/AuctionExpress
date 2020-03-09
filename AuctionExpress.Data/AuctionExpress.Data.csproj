@@ -86,13 +86,9 @@
   <ItemGroup>
     <Compile Include="Category.cs" />
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\202003091319554_Transaction.cs" />
-    <Compile Include="Migrations\202003091319554_Transaction.Designer.cs">
-      <DependentUpon>202003091319554_Transaction.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003091344082_UpdatedProductIsActive.cs" />
-    <Compile Include="Migrations\202003091344082_UpdatedProductIsActive.Designer.cs">
-      <DependentUpon>202003091344082_UpdatedProductIsActive.cs</DependentUpon>
+    <Compile Include="Migrations\202003091648462_Initial Migration.cs" />
+    <Compile Include="Migrations\202003091648462_Initial Migration.Designer.cs">
+      <DependentUpon>202003091648462_Initial Migration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Product.cs" />
@@ -105,11 +101,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202003091319554_Transaction.resx">
-      <DependentUpon>202003091319554_Transaction.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003091344082_UpdatedProductIsActive.resx">
-      <DependentUpon>202003091344082_UpdatedProductIsActive.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003091648462_Initial Migration.resx">
+      <DependentUpon>202003091648462_Initial Migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
