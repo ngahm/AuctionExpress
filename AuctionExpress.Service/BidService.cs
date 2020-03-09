@@ -10,7 +10,7 @@ namespace AuctionExpress.Service
 {
     public class BidService
     {
-        private readonly Guid _userId;         /*ApplicationUser*/
+        private readonly Guid _userId;      
 
         public BidService(Guid userId)
         {
