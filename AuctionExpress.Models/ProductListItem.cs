@@ -12,7 +12,19 @@ namespace AuctionExpress.Models
         public string ProductName { get; set; }
         public string CategoryName { get; set; }
         public int ProductQuantity { get; set; }
-        public bool ProductIsActive { get; set; }
+        public bool ProductIsActive
+        {
+            get
+            {
+                if (DateTimeOffset.Now < ProductStartTime || DateTimeOffset.Now > ProductCloseTime)
+                {
+                    return false;
+                }
+                else
+                    return true;
+            }
+        }
         public DateTimeOffset ProductCloseTime { get; set; }
+        public DateTimeOffset ProductStartTime { get; set; }
     }
 }

@@ -9,8 +9,8 @@ namespace AuctionExpress.Models
 {
     public class TransactionCreate
     {
-        
-        public int BidId { get; set; }
+
+        public int ProductId { get; set; }
         public bool IsPaid { get; set; }
     }
 }
