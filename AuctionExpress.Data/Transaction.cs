@@ -13,7 +13,7 @@ namespace AuctionExpress.Data
         [Key]
         public int TransactionId { get; set; }
 
-       [ForeignKey(nameof(TransactionProduct))]
+        [ForeignKey(nameof(TransactionProduct))]
         //[Required]
         public int ProductId { get; set; }
         public virtual Product TransactionProduct { get; set; }
@@ -22,10 +22,10 @@ namespace AuctionExpress.Data
         {
             get
             {
-                    Bid _winningBid = TransactionProduct.ProductBids
-                        .Single(x => x.BidPrice == TransactionProduct.HighestBid);
-                   
-                    return _winningBid;
+                Bid _winningBid = TransactionProduct.ProductBids
+                    .Single(x => x.BidPrice == TransactionProduct.HighestBid);
+
+                return _winningBid;
             }
         }
         [Required]
