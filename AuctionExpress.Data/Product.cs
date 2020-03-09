@@ -22,11 +22,24 @@ namespace AuctionExpress.Data
         public DateTimeOffset ProductStartTime { get; set; } = DateTimeOffset.Now;
         [Required]
         public DateTimeOffset ProductCloseTime { get; set; }
-        public bool ProductIsActive { get; set; }
+        public bool ProductIsActive
+        {
+            get
+            {
+                if (DateTimeOffset.Now < ProductStartTime || DateTimeOffset.Now > ProductCloseTime)
+                {
+                    return false;
+                }
+                else
+                    return true;
+            }
+        }
 
-       // [ForeignKey(nameof(ProductTransaction))]
-       // public int? ProductTransactionKey { get; set; }
-       //public virtual Transaction ProductTransaction { get; set; }
+        
+
+        // [ForeignKey(nameof(ProductTransaction))]
+        // public int? ProductTransactionKey { get; set; }
+        //public virtual Transaction ProductTransaction { get; set; }
 
         [ForeignKey(nameof(ProductCategoryCombo))]
         public int? ProductCategoryId { get; set; }
@@ -39,17 +52,17 @@ namespace AuctionExpress.Data
 
         public virtual ICollection<Bid> ProductBids { get; set; }
 
-        public double HighestBid 
-        { 
-            get 
+        public double HighestBid
+        {
+            get
             {
-                if (ProductBids.Count()>0)
-               {
-                var item = ProductBids.Max(x => x.BidPrice);
-               return item;
+                if (ProductBids.Count() > 0)
+                {
+                    var item = ProductBids.Max(x => x.BidPrice);
+                    return item;
                 }
                 return 0;
-            } 
+            }
         }
     }
 }

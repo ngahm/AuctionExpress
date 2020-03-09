@@ -51,11 +51,13 @@ namespace AuctionExpress.Service
                         ProductName = e.ProductName,
                         CategoryName = e.ProductCategoryCombo.CategoryName,
                         ProductQuantity = e.ProductQuantity,
-                        ProductIsActive = e.ProductIsActive,
+                      // ProductIsActive = e.DetermineIsActive(),
+                        ProductStartTime = e.ProductStartTime,
                         ProductCloseTime = e.ProductCloseTime
                     }
                     );
-                return query.ToArray();
+                return query.ToList();
+                
             }
         }
 
@@ -83,19 +85,19 @@ namespace AuctionExpress.Service
                     };
             }
         }
-        public bool UpdateProduct (ProductEdit model)
+        public bool UpdateProduct(ProductEdit model)
         {
-            using(var ctx = new ApplicationDbContext())
+            using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
                     .Product
-                    .Single(e => e.ProductId == model.ProductId && e.ProductSeller==_userId.ToString());
+                    .Single(e => e.ProductId == model.ProductId && e.ProductSeller == _userId.ToString());
 
                 entity.ProductId = model.ProductId;
                 entity.ProductName = model.ProductName;
                 entity.ProductCategoryId = model.ProductCategoryId;
-                entity.ProductIsActive = model.ProductIsActive;
+                //entity.ProductIsActive = model.ProductIsActive;
                 entity.ProductDescription = model.ProductDescription;
                 entity.ProductQuantity = model.ProductQuantity;
                 entity.ProductCloseTime = model.ProductCloseTime;
@@ -104,6 +106,6 @@ namespace AuctionExpress.Service
             }
         }
 
-        
+
     }
 }
