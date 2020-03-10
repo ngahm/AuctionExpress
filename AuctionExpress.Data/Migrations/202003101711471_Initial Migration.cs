@@ -7,12 +7,10 @@ namespace AuctionExpress.Data.Migrations
     {
         public override void Up()
         {
-            DropColumn("dbo.Product", "ProductIsActive");
         }
         
         public override void Down()
         {
-            AddColumn("dbo.Product", "ProductIsActive", c => c.Boolean(nullable: false));
         }
     }
 }

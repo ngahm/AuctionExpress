@@ -7,13 +7,13 @@ namespace AuctionExpress.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class NewMigration : IMigrationMetadata
+    public sealed partial class InitialMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(NewMigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "202003101255423_NewMigration"; }
+            get { return "202003101711471_Initial Migration"; }
         }
         
         string IMigrationMetadata.Source

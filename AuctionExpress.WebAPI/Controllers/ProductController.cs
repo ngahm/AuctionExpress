@@ -3,6 +3,7 @@ using AuctionExpress.Service;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -31,7 +32,21 @@ namespace AuctionExpress.WebAPI.Controllers
                 return BadRequest(ModelState);
 
             var service = CreateProductService();
-
+            var result = new DateValidator (product.ProductStartTime, product.ProductCloseTime);
+            bool validateAllProperties = false;
+            var results = new List<ValidationResult>();
+            bool isValid = Validator.TryValidateObject(result,
+                new ValidationContext(result, null, null),
+                results, validateAllProperties);
+            if (!isValid)
+            {
+                string errorMessage = "";
+                foreach (var item in results)
+                {
+                    errorMessage = item + ", ";
+                }
+                return BadRequest(errorMessage);
+            }
             if (!service.CreateProduct(product))
                 return InternalServerError();
 
