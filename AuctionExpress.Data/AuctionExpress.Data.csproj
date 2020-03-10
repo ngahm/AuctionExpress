@@ -87,9 +87,11 @@
     <Compile Include="Category.cs" />
     <Compile Include="IdentityModels.cs" />
 
+
     <Compile Include="Migrations\202003101712128_PulledCode.cs" />
     <Compile Include="Migrations\202003101712128_PulledCode.Designer.cs">
       <DependentUpon>202003101712128_PulledCode.cs</DependentUpon>
+
 
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
@@ -104,8 +106,10 @@
   </ItemGroup>
   <ItemGroup>
 
+
     <EmbeddedResource Include="Migrations\202003101712128_PulledCode.resx">
       <DependentUpon>202003101712128_PulledCode.cs</DependentUpon>
+
 
     </EmbeddedResource>
   </ItemGroup>
