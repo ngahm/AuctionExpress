@@ -50,7 +50,7 @@ namespace AuctionExpress.WebAPI.Controllers
             if (!service.CreateProduct(product))
                 return InternalServerError();
 
-            return Ok();
+            return Ok("Product successfully created.");
         }
 
         //GET Products
@@ -94,7 +94,7 @@ namespace AuctionExpress.WebAPI.Controllers
             if (!service.UpdateProduct(product))
                 return InternalServerError();
 
-            return Ok();
+            return Ok("Product succesfully updated.");
         }
     }
 }

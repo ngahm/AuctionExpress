@@ -39,6 +39,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 return BadRequest(ModelState);
             var prodService = CreateProductService();
             var prodDetail = prodService.GetProductById(bid.ProductId);
+
             if (prodDetail == null)
                 return BadRequest("Product has been removed or does not exist.");
             if (prodDetail.HighestBid > bid.BidPrice)
@@ -50,7 +51,7 @@ namespace AuctionExpress.WebAPI.Controllers
             if (!service.CreateBid(bid))
                 return InternalServerError();
 
-            return Ok();
+            return Ok("Bid successfully added.");
         }
 
         //GET Bid
