@@ -40,7 +40,6 @@ namespace AuctionExpress.WebAPI.Controllers
             var prodService = CreateProductService();
             var prodDetail = prodService.GetProductById(bid.ProductId);
 
-
             if (prodDetail == null)
                 return BadRequest("Product has been removed or does not exist.");
             if (prodDetail.HighestBid > bid.BidPrice)
