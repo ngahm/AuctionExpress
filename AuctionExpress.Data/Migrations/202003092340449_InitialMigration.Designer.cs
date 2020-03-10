@@ -13,7 +13,7 @@ namespace AuctionExpress.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202003091648462_Initial Migration"; }
+            get { return "202003092340449_InitialMigration"; }
         }
         
         string IMigrationMetadata.Source
