@@ -35,8 +35,6 @@ namespace AuctionExpress.Data
             }
         }
 
-        
-
         // [ForeignKey(nameof(ProductTransaction))]
         // public int? ProductTransactionKey { get; set; }
         //public virtual Transaction ProductTransaction { get; set; }
@@ -56,12 +54,17 @@ namespace AuctionExpress.Data
         {
             get
             {
-                if (ProductBids.Count() > 0)
+
+                if (ProductBids.Count >0)
+
                 {
+
                     var item = ProductBids.Max(x => x.BidPrice);
                     return item;
                 }
-                return 0;
+                    return 0;
+
+                
             }
         }
     }
