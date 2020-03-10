@@ -12,3 +12,6 @@ https://stackoverflow.com/questions/12014969/when-to-use-linqs-tolist-or-toarray
 LINQ
 ToList() 
 ToArray()
+
+https://stackoverflow.com/questions/44299292/best-way-to-convert-string-to-datetimeoffset
+DateTimeOffset Formatting
