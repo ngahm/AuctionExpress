@@ -26,22 +26,6 @@ namespace AuctionExpress.Service
                 BidderId = _userId.ToString(),
                 BidPrice = model.BidPrice,
             };
-<<<<<<< HEAD
-            if (entity.Auction == null)
-                return entity;
-
-            //look in product database for product matching product id and assign auction to this instance
-
-            if (entity.Auction.HighestBid >= entity.BidPrice)
-                return null;
-            return entity;
-        }
-
-        public bool CreateBid(Bid entity)
-        {
-
-=======
->>>>>>> d175c2b9a02cc03175101a4c10ab4215ba9f7362
             using (var ctx = new ApplicationDbContext())
             {
                 ctx.Bid.Add(entity);

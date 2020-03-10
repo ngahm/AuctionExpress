@@ -61,6 +61,7 @@
     <Compile Include="Category\CategoryDetail.cs" />
     <Compile Include="Category\CategoryListItem.cs" />
     <Compile Include="Category\CategoryEdit.cs" />
+    <Compile Include="DateValidator.cs" />
     <Compile Include="Product\ProductCreate.cs" />
     <Compile Include="Product\ProductDetail.cs" />
     <Compile Include="Product\ProductListItem.cs" />

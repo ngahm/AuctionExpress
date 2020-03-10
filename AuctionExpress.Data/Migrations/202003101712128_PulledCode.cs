@@ -3,16 +3,16 @@ namespace AuctionExpress.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialMigration : DbMigration
+    public partial class PulledCode : DbMigration
     {
         public override void Up()
         {
-            DropColumn("dbo.Product", "ProductIsActive");
+            DropColumn("dbo.Bid", "TimeOfBid");
         }
         
         public override void Down()
         {
-            AddColumn("dbo.Product", "ProductIsActive", c => c.Boolean(nullable: false));
+            AddColumn("dbo.Bid", "TimeOfBid", c => c.DateTimeOffset(nullable: false, precision: 7));
         }
     }
 }
