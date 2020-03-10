@@ -86,9 +86,9 @@
   <ItemGroup>
     <Compile Include="Category.cs" />
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\202003101409569_Initial Migration.cs" />
-    <Compile Include="Migrations\202003101409569_Initial Migration.Designer.cs">
-      <DependentUpon>202003101409569_Initial Migration.cs</DependentUpon>
+    <Compile Include="Migrations\202003101711471_Initial Migration.cs" />
+    <Compile Include="Migrations\202003101711471_Initial Migration.Designer.cs">
+      <DependentUpon>202003101711471_Initial Migration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Product.cs" />
@@ -101,8 +101,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202003101409569_Initial Migration.resx">
-      <DependentUpon>202003101409569_Initial Migration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003101711471_Initial Migration.resx">
+      <DependentUpon>202003101711471_Initial Migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
