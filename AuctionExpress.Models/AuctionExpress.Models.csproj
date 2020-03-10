@@ -75,5 +75,11 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AuctionExpress.Data\AuctionExpress.Data.csproj">
+      <Project>{1FEA453E-AEE2-4946-8E6B-62033C5898AC}</Project>
+      <Name>AuctionExpress.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

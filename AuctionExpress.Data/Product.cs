@@ -35,8 +35,6 @@ namespace AuctionExpress.Data
             }
         }
 
-        
-
         // [ForeignKey(nameof(ProductTransaction))]
         // public int? ProductTransactionKey { get; set; }
         //public virtual Transaction ProductTransaction { get; set; }

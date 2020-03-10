@@ -18,7 +18,7 @@ namespace AuctionExpress.Data
         public int ProductId { get; set; }
         public virtual Product TransactionProduct { get; set; }
 
-        public virtual Bid WinningBid
+        public Bid WinningBid
         {
             get
             {

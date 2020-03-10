@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AuctionExpress.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace AuctionExpress.Models
        
         public int ProductId { get; set; }
         //public string BidderId { get; set; }
+
         public double BidPrice { get; set; }
     }
 }

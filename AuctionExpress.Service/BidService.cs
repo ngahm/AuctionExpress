@@ -27,8 +27,11 @@ namespace AuctionExpress.Service
                 BidPrice = model.BidPrice,
             };
 
-            if (entity.Auction.HighestBid >= entity.BidPrice)
-                return null;
+            var bidList = GetBid(model.ProductId);
+            double highestBid = bidList.Max(x => x.BidPrice);
+
+            if (highestBid>= entity.BidPrice)
+               return null;
             return entity;
         }
 
