@@ -26,6 +26,10 @@ namespace AuctionExpress.Service
                 BidderId = _userId.ToString(),
                 BidPrice = model.BidPrice,
             };
+            if (entity.Auction == null)
+                return entity;
+
+            //look in product database for product matching product id and assign auction to this instance
 
             if (entity.Auction.HighestBid >= entity.BidPrice)
                 return null;
