@@ -54,12 +54,17 @@ namespace AuctionExpress.Data
         {
             get
             {
-                if (ProductBids.Count()>0)
+
+                if (ProductBids.Count >0)
+
                 {
+
                     var item = ProductBids.Max(x => x.BidPrice);
                     return item;
                 }
-                return 0;
+                    return 0;
+
+                
             }
         }
     }

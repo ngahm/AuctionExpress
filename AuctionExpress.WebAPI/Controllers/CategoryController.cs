@@ -24,6 +24,10 @@ namespace AuctionExpress.WebAPI.Controllers
 
 
         //GET ALL
+        /// <summary>
+        /// Get a list of all available categories.
+        /// </summary>
+        /// <returns></returns>
         public IHttpActionResult Get()
         {
             CategoryService categoryService = CreateCategoryService();
@@ -32,6 +36,11 @@ namespace AuctionExpress.WebAPI.Controllers
         }
 
         //POST
+        /// <summary>
+        /// Create a new category.
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
         public IHttpActionResult Post(CategoryCreate category)
         {
             if (!ModelState.IsValid)
@@ -46,6 +55,11 @@ namespace AuctionExpress.WebAPI.Controllers
         }
 
         //GET BY ID
+        /// <summary>
+        /// Get a specific category by refencing the category id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IHttpActionResult Get(int id)
         {
             CategoryService categoryService = CreateCategoryService();
@@ -53,8 +67,13 @@ namespace AuctionExpress.WebAPI.Controllers
             return Ok(category);
         }
 
-
+        
         //PUT
+        /// <summary>
+        /// Update a category.
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
         public IHttpActionResult Put(CategoryEdit category)
         {
             if (!ModelState.IsValid)

@@ -9,9 +9,7 @@ namespace AuctionExpress.Models
 {
     public class BidListItem
     {
-       [Display(Name="Bid Id")]
         public int BidId { get; set; }
-        [Display(Name="Product Id")]
         public int ProductId { get; set; }
         public string BidderId { get; set; }
         public double BidPrice { get; set; }
