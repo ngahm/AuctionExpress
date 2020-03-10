@@ -18,6 +18,12 @@ namespace AuctionExpress.WebAPI.Controllers
             var bidService = new BidService(userId);
             return bidService;
         }
+        private ProductService CreateProductService()
+        {
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var productService = new ProductService(userId);
+            return productService;
+        }
 
 
 
@@ -27,13 +33,17 @@ namespace AuctionExpress.WebAPI.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
+            var prodService = CreateProductService();
+            var prodDetail = prodService.GetProductById(bid.ProductId);
+            if (prodDetail == null)
+                return BadRequest("Product has been removed or does not exist.");
+            if (prodDetail.HighestBid > bid.BidPrice)
+                return BadRequest("Bid must be higher than current selling price.");
+            if (!prodDetail.ProductIsActive)
+                return BadRequest("Auction is closed");
             var service = CreateBidService();
-            var entity = service.ValidateBid(bid);
-            if (entity == null)
-                return BadRequest("Invalid bid due to auciton being closed or bid being below product price.");
-
-            if (!service.CreateBid(entity))
+            
+            if (!service.CreateBid(bid))
                 return InternalServerError();
 
             return Ok();
