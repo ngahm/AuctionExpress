@@ -21,6 +21,11 @@ namespace AuctionExpress.WebAPI.Controllers
         }
 
         //CREATE Transaction
+        /// <summary>
+        /// Create a new transaction.
+        /// </summary>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
         public IHttpActionResult Post(TransactionCreate transaction)
         {
             if (!ModelState.IsValid)
@@ -31,10 +36,14 @@ namespace AuctionExpress.WebAPI.Controllers
             if (!service.CreateTransaction(transaction))
                 return InternalServerError();
 
-            return Ok();
+            return Ok("Transaction successfully created.");
         }
 
         //GET POSTS
+        /// <summary>
+        /// Get all transactions where the user is the auction winner.
+        /// </summary>
+        /// <returns></returns>
         public IHttpActionResult Get()
         {
             var service = CreateTransactionService();
@@ -43,6 +52,11 @@ namespace AuctionExpress.WebAPI.Controllers
         }
 
         //GET POSTS BY IT
+        /// <summary>
+        /// get a specific transaction by referencing the transaction id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IHttpActionResult Get(int id)
         {
             var service = CreateTransactionService();
@@ -51,6 +65,11 @@ namespace AuctionExpress.WebAPI.Controllers
         }
 
         //EDIT POST
+        /// <summary>
+        /// Update the status of a transaction.
+        /// </summary>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
         public IHttpActionResult Put(TransactionEdit transaction)
         {
             if (!ModelState.IsValid)
@@ -61,7 +80,7 @@ namespace AuctionExpress.WebAPI.Controllers
             if (!service.UpdateTransaction(transaction))
                 return InternalServerError();
 
-            return Ok();
+            return Ok("Transaction succesfully updated.");
         }
     }
 }

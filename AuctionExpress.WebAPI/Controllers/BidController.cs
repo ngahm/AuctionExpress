@@ -27,8 +27,12 @@ namespace AuctionExpress.WebAPI.Controllers
 
 
 
-        //POST COMMENT ()
-
+        //POST Bid
+        /// <summary>
+        /// Place a new bid on an auction.
+        /// </summary>
+        /// <param name="bid"></param>
+        /// <returns></returns>
         public IHttpActionResult Post(BidCreate bid)
         {
             if (!ModelState.IsValid)
@@ -49,7 +53,12 @@ namespace AuctionExpress.WebAPI.Controllers
             return Ok();
         }
 
-        //GET COMMENT ()
+        //GET Bid
+        /// <summary>
+        /// Get all bids associated with a product.
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
        public IHttpActionResult GetBid(int productId)
        {
            BidService bidService = CreateBidService();
@@ -57,7 +66,12 @@ namespace AuctionExpress.WebAPI.Controllers
            return Ok(bids);
         }
 
-        //GET COMMENT BY ID
+        //GET Bid BY ID
+        /// <summary>
+        /// Get a specific bid referenced by bid id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IHttpActionResult GetBidById(int id)
         {
             BidService bidService = CreateBidService();
