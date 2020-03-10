@@ -51,7 +51,7 @@ namespace AuctionExpress.WebAPI.Controllers
             if (!service.CreateCategory(category))
                 return InternalServerError();
 
-            return Ok();
+            return Ok("Category successfully added.");
         }
 
         //GET BY ID
@@ -84,7 +84,7 @@ namespace AuctionExpress.WebAPI.Controllers
             if (!service.UpdateCategory(category))
                 return InternalServerError();
 
-            return Ok("The inputed strings have successfully updated your ID selection");
+            return Ok("Category successfully updated.");
         }
     }
 }
