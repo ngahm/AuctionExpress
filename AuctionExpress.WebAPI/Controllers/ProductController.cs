@@ -19,7 +19,12 @@ namespace AuctionExpress.WebAPI.Controllers
             return productService;
         }
 
-        //CREATE POST
+        //Post Product
+        /// <summary>
+        /// Create a new auction.
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         public IHttpActionResult Post(ProductCreate product)
         {
             if (!ModelState.IsValid)
@@ -33,7 +38,11 @@ namespace AuctionExpress.WebAPI.Controllers
             return Ok();
         }
 
-        //GET POSTS
+        //GET Products
+        /// <summary>
+        /// Get a list of auction that the user has created.
+        /// </summary>
+        /// <returns></returns>
         public IHttpActionResult Get()
         {
             ProductService productService = CreateProductService();
@@ -41,7 +50,12 @@ namespace AuctionExpress.WebAPI.Controllers
             return Ok(products);
         }
 
-        //GET POSTS BY IT
+        //GET products by Id
+        /// <summary>
+        /// Get a specific auction by referencing the auction id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IHttpActionResult Get(int id)
         {
             ProductService productService = CreateProductService();
@@ -50,6 +64,11 @@ namespace AuctionExpress.WebAPI.Controllers
         }
 
         //EDIT POST
+        /// <summary>
+        /// Update an auction.
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         public IHttpActionResult Put(ProductEdit product)
         {
             if (!ModelState.IsValid)

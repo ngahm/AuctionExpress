@@ -17,15 +17,16 @@ namespace AuctionExpress.Service
             _userId = userId;
         }
 
-        public Bid ValidateBid(BidCreate model)
+
+        public bool CreateBid(BidCreate model)
         {
             var entity = new Bid()
             {
-
                 ProductId = model.ProductId,
                 BidderId = _userId.ToString(),
                 BidPrice = model.BidPrice,
             };
+<<<<<<< HEAD
             if (entity.Auction == null)
                 return entity;
 
@@ -39,6 +40,8 @@ namespace AuctionExpress.Service
         public bool CreateBid(Bid entity)
         {
 
+=======
+>>>>>>> d175c2b9a02cc03175101a4c10ab4215ba9f7362
             using (var ctx = new ApplicationDbContext())
             {
                 ctx.Bid.Add(entity);

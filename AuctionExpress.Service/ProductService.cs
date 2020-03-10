@@ -68,7 +68,11 @@ namespace AuctionExpress.Service
                 var entity =
                     ctx
                     .Product
-                    .Single(e => e.ProductId == id);
+                    .Where(e => e.ProductId == id)
+                    .FirstOrDefault();
+                if (entity == null)
+                    return null;
+
                 return
                     new ProductDetail
                     {
