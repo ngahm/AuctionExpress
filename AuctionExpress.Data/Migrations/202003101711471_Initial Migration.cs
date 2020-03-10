@@ -7,12 +7,10 @@ namespace AuctionExpress.Data.Migrations
     {
         public override void Up()
         {
-            DropColumn("dbo.Bid", "TimeOfBid");
         }
         
         public override void Down()
         {
-            AddColumn("dbo.Bid", "TimeOfBid", c => c.DateTimeOffset(nullable: false, precision: 7));
         }
     }
 }
