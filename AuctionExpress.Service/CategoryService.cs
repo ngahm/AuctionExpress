@@ -62,7 +62,8 @@ namespace AuctionExpress.Service
                 var entity =
                      ctx
                     .Category                                                          
-                    .Single(e => e.CategoryId == id);         
+                    .Where(e => e.CategoryId == id)
+                    .FirstOrDefault();         
                 return
                     new CategoryDetail                                                  
                     {

@@ -65,7 +65,8 @@ namespace AuctionExpress.Service
                 var entity =
                     ctx
                         .Bid
-                        .Single(e => e.BidId == id);           /*target one unique identifier*/
+                        .Where(e => e.BidId == id)
+                        .FirstOrDefault();           /*target one unique identifier*/
                 return
                     new BidDetail
                     {

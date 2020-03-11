@@ -66,7 +66,8 @@ namespace AuctionExpress.Service
                 var entity =
                     ctx
                     .Transaction
-                    .Single(e => e.TransactionId == id);
+                    .Where(e => e.TransactionId == id)
+                    .FirstOrDefault();
                 return
                     new TransactionDetail
                     {
