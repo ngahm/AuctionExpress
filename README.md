@@ -15,3 +15,6 @@ ToArray()
 
 https://stackoverflow.com/questions/44299292/best-way-to-convert-string-to-datetimeoffset
 DateTimeOffset Formatting
+
+https://www.tutorialsteacher.com/webapi/consume-web-api-get-method-in-aspnet-mvc
+Consume WebAPI MVC Razer
