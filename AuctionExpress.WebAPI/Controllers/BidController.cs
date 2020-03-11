@@ -77,6 +77,8 @@ namespace AuctionExpress.WebAPI.Controllers
         {
             BidService bidService = CreateBidService();
             var bid = bidService.GetBidById(id);
+            if (bid == null)
+                return BadRequest("Bid does not exist.");
             return Ok(bid);
         }
 

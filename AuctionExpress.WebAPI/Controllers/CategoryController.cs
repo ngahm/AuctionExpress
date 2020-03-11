@@ -64,6 +64,8 @@ namespace AuctionExpress.WebAPI.Controllers
         {
             CategoryService categoryService = CreateCategoryService();
             var category = categoryService.GetCategoryById(id);
+            if (category == null)
+                return BadRequest("Category does not exist.");
             return Ok(category);
         }
 
