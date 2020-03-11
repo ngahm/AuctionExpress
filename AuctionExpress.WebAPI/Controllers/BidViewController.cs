@@ -19,7 +19,7 @@ namespace AuctionExpress.WebAPI.Controllers
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
                 //HTTP GET
-                var responseTask = client.GetAsync("Bid?productId=2");
+                var responseTask = client.GetAsync("Bid?productId=4");
                 responseTask.Wait();
 
                 var result = responseTask.Result;
