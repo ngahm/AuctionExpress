@@ -38,20 +38,19 @@ namespace AuctionExpress.WebAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var prodService = CreateProductService();
-            var prodDetail = prodService.GetProductById(bid.ProductId);
+            var prodDetail = prodService.ValidateBid(bid);
 
-            if (prodDetail == null)
-                return BadRequest("Product has been removed or does not exist.");
-            if (prodDetail.HighestBid > bid.BidPrice)
-                return BadRequest("Bid must be higher than current selling price.");
-            if (!prodDetail.ProductIsActive)
-                return BadRequest("Auction is closed");
-            var service = CreateBidService();
+            if (prodDetail== "")
+            {
+                var service = CreateBidService();
+
+                if (!service.CreateBid(bid))
+                    return InternalServerError();
+
+                return Ok("Bid successfully added.");
+            }
+            return BadRequest(prodDetail);
             
-            if (!service.CreateBid(bid))
-                return InternalServerError();
-
-            return Ok("Bid successfully added.");
         }
 
         //GET Bid

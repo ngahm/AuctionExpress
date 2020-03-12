@@ -20,6 +20,14 @@ namespace AuctionExpress.WebAPI.Controllers
             return transactionService;
         }
 
+        private ProductService CreateProductService()
+        {
+            var userId = Guid.Parse("137ae0c4-7144-445d-b6c0-2918a3dd5907");
+            //User.Identity.GetUserId());
+            var productService = new ProductService(userId);
+            return productService;
+        }
+
         //CREATE Transaction
         /// <summary>
         /// Create a new transaction.
@@ -31,12 +39,19 @@ namespace AuctionExpress.WebAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreateTransactionService();
+            var prodService = CreateProductService();
+            var prodDetail = prodService.ValidateAuctionStatus(transaction.ProductId);
+            if (prodDetail == "Auction is closed")
+            {
 
-            if (!service.CreateTransaction(transaction))
-                return InternalServerError();
+                var service = CreateTransactionService();
 
-            return Ok("Transaction successfully created.");
+                if (!service.CreateTransaction(transaction))
+                    return InternalServerError();
+
+                return Ok("Transaction successfully created.");
+            }
+            return BadRequest("BadRequest" + prodDetail);
         }
 
         //GET POSTS

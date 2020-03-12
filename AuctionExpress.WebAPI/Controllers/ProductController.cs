@@ -33,7 +33,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 return BadRequest(ModelState);
 
             var service = CreateProductService();
-            var result = new DateValidator (product.ProductStartTime, product.ProductCloseTime);
+            var result = new DateValidator(product.ProductStartTime, product.ProductCloseTime);
             bool validateAllProperties = false;
             var results = new List<ValidationResult>();
             bool isValid = Validator.TryValidateObject(result,
@@ -87,31 +87,37 @@ namespace AuctionExpress.WebAPI.Controllers
         /// <returns></returns>
         public IHttpActionResult Put(ProductEdit product)
         {
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var service = CreateProductService();
-
-            var result = new DateValidator(product.ProductCloseTime);
-            bool validateAllProperties = false;
-            var results = new List<ValidationResult>();
-            bool isValid = Validator.TryValidateObject(result,
-                new ValidationContext(result, null, null),
-                results, validateAllProperties);
-            if (!isValid)
+            var prodDetail = service.ValidateAuctionStatus(product.ProductId);
+            if (prodDetail == "")
             {
-                string errorMessage = "";
-                foreach (var item in results)
+
+                var result = new DateValidator(product.ProductCloseTime);
+                bool validateAllProperties = false;
+                var results = new List<ValidationResult>();
+                bool isValid = Validator.TryValidateObject(result,
+                    new ValidationContext(result, null, null),
+                    results, validateAllProperties);
+                if (!isValid)
                 {
-                    errorMessage = item + ", ";
+                    string errorMessage = "";
+                    foreach (var item in results)
+                    {
+                        errorMessage = item + ", ";
+                    }
+                    return BadRequest(errorMessage);
                 }
-                return BadRequest(errorMessage);
+
+                if (!service.UpdateProduct(product))
+                    return InternalServerError();
+
+                return Ok("Product succesfully updated.");
             }
-
-            if (!service.UpdateProduct(product))
-                return InternalServerError();
-
-            return Ok("Product succesfully updated.");
+            return BadRequest(prodDetail);
         }
     }
 }
