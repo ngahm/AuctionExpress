@@ -9,8 +9,10 @@ namespace AuctionExpress.Models
 {
     public class TransactionCreate
     {
-
+        [Display(Name = "Product Id")]
         public int ProductId { get; set; }
+
+        [Display(Name = "Is Paid")]
         public bool IsPaid { get; set; }
     }
 }
