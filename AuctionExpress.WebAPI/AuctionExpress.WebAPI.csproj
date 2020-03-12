@@ -353,17 +353,17 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-<<<<<<< HEAD
-    <Content Include="Views\MVC\Index.cshtml" />
+
+
     <Content Include="Views\AccountView\Create.cshtml" />
     <Content Include="Views\AccountView\Login.cshtml" />
-=======
+
     <Content Include="Views\BidView\GetBidsByProduct.cshtml" />
     <Content Include="Views\ProductView\GetProduct.cshtml" />
     <Content Include="Views\ProductView\PostProduct.cshtml" />
     <Content Include="Views\ProductView\GetProductById.cshtml" />
     <Content Include="Views\ProductView\PutProduct.cshtml" />
->>>>>>> 27b16d9c6122ad63f18873b358e0ba42b2696929
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
