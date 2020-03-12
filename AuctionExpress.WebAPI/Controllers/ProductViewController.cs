@@ -103,7 +103,7 @@ namespace AuctionExpress.WebAPI.Controllers
        
 
 
-      /*  public ActionResult PutProduct(ProductEdit product)
+        public ActionResult PutProduct(ProductEdit product)
         {
             using (var client = new HttpClient())
             {
@@ -121,7 +121,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 return View(product);
             }
         }
-        */
+        
 
         //public ActionResult Delete(int id)
         //{
