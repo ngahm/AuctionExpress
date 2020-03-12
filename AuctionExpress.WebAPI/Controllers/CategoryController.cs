@@ -14,7 +14,7 @@ namespace AuctionExpress.WebAPI.Controllers
     {
         private CategoryService CreateCategoryService()
         {
-            var userId = Guid.Parse(User.Identity.GetUserId());
+            var userId = Guid.Parse("1ae9afff-3752-45c4-a551-dc17f56033d8");//User.Identity.GetUserId());
             var categoryService = new CategoryService(userId);
             return categoryService;
         }
@@ -87,6 +87,16 @@ namespace AuctionExpress.WebAPI.Controllers
                 return InternalServerError();
 
             return Ok("Category successfully updated.");
+        }
+
+        public IHttpActionResult Delete(int id)
+        {
+            var service = CreateCategoryService();
+
+            if (!service.DeleteCategory(id))
+                return InternalServerError();
+
+            return Ok();
         }
     }
 }
