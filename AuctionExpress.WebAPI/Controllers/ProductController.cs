@@ -119,5 +119,19 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             return BadRequest(prodDetail);
         }
+        /// <summary>
+        /// Delete a product using the product id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IHttpActionResult Delete(int id)
+        {
+            var service = CreateProductService();
+
+            if (!service.DeleteProduct(id))
+                return InternalServerError();
+
+            return Ok();
+        }
     }
 }

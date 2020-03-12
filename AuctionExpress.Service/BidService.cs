@@ -80,6 +80,21 @@ namespace AuctionExpress.Service
              }
         }
 
+        public bool DeleteBid(int bidId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Bid
+                        .Single(e => e.BidId == bidId);
+
+                ctx.Bid.Remove(entity);
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
 
 
 

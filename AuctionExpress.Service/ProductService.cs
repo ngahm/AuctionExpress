@@ -110,6 +110,21 @@ namespace AuctionExpress.Service
             }
         }
 
+        public bool DeleteProduct(int productId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Product
+                        .Single(e => e.ProductId == productId);
+
+                ctx.Product.Remove(entity);
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
         public string ValidateAuctionStatus(int id)
         {
             var prodDetail = GetProductById(id);

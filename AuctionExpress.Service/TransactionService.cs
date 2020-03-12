@@ -104,5 +104,20 @@ namespace AuctionExpress.Service
                 return ctx.SaveChanges() == 1;
             }
         }
+
+        public bool DeleteTransaction(int transactionId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Transaction
+                        .Single(e => e.TransactionId == transactionId);
+
+                ctx.Transaction.Remove(entity);
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
 }

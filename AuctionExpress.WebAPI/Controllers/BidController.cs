@@ -81,7 +81,20 @@ namespace AuctionExpress.WebAPI.Controllers
             return Ok(bid);
         }
 
+        /// <summary>
+        /// Delete Bid by bid Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IHttpActionResult Delete(int id)
+        {
+            var service = CreateBidService();
 
+            if (!service.DeleteBid(id))
+                return InternalServerError();
+
+            return Ok();
+        }
     }
 }
 

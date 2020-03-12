@@ -88,7 +88,11 @@ namespace AuctionExpress.WebAPI.Controllers
 
             return Ok("Category successfully updated.");
         }
-
+        /// <summary>
+        /// Delete a Category using the Category Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IHttpActionResult Delete(int id)
         {
             var service = CreateCategoryService();

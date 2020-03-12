@@ -68,7 +68,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
         //GET POSTS BY IT
         /// <summary>
-        /// get a specific transaction by referencing the transaction id.
+        /// Get a specific transaction by referencing the transaction id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -96,6 +96,20 @@ namespace AuctionExpress.WebAPI.Controllers
                 return InternalServerError();
 
             return Ok("Transaction succesfully updated.");
+        }
+        /// <summary>
+        /// Delete a Transaction by transaction id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IHttpActionResult Delete(int id)
+        {
+            var service = CreateTransactionService();
+
+            if (!service.DeleteTransaction(id))
+                return InternalServerError();
+
+            return Ok();
         }
     }
 }
