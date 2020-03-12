@@ -101,12 +101,37 @@ namespace AuctionExpress.WebAPI.Controllers
             return View(product);
         }
 
+        public ActionResult PutProduct(int id)
+        {
+            ProductEdit product = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                //HTTP GET
+                var responseTask = client.GetAsync("product/" + id.ToString());
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<ProductEdit>();
+                    readTask.Wait();
+
+                    product = readTask.Result;
+                }
+            }
+
+            return View(product);
+        }
+
+
         [HttpPost]
         public ActionResult PutProduct(ProductEdit product)
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44320/api/product");
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
 
                 //HTTP 
                 var putTask = client.PutAsJsonAsync<ProductEdit>("product", product);
@@ -129,7 +154,7 @@ namespace AuctionExpress.WebAPI.Controllers
         //        client.BaseAddress = new Uri("http://localhost:44320/api/");
 
         //        //HTTP Delete
-        //        var deleteTask = ClientCertificateOption.DeleteAsync("student/" + id.ToString());
+        //        var deleteTask = Client.DeleteAsync("student/" + id.ToString());
         //        deleteTask.Wait();
 
         //        var result = deleteTask.Result;
@@ -139,6 +164,7 @@ namespace AuctionExpress.WebAPI.Controllers
         //        }
 
         //    }
+        //     return RedirectToAction("GetProduct")
         //}
 
     }   
