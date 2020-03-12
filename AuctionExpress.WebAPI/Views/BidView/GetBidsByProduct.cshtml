@@ -44,7 +44,7 @@
             </td>
             <td>
                 <!--@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |-->
-                @Html.ActionLink("Details", "GetBidById", new { id = item.BidId }) 
+                @Html.ActionLink("Details", "GetBidById", new { id = item.BidId })
                 <!--@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })-->
             </td>
         </tr>
@@ -55,3 +55,8 @@
         </td>
     </tr>
 </table>
+
+<div>
+    @Html.ActionLink("Back to Product List", "GetProduct", "ProductView", new { /*id = */ }, htmlAttributes: new { @class = "btn" })
+</div>
+

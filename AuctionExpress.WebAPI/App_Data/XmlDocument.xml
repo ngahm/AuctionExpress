@@ -572,7 +572,7 @@
         </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.ProductController.Delete(System.Int32)">
             <summary>
-            Delete a product using the product id.
+            Delete a product using the product id
             </summary>
             <param name="id"></param>
             <returns></returns>
@@ -592,7 +592,7 @@
         </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.TransactionController.Get(System.Int32)">
             <summary>
-            get a specific transaction by referencing the transaction id.
+            Get a specific transaction by referencing the transaction id.
             </summary>
             <param name="id"></param>
             <returns></returns>
@@ -602,6 +602,13 @@
             Update the status of a transaction.
             </summary>
             <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.TransactionController.Delete(System.Int32)">
+            <summary>
+            Delete a Transaction by transaction id.
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
     </members>
