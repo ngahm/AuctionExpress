@@ -45,6 +45,8 @@ namespace AuctionExpress.WebAPI.Models
         [Display(Name="Business Name")]
         public string BusinessName { get; set; }
 
+        public bool IsActive { get { return true; } }
+
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
@@ -87,5 +89,20 @@ namespace AuctionExpress.WebAPI.Models
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    public class LoginModel
+    {
+        [Required]
+        [Display(Name ="Email")]
+        [EmailAddress]
+        public string Email { get; set; }
+        
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name ="Password")]
+        public string Password { get; set; }
+        [Display(Name ="Remember me?")]
+        public bool RememberMe { get; set; }
     }
 }

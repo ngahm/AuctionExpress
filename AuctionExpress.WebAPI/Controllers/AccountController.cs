@@ -26,6 +26,9 @@ namespace AuctionExpress.WebAPI.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        private ApplicationSignInManager _signInManager;
+
+
 
         public AccountController()
         {
@@ -47,6 +50,26 @@ namespace AuctionExpress.WebAPI.Controllers
             private set
             {
                 _userManager = value;
+            }
+        }
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? Request.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return Request.GetOwinContext().Authentication;
             }
         }
 
@@ -127,7 +150,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -140,18 +163,18 @@ namespace AuctionExpress.WebAPI.Controllers
         [Route("DeactivateUser")]
         public async Task<IHttpActionResult> DeactivateUser()
         {
-          if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-              return BadRequest(ModelState);
-           }
+                return BadRequest(ModelState);
+            }
             var userId = User.Identity.GetUserId();
             ApplicationUser user = new ApplicationUser() { Id = userId };
             IdentityResult result = await UserManager.DeleteAsync(user);
 
             if (!result.Succeeded)
             {
-               return GetErrorResult(result);
-           }
+                return GetErrorResult(result);
+            }
 
             return Ok();
         }
@@ -280,9 +303,9 @@ namespace AuctionExpress.WebAPI.Controllers
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    OAuthDefaults.AuthenticationType);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
@@ -349,7 +372,7 @@ namespace AuctionExpress.WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
+
             var user = new ApplicationUser() { UserName = model.UserName, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
@@ -390,9 +413,39 @@ namespace AuctionExpress.WebAPI.Controllers
             result = await UserManager.AddLoginAsync(user.Id, info.Login);
             if (!result.Succeeded)
             {
-                return GetErrorResult(result); 
+                return GetErrorResult(result);
             }
             return Ok();
+        }
+
+
+        // POST: /Account/Login
+
+        [AllowAnonymous]
+        [Route("Login")]
+        public async Task<IHttpActionResult> Login(LoginModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return Ok();
+                case SignInStatus.LockedOut:
+                    return BadRequest("account is locked out.");
+                case SignInStatus.RequiresVerification:
+                    return BadRequest("account needs verification");
+                case SignInStatus.Failure:
+                default:
+                    return BadRequest("invalid login attempt.");
+            }
         }
 
         protected override void Dispose(bool disposing)
