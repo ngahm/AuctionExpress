@@ -53,7 +53,7 @@ namespace AuctionExpress.WebAPI.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:44320/api/product");
+                client.BaseAddress = new Uri("https://localhost:44320/api/product");
 
                 //HTTP Post
                 var postTask = client.PostAsJsonAsync<ProductCreate>("product", product);
@@ -71,14 +71,14 @@ namespace AuctionExpress.WebAPI.Controllers
 
         }
 
-
+        
         public ActionResult GetProductById(int id)
         {
             ProductDetail product = null;
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:44320/api/");
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
 
                 //HTTP Get
                 var responseTask = client.GetAsync("product/" + id.ToString());
@@ -106,7 +106,7 @@ namespace AuctionExpress.WebAPI.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:44320/api/product");
+                client.BaseAddress = new Uri("https://localhost:44320/api/product");
 
                 //HTTP 
                 var putTask = client.PutAsJsonAsync<ProductEdit>("product", product);
