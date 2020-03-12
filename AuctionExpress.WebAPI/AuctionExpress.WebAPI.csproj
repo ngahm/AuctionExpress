@@ -212,6 +212,7 @@
     <Compile Include="Controllers\BidController.cs" />
     <Compile Include="Controllers\BidViewController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CategoryViewController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductViewController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -359,6 +360,12 @@
     <Content Include="Views\AccountView\Login.cshtml" />
 
     <Content Include="Views\BidView\GetBidsByProduct.cshtml" />
+    <Content Include="Views\BidView\CreateBid.cshtml" />
+    <Content Include="Views\BidView\GetBidById.cshtml" />
+    <Content Include="Views\CategoryView\GetCategories.cshtml" />
+    <Content Include="Views\CategoryView\CreateCategory.cshtml" />
+    <Content Include="Views\CategoryView\EditCategory.cshtml" />
+    <Content Include="Views\CategoryView\GetCategoryById.cshtml" />
     <Content Include="Views\ProductView\GetProduct.cshtml" />
     <Content Include="Views\ProductView\PostProduct.cshtml" />
     <Content Include="Views\ProductView\GetProductById.cshtml" />
