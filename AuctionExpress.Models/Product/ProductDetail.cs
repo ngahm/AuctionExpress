@@ -8,6 +8,7 @@ namespace AuctionExpress.Models
 {
     public class ProductDetail
     {
+        public int ProductId { get; set; }
         public string ProductName { get; set; }
         public int? ProductCategoryId { get; set; }
         public string ProductDescription { get; set; }

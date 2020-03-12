@@ -71,7 +71,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
         }
 
-
+        
         public ActionResult GetProductById(int id)
         {
             ProductDetail product = null;
@@ -103,11 +103,44 @@ namespace AuctionExpress.WebAPI.Controllers
        
 
 
+<<<<<<< HEAD
+=======
+        public ActionResult PutProduct(int id)
+        {
+            ProductEdit product = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                //HTTP GET
+                var responseTask = client.GetAsync("product/" + id.ToString());
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<ProductEdit>();
+                    readTask.Wait();
+
+                    product = readTask.Result;
+                }
+            }
+
+            return View(product);
+        }
+
+
+        [HttpPost]
+>>>>>>> 5604d9ba825e3fb294b36746e72e0b19083fa7a0
         public ActionResult PutProduct(ProductEdit product)
         {
             using (var client = new HttpClient())
             {
+<<<<<<< HEAD
                 client.BaseAddress = new Uri("https://localhost:44320/api/product");
+=======
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+>>>>>>> 5604d9ba825e3fb294b36746e72e0b19083fa7a0
 
                 //HTTP 
                 var putTask = client.PutAsJsonAsync<ProductEdit>("product", product);
@@ -130,7 +163,7 @@ namespace AuctionExpress.WebAPI.Controllers
         //        client.BaseAddress = new Uri("https://localhost:44320/api/");
 
         //        //HTTP Delete
-        //        var deleteTask = ClientCertificateOption.DeleteAsync("student/" + id.ToString());
+        //        var deleteTask = Client.DeleteAsync("student/" + id.ToString());
         //        deleteTask.Wait();
 
         //        var result = deleteTask.Result;
@@ -140,6 +173,7 @@ namespace AuctionExpress.WebAPI.Controllers
         //        }
 
         //    }
+        //     return RedirectToAction("GetProduct")
         //}
 
     }   
