@@ -100,11 +100,15 @@ namespace AuctionExpress.WebAPI.Controllers
 
             return View(product);
         }
+<<<<<<< HEAD
        
 
 
 <<<<<<< HEAD
 =======
+=======
+    
+>>>>>>> 50f4ed896db09e1dc368fb2c5cf943022f1adae2
         public ActionResult PutProduct(int id)
         {
             ProductEdit product = null;
@@ -129,18 +133,27 @@ namespace AuctionExpress.WebAPI.Controllers
             return View(product);
         }
 
-
         [HttpPost]
+<<<<<<< HEAD
 >>>>>>> 5604d9ba825e3fb294b36746e72e0b19083fa7a0
+=======
+
+>>>>>>> 50f4ed896db09e1dc368fb2c5cf943022f1adae2
         public ActionResult PutProduct(ProductEdit product)
         {
             using (var client = new HttpClient())
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 client.BaseAddress = new Uri("https://localhost:44320/api/product");
 =======
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
 >>>>>>> 5604d9ba825e3fb294b36746e72e0b19083fa7a0
+=======
+
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+
+>>>>>>> 50f4ed896db09e1dc368fb2c5cf943022f1adae2
 
                 //HTTP 
                 var putTask = client.PutAsJsonAsync<ProductEdit>("product", product);
