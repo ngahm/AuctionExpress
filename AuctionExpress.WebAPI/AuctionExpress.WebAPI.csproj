@@ -210,9 +210,10 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountViewController.cs" />
     <Compile Include="Controllers\BidController.cs" />
+    <Compile Include="Controllers\BidViewController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MVCController.cs" />
+    <Compile Include="Controllers\ProductViewController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -352,9 +353,17 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\MVC\Index.cshtml" />
     <Content Include="Views\AccountView\Create.cshtml" />
     <Content Include="Views\AccountView\Login.cshtml" />
+=======
+    <Content Include="Views\BidView\GetBidsByProduct.cshtml" />
+    <Content Include="Views\ProductView\GetProduct.cshtml" />
+    <Content Include="Views\ProductView\PostProduct.cshtml" />
+    <Content Include="Views\ProductView\GetProductById.cshtml" />
+    <Content Include="Views\ProductView\PutProduct.cshtml" />
+>>>>>>> 27b16d9c6122ad63f18873b358e0ba42b2696929
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

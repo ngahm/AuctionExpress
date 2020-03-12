@@ -448,6 +448,13 @@ namespace AuctionExpress.WebAPI.Controllers
             }
         }
 
+        [Route("Logoff")]
+        public IHttpActionResult LogOff()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return Ok();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
