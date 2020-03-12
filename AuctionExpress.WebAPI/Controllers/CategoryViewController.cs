@@ -92,6 +92,8 @@ namespace AuctionExpress.WebAPI.Controllers
 
             return View(category);
         }
+
+
         [HttpPost]
         public ActionResult EditCategory(CategoryEdit category)
         {
