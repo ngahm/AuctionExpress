@@ -8,89 +8,89 @@ using System.Web.Mvc;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
-    public class ProductViewController : Controller
+    public class TransactionViewController : Controller
     {
-        // GET: MVC
-        public ActionResult GetProduct()
+        // GET: TransactionView
+        public ActionResult GetTransaction()
         {
-            IEnumerable<ProductListItem> productViewer = null;
+            IEnumerable<TransactionListItem> transactionViewer = null;
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
 
-                var responseTask = client.GetAsync("product");
+                var responseTask = client.GetAsync("transaction");
                 responseTask.Wait();
 
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<IList<ProductListItem>>();
+                    var readTask = result.Content.ReadAsAsync<IList<TransactionListItem>>();
                     readTask.Wait();
 
-                    productViewer = readTask.Result;
+                    transactionViewer = readTask.Result;
                 }
                 else      //web api sent error response
                 {         //log response status here.
-                    productViewer = Enumerable.Empty<ProductListItem>();
+                    transactionViewer = Enumerable.Empty<TransactionListItem>();
 
                     ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
 
                 }
 
             }
-            return View(productViewer);
+            return View(transactionViewer);
         }
 
 
-        public ActionResult PostProduct()
+        public ActionResult PostTransaction()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult PostProduct(ProductCreate product)
+        public ActionResult PostTransaction(TransactionCreate model)
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44320/api/product");
+                client.BaseAddress = new Uri("https://localhost:44320/api/transaction");
 
                 //HTTP Post
-                var postTask = client.PostAsJsonAsync<ProductCreate>("product", product);
+                var postTask = client.PostAsJsonAsync<TransactionCreate>("transaction", model);
                 postTask.Wait();
 
                 var result = postTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("GetProduct");
+                    return RedirectToAction("GetTransaction");
                 }
             }
             ModelState.AddModelError(string.Empty, "Server Error. Please contact administration.");
 
-            return View(product);
+            return View(model);
 
         }
 
-        
-        public ActionResult GetProductById(int id)
+
+        public ActionResult GetTransactionById(int id)
         {
-            ProductDetail product = null;
+            TransactionDetail model = null;
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
 
                 //HTTP Get
-                var responseTask = client.GetAsync("product/" + id.ToString());
+                var responseTask = client.GetAsync("transaction/" + id.ToString());
                 responseTask.Wait();
 
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<ProductDetail>();
+                    var readTask = result.Content.ReadAsAsync<TransactionDetail>();
                     readTask.Wait();
 
-                    product = readTask.Result;
+                    model = readTask.Result;
                 }
                 else
                 {
@@ -98,78 +98,76 @@ namespace AuctionExpress.WebAPI.Controllers
                 }
             }
 
-            return View(product);
+            return View(model);
         }
 
-        public ActionResult PutProduct(int id)
+        public ActionResult PutTransaction(int id)
         {
-            ProductEdit product = null;
+            TransactionEdit model = null;
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
                 //HTTP GET
-                var responseTask = client.GetAsync("product/" + id.ToString());
+                var responseTask = client.GetAsync("transaction/" + id.ToString());
                 responseTask.Wait();
 
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<ProductEdit>();
+                    var readTask = result.Content.ReadAsAsync<TransactionEdit>();
                     readTask.Wait();
 
-                    product = readTask.Result;
+                    model = readTask.Result;
                 }
             }
 
-            return View(product);
+            return View(model);
         }
 
-        [HttpPost]
 
-        public ActionResult PutProduct(ProductEdit product)
+        [HttpPost]
+        public ActionResult PutTransaction(TransactionEdit model)
         {
             using (var client = new HttpClient())
             {
-
-
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
 
-
                 //HTTP 
-                var putTask = client.PutAsJsonAsync<ProductEdit>("product", product);
+                var putTask = client.PutAsJsonAsync<TransactionEdit>("transaction", model);
                 putTask.Wait();
 
                 var result = putTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("GetProduct");
+                    return RedirectToAction("GetTransaction");
                 }
-                return View(product);
+                return View(model);
             }
         }
-        
+
+
+
 
         //public ActionResult Delete(int id)
         //{
         //    using (var client = new HttpClient())
         //    {
-        //        client.BaseAddress = new Uri("https://localhost:44320/api/");
+        //        client.BaseAddress = new Uri("http://localhost:44320/api/");
 
         //        //HTTP Delete
-        //        var deleteTask = Client.DeleteAsync("student/" + id.ToString());
+        //        var deleteTask = client.DeleteAsync("transaction/" + id.ToString());
         //        deleteTask.Wait();
 
         //        var result = deleteTask.Result;
         //        if (result.IsSuccessStatusCode)
         //        {
-        //            return RedirectToAction("GetProduct");
+        //            return RedirectToAction("GetTransaction");
         //        }
 
         //    }
-        //     return RedirectToAction("GetProduct")
+        //    return RedirectToAction("GetTransaction");
         //}
 
-    }   
-
+    }
 }

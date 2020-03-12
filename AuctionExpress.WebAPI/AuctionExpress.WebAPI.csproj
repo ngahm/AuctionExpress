@@ -217,6 +217,7 @@
     <Compile Include="Controllers\ProductViewController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
+    <Compile Include="Controllers\TransactionViewController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -354,11 +355,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-
-
     <Content Include="Views\AccountView\Create.cshtml" />
     <Content Include="Views\AccountView\Login.cshtml" />
-
     <Content Include="Views\BidView\GetBidsByProduct.cshtml" />
     <Content Include="Views\BidView\CreateBid.cshtml" />
     <Content Include="Views\BidView\GetBidById.cshtml" />
@@ -370,7 +368,10 @@
     <Content Include="Views\ProductView\PostProduct.cshtml" />
     <Content Include="Views\ProductView\GetProductById.cshtml" />
     <Content Include="Views\ProductView\PutProduct.cshtml" />
-
+    <Content Include="Views\TransactionView\PostTransaction.cshtml" />
+    <Content Include="Views\TransactionView\GetTransactionById.cshtml" />
+    <Content Include="Views\TransactionView\PutTransaction.cshtml" />
+    <Content Include="Views\TransactionView\GetTransaction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
