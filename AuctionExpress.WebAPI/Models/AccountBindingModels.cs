@@ -91,12 +91,12 @@ namespace AuctionExpress.WebAPI.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class LoginModel
+    public class LoginBindingModel
     {
         [Required]
-        [Display(Name ="Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name ="User Name")]
+        //[EmailAddress]
+        public string UserName { get; set; }
         
         [Required]
         [DataType(DataType.Password)]

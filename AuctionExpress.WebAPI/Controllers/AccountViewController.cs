@@ -54,13 +54,13 @@ namespace AuctionExpress.WebAPI.Controllers
         [HttpPost]
 
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        public ActionResult Login(LoginBindingModel model, string returnUrl)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
 
-                var postTask = client.PostAsJsonAsync<LoginModel>("Account/Login", model);
+                var postTask = client.PostAsJsonAsync<LoginBindingModel>("Account/Login", model);
                 postTask.Wait();
 
                 var result = postTask.Result;
