@@ -353,8 +353,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+
+
     <Content Include="Views\AccountView\Create.cshtml" />
     <Content Include="Views\AccountView\Login.cshtml" />
+
     <Content Include="Views\BidView\GetBidsByProduct.cshtml" />
     <Content Include="Views\ProductView\GetProduct.cshtml" />
     <Content Include="Views\ProductView\PostProduct.cshtml" />

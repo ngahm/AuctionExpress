@@ -76,6 +76,30 @@ namespace AuctionExpress.WebAPI.Controllers
 
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogOff()
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+
+                var postTask = client.DeleteAsync("Account/LogOff");
+                postTask.Wait();
+
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+
+           ModelState.AddModelError(string.Empty, "Server Error.  Please contact administrator.");
+
+            return View();
+
+        }
+
 
 
 
