@@ -17,6 +17,8 @@ using AuctionExpress.WebAPI.Models;
 using AuctionExpress.WebAPI.Providers;
 using AuctionExpress.WebAPI.Results;
 using AuctionExpress.Data;
+using AuctionExpress.Models;
+using AuctionExpress.Models.Roles;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
@@ -27,6 +29,7 @@ namespace AuctionExpress.WebAPI.Controllers
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
         private ApplicationSignInManager _signInManager;
+        private ApplicationRoleManager _roleManager;
 
 
 
@@ -34,11 +37,13 @@ namespace AuctionExpress.WebAPI.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager,
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
+            SignInManager = signInManager;
+            RoleManager = roleManager;
         }
 
         public ApplicationUserManager UserManager
@@ -63,6 +68,15 @@ namespace AuctionExpress.WebAPI.Controllers
             {
                 _signInManager = value;
             }
+        }
+
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? Request.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set { _roleManager = value; }
         }
 
         private IAuthenticationManager AuthenticationManager
@@ -433,7 +447,7 @@ namespace AuctionExpress.WebAPI.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
-            
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -454,6 +468,78 @@ namespace AuctionExpress.WebAPI.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return Ok();
         }
+        [Authorize]
+        // [RoutePrefix("api/Admininstration")]
+        [Route("AddRole")]
+        public async Task<IHttpActionResult> CreateRole(CreateRoleModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            IdentityRole identityRole = new IdentityRole
+            {
+                Name = model.RoleName
+            };
+
+            IdentityResult result = await RoleManager.CreateAsync(identityRole);
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            return Ok();
+        }
+        [Route("GetRoles")]
+        public IHttpActionResult GetRoles()
+        {
+            List<RoleDetail> roleDetails = new List<RoleDetail>();
+            var roles = RoleManager.Roles;
+            foreach (var item in roles)
+            {
+                new RoleDetail()
+                {
+                    Id = item.Id,
+                    Name = item.Name
+                };
+                roleDetails.Add(new RoleDetail()
+                {
+                    Id = item.Id,
+                    Name = item.Name
+                });
+            }
+            return Ok(roleDetails);
+        }
+        //private IHttpActionResult GetErrorResult(IdentityResult result)
+        //{
+        //    if (result == null)
+        //    {
+        //        return InternalServerError();
+        //    }
+
+        //    if (!result.Succeeded)
+        //    {
+        //        if (result.Errors != null)
+        //        {
+        //            foreach (string error in result.Errors)
+        //            {
+        //                ModelState.AddModelError("", error);
+        //            }
+        //        }
+
+        //        if (ModelState.IsValid)
+        //        {
+        //            // No ModelState errors are available to send, so just return an empty BadRequest.
+        //            return BadRequest();
+        //        }
+
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    return null;
+        //}
+
 
         protected override void Dispose(bool disposing)
         {
