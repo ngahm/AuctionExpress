@@ -29,7 +29,9 @@
 
     </dl>
 </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-        @Html.ActionLink("Back to List", "GetCategories")
-    </p>
+<p>
+    @Html.ActionLink("Edit", "EditCategory", new { id = Model.CategoryId }) |
+    @Html.ActionLink("Back to List", "GetCategories") |
+    @Html.ActionLink("Delete", "DeleteCategory", new { id = Model.CategoryId })
+
+</p>
