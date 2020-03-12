@@ -502,6 +502,13 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.BidController.Delete(System.Int32)">
+            <summary>
+            Delete Bid by bid Id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.CategoryController.Get">
             <summary>
             Get a list of all available categories.
@@ -529,6 +536,13 @@
             <param name="category"></param>
             <returns></returns>
         </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.CategoryController.Delete(System.Int32)">
+            <summary>
+            Delete a Category using the Category Id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.ProductController.Post(AuctionExpress.Models.ProductCreate)">
             <summary>
             Create a new auction.
@@ -554,6 +568,13 @@
             Update an auction.
             </summary>
             <param name="product"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.ProductController.Delete(System.Int32)">
+            <summary>
+            Delete a product using the product id.
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.TransactionController.Post(AuctionExpress.Models.TransactionCreate)">

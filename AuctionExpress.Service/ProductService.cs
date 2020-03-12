@@ -111,6 +111,44 @@ namespace AuctionExpress.Service
             }
         }
 
+        public bool DeleteProduct(int productId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Product
+                        .Single(e => e.ProductId == productId);
+
+                ctx.Product.Remove(entity);
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
+        public string ValidateAuctionStatus(int id)
+        {
+            var prodDetail = GetProductById(id);
+            
+            if (prodDetail == null)
+                return "Product has been removed or does not exist.";
+            if (!prodDetail.ProductIsActive)
+                return "Auction is closed";
+            return "";
+        }
+
+        public string ValidateBid(BidCreate bid)
+        {
+            var prodDetail = GetProductById(bid.ProductId);
+
+            if (prodDetail == null)
+                return "Product has been removed or does not exist.";
+            if (!prodDetail.ProductIsActive)
+                return "Auction is closed";
+            if (prodDetail.HighestBid > bid.BidPrice)
+                return "Bid must be higher than current selling price.";
+            return "";
+        }
 
     }
 }
