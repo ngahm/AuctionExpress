@@ -1,0 +1,92 @@
+﻿@model AuctionExpress.Models.ProductDetail
+
+@{
+    ViewBag.Title = "GetProductById";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetProductById</h2>
+
+<div>
+    <h4>ProductDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductCategoryId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductCategoryId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductQuantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductQuantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductIsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductIsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductStartTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductStartTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductCloseTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductCloseTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductSeller)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductSeller)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HighestBid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HighestBid)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "PutProduct", new { id = Model.ProductId }) |
+    @Html.ActionLink("Back to List", "GetProduct") |
+    @Html.ActionLink("Bid On Product", "CreateBid", "BidView", new { id = Model.ProductId }, htmlAttributes: new { @class = "btn"}) |
+</p>

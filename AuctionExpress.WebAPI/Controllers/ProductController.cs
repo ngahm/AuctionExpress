@@ -15,7 +15,8 @@ namespace AuctionExpress.WebAPI.Controllers
     {
         private ProductService CreateProductService()
         {
-            var userId = Guid.Parse(User.Identity.GetUserId());
+            var userId = Guid.Parse("1ae9afff-3752-45c4-a551-dc17f56033d8");
+            //User.Identity.GetUserId());
             var productService = new ProductService(userId);
             return productService;
         }
@@ -32,7 +33,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 return BadRequest(ModelState);
 
             var service = CreateProductService();
-            var result = new DateValidator (product.ProductStartTime, product.ProductCloseTime);
+            var result = new DateValidator(product.ProductStartTime, product.ProductCloseTime);
             bool validateAllProperties = false;
             var results = new List<ValidationResult>();
             bool isValid = Validator.TryValidateObject(result,
@@ -86,15 +87,51 @@ namespace AuctionExpress.WebAPI.Controllers
         /// <returns></returns>
         public IHttpActionResult Put(ProductEdit product)
         {
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var service = CreateProductService();
+            var prodDetail = service.ValidateAuctionStatus(product.ProductId);
+            if (prodDetail == "")
+            {
 
-            if (!service.UpdateProduct(product))
+                var result = new DateValidator(product.ProductCloseTime);
+                bool validateAllProperties = false;
+                var results = new List<ValidationResult>();
+                bool isValid = Validator.TryValidateObject(result,
+                    new ValidationContext(result, null, null),
+                    results, validateAllProperties);
+                if (!isValid)
+                {
+                    string errorMessage = "";
+                    foreach (var item in results)
+                    {
+                        errorMessage = item + ", ";
+                    }
+                    return BadRequest(errorMessage);
+                }
+
+                if (!service.UpdateProduct(product))
+                    return InternalServerError();
+
+                return Ok("Product succesfully updated.");
+            }
+            return BadRequest(prodDetail);
+        }
+        /// <summary>
+        /// Delete a product using the product id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IHttpActionResult Delete(int id)
+        {
+            var service = CreateProductService();
+
+            if (!service.DeleteProduct(id))
                 return InternalServerError();
 
-            return Ok("Product succesfully updated.");
+            return Ok();
         }
     }
 }

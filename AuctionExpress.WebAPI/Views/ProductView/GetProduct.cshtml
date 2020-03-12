@@ -1,0 +1,76 @@
+﻿@model IEnumerable<AuctionExpress.Models.ProductListItem>
+
+@{
+    ViewBag.Title = "GetProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetProduct</h2>
+
+<p>
+    @Html.ActionLink("Create New", "PostProduct")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductQuantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductIsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductStartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductCloseTime)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductQuantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductIsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductStartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductCloseTime)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "PutProduct", new { id = item.ProductId }) |
+                @Html.ActionLink("Details", "GetProductById", new { id = item.ProductId }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }) |
+            </td>
+        </tr>
+    }
+    <tr>
+        <td>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        </td>
+    </tr>
+
+</table>

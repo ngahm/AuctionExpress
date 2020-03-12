@@ -65,7 +65,8 @@ namespace AuctionExpress.Service
                 var entity =
                     ctx
                         .Bid
-                        .Single(e => e.BidId == id);           /*target one unique identifier*/
+                        .Where(e => e.BidId == id)
+                        .FirstOrDefault();           /*target one unique identifier*/
                 return
                     new BidDetail
                     {
@@ -77,6 +78,21 @@ namespace AuctionExpress.Service
                     };
 
              }
+        }
+
+        public bool DeleteBid(int bidId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Bid
+                        .Single(e => e.BidId == bidId);
+
+                ctx.Bid.Remove(entity);
+
+                return ctx.SaveChanges() == 1;
+            }
         }
 
 

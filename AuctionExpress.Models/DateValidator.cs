@@ -15,6 +15,13 @@ namespace AuctionExpress.Models
             DateTwo = dateTwo;
             ErrorMessage = "Auction Start Time must be before Auction Close Time";
             }
+
+        public DateValidator(DateTimeOffset dateTwo)
+        {
+            DateOne = DateTimeOffset.Now;
+            DateTwo = dateTwo;
+            ErrorMessage = "Auction Close Time must be set later than current time.";
+        }
         public DateTimeOffset DateOne { get; set; }
         public DateTimeOffset DateTwo { get; set; }
         public string ErrorMessage { get; set; }
@@ -27,7 +34,6 @@ namespace AuctionExpress.Models
             {
                 ValidationResult mss = new ValidationResult(ErrorMessage);
                 res.Add(mss);
-
             }
             return res;
         }

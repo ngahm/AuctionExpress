@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using Microsoft.Owin.Security;
 using AuctionExpress.WebAPI.Models;
 using AuctionExpress.Data;
 using System.Linq;
@@ -48,34 +49,45 @@ namespace AuctionExpress.WebAPI
         {
             using (var ctx = new ApplicationDbContext())
             {
-            var entity =
-              ctx
-                .Users
-                  .Single(e => e.Id==user.Id);
+                var entity =
+                  ctx
+                    .Users
+                      .Single(e => e.Id == user.Id);
 
-            entity.IsActive = false;
+                entity.IsActive = false;
 
-            ctx.SaveChanges();
+                ctx.SaveChanges();
             }
             //  bool wasSaved = (ctx.SaveChangesAsync().Result==1);
             //Need to save this to database
 
             return Task.FromResult(IdentityResult.Success);
-            // }
-
         }
-        // public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
-        //{
-        //  public override Task<SignInStatus> PasswordSignInAsync(string userName, string password, bool rememberMe, bool shouldLockout)
-        //{
-        //  var user = UserManager.FindByEmailAsync(userName).Result;
 
-        //if (!user.IsActive)
-        // {
-        //   return Task.FromResult<SignInStatus>(SignInStatus.LockedOut);
-        // }
+    }
+    public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
+    {
+        public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
+            : base(userManager, authenticationManager)
+        {
+        }
 
-        //  return base.PasswordSignInAsync(userName, password, rememberMe, shouldLockout);
-        // }
+        public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
+        {
+            return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
+        }
+
+
+        public override Task<SignInStatus> PasswordSignInAsync(string userName, string password, bool rememberMe, bool shouldLockout)
+        {
+            var user = UserManager.FindByNameAsync(userName).Result;
+
+            if (!user.IsActive)
+            {
+                return Task.FromResult<SignInStatus>(SignInStatus.LockedOut);
+            }
+
+            return base.PasswordSignInAsync(user.UserName, password, rememberMe, shouldLockout);
+        }
     }
 }

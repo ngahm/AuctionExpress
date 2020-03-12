@@ -66,7 +66,8 @@ namespace AuctionExpress.Service
                 var entity =
                     ctx
                     .Transaction
-                    .Single(e => e.TransactionId == id);
+                    .Where(e => e.TransactionId == id)
+                    .FirstOrDefault();
                 return
                     new TransactionDetail
                     {
@@ -100,6 +101,21 @@ namespace AuctionExpress.Service
                     entity.PaymentDate = DateTimeOffset.Now;
                 else
                     entity.PaymentDate = null;
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
+        public bool DeleteTransaction(int transactionId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Transaction
+                        .Single(e => e.TransactionId == transactionId);
+
+                ctx.Transaction.Remove(entity);
+
                 return ctx.SaveChanges() == 1;
             }
         }
