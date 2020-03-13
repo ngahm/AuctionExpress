@@ -511,35 +511,27 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             return Ok(roleDetails);
         }
-        //private IHttpActionResult GetErrorResult(IdentityResult result)
-        //{
-        //    if (result == null)
-        //    {
-        //        return InternalServerError();
-        //    }
 
-        //    if (!result.Succeeded)
-        //    {
-        //        if (result.Errors != null)
-        //        {
-        //            foreach (string error in result.Errors)
-        //            {
-        //                ModelState.AddModelError("", error);
-        //            }
-        //        }
+        public IHttpActionResult EditRole(string id)
+        {
+           var role = RoleManager.FindById(id);
+            if (role == null)
+                return BadRequest("Role not found.");
+            var model = new EditRole
+            {
+                Id = role.Id,
+                RoleName = role.Name,
+            };
 
-        //        if (ModelState.IsValid)
-        //        {
-        //            // No ModelState errors are available to send, so just return an empty BadRequest.
-        //            return BadRequest();
-        //        }
-
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    return null;
-        //}
-
+            foreach (var user in UserManager.Users)
+            {
+                if (UserManager.IsInRole(user.Id, role.Name))
+                {
+                    model.Users.Add(user.UserName);
+                }
+            }
+            return Ok(model);
+        }
 
         protected override void Dispose(bool disposing)
         {
