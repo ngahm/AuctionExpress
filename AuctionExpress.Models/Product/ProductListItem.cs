@@ -40,5 +40,8 @@ namespace AuctionExpress.Models
 
         [Display(Name = "Product Start")]
         public DateTimeOffset ProductStartTime { get; set; }
+
+        [Display(Name = "Minimum Selling Price")]
+        public double MinimumSellingPrice { get; set; }
     }
 }

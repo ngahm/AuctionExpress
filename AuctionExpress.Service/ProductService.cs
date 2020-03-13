@@ -27,7 +27,8 @@ namespace AuctionExpress.Service
                 ProductQuantity = model.ProductQuantity,
                 ProductStartTime = model.ProductStartTime,
                 ProductCloseTime = model.ProductCloseTime,
-                ProductSeller = _userId.ToString()
+                ProductSeller = _userId.ToString(),
+                MinimumSellingPrice = model.MinimumSellingPrice
             };
 
             using (var ctx = new ApplicationDbContext())
@@ -53,7 +54,8 @@ namespace AuctionExpress.Service
                         ProductQuantity = e.ProductQuantity,
                       // ProductIsActive = e.DetermineIsActive(),
                         ProductStartTime = e.ProductStartTime,
-                        ProductCloseTime = e.ProductCloseTime
+                        ProductCloseTime = e.ProductCloseTime,
+                        MinimumSellingPrice = e.MinimumSellingPrice
                     }
                     );
                 return query.ToList();
@@ -85,7 +87,8 @@ namespace AuctionExpress.Service
                         ProductStartTime = entity.ProductStartTime,
                         ProductCloseTime = entity.ProductCloseTime,
                         ProductSeller = entity.ProductSeller,
-                        HighestBid = entity.HighestBid
+                        HighestBid = entity.HighestBid,
+                        MinimumSellingPrice = entity.MinimumSellingPrice
 
                     };
             }
@@ -106,6 +109,7 @@ namespace AuctionExpress.Service
                 entity.ProductDescription = model.ProductDescription;
                 entity.ProductQuantity = model.ProductQuantity;
                 entity.ProductCloseTime = model.ProductCloseTime;
+                entity.MinimumSellingPrice = model.MinimumSellingPrice;
 
                 return ctx.SaveChanges() == 1;
             }

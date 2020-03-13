@@ -30,8 +30,12 @@ namespace AuctionExpress.Models
         [Range(0, int.MaxValue, ErrorMessage = "Quantity must be a number greater than zero.")]
         public int ProductQuantity { get; set; }
 
-        [Display(Name = "Transaction Id")]
+        [Display(Name = "Product Close Time")]
         [DataType(DataType.Date)]
         public DateTimeOffset ProductCloseTime { get; set; }
+
+        [Display(Name = "Minimum Selling Price")]
+        [Range(0,double.MaxValue, ErrorMessage ="Price must be a number greater than zero.")]
+        public double MinimumSellingPrice { get; set; }
     }
 }
