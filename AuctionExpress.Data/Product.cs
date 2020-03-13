@@ -67,5 +67,7 @@ namespace AuctionExpress.Data
                 
             }
         }
+
+        public double MinimumSellingPrice { get; set; }
     }
 }
