@@ -17,16 +17,19 @@ using AuctionExpress.WebAPI.Models;
 using AuctionExpress.WebAPI.Providers;
 using AuctionExpress.WebAPI.Results;
 using AuctionExpress.Data;
+using AuctionExpress.Models;
+using AuctionExpress.Models.Roles;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
         private ApplicationSignInManager _signInManager;
+        private ApplicationRoleManager _roleManager;
 
 
 
@@ -34,11 +37,13 @@ namespace AuctionExpress.WebAPI.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager,
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
+            SignInManager = signInManager;
+            RoleManager = roleManager;
         }
 
         public ApplicationUserManager UserManager
@@ -63,6 +68,15 @@ namespace AuctionExpress.WebAPI.Controllers
             {
                 _signInManager = value;
             }
+        }
+
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? Request.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set { _roleManager = value; }
         }
 
         private IAuthenticationManager AuthenticationManager
@@ -433,7 +447,7 @@ namespace AuctionExpress.WebAPI.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
-            
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -453,6 +467,88 @@ namespace AuctionExpress.WebAPI.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return Ok();
+        }
+        //[Authorize]
+        // [RoutePrefix("api/Admininstration")]
+        [Route("AddRole")]
+        public async Task<IHttpActionResult> CreateRole(CreateRoleModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            IdentityRole identityRole = new IdentityRole
+            {
+                Name = model.RoleName
+            };
+
+            IdentityResult result = await RoleManager.CreateAsync(identityRole);
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            return Ok();
+        }
+        [Route("GetRoles")]
+        public IHttpActionResult GetRoles()
+        {
+            List<RoleDetail> roleDetails = new List<RoleDetail>();
+            var roles = RoleManager.Roles;
+            foreach (var item in roles)
+            {
+                new RoleDetail()
+                {
+                    Id = item.Id,
+                    Name = item.Name
+                };
+                roleDetails.Add(new RoleDetail()
+                {
+                    Id = item.Id,
+                    Name = item.Name
+                });
+            }
+            return Ok(roleDetails);
+        }
+
+        [Route("GetRoleById")]
+        public IHttpActionResult GetRole(string id)
+        {
+           var role = RoleManager.FindById(id);
+            if (role == null)
+                return BadRequest("Role not found.");
+            var model = new EditRole
+            {
+                Id = role.Id,
+                RoleName = role.Name,
+            };
+
+            //foreach (var user in UserManager.Users)
+            //{
+            //    if (UserManager.IsInRole(user.Id, role.Name))
+            //    {
+            //        model.Users.Add(user.UserName);
+            //    }
+            //}
+            return Ok(model);
+        }
+
+        [Route("UpdateRole")]
+        [HttpPut]
+        public IHttpActionResult UpdateRole(EditRole model)
+        {
+            var role = RoleManager.FindById(model.Id);
+            if(role==null)
+            {
+                return BadRequest($"Role Id {model.Id} not found.");
+            }
+
+            role.Name = model.RoleName;
+            IdentityResult result = RoleManager.Update(role);
+            if (result.Succeeded)
+                return Ok("Role successfully updated.");
+            return InternalServerError();
         }
 
         protected override void Dispose(bool disposing)

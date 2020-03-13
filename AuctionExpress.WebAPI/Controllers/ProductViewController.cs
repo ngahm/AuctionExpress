@@ -132,9 +132,7 @@ namespace AuctionExpress.WebAPI.Controllers
             using (var client = new HttpClient())
             {
 
-
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
-
 
                 //HTTP 
                 var putTask = client.PutAsJsonAsync<ProductEdit>("product", product);
