@@ -51,7 +51,7 @@ namespace AuctionExpress.WebAPI.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:44320/api/category");
+                client.BaseAddress = new Uri("https://localhost:44320/api/category");
 
                 //HTTP POST
                 var postTask = client.PostAsJsonAsync<CategoryCreate>("category", category);
@@ -75,7 +75,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:44320/api/");
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
                 //HTTP GET
                 var responseTask = client.GetAsync("category/" + id.ToString());
                 responseTask.Wait();
@@ -92,12 +92,14 @@ namespace AuctionExpress.WebAPI.Controllers
 
             return View(category);
         }
+
+
         [HttpPost]
         public ActionResult EditCategory(CategoryEdit category)
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:44320/api/");
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
 
                 //HTTP POST
                 var putTask = client.PutAsJsonAsync<CategoryEdit>("category", category);

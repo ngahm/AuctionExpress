@@ -76,6 +76,7 @@ namespace AuctionExpress.Service
                 return
                     new ProductDetail
                     {
+                        ProductId=entity.ProductId,
                         ProductName = entity.ProductName,
                         ProductCategoryId = entity.ProductCategoryId,
                         ProductDescription = entity.ProductDescription,
