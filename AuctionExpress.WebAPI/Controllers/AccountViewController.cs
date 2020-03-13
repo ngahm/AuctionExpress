@@ -210,6 +210,57 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             return View(role);
         }
+
+        public ActionResult EditUserRole(string id)
+        {
+            IEnumerable<UserRoleView> roleViews = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                //HTTP GET
+                var responseTask = client.GetAsync("Account/GetRoleUsers?roleId=" + id);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<UserRoleView>>();
+                    readTask.Wait();
+
+                    roleViews = readTask.Result;
+                }
+                else      //web api sent error response
+                {         //log response status here.
+                    roleViews = Enumerable.Empty<UserRoleView>();
+
+                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+
+                }
+            }
+
+            return View(roleViews);
+        }
+
+        [HttpPut]
+        public ActionResult EditUserRole(IEnumerable<UserRoleView> roleViews, string roleId)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+
+                //HTTP POST
+                var putTask = client.PutAsJsonAsync<IEnumerable<UserRoleView>>("Account/UpdateRoleUsers?roleId=", roleViews);
+                putTask.Wait();
+
+                var result = putTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("GetRoles");
+                }
+            }
+            return View(roleViews);
+        }
     }
 
 

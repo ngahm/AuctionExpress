@@ -70,6 +70,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roles\EditRole.cs" />
     <Compile Include="Roles\RoleDetail.cs" />
+    <Compile Include="Roles\UserRoleView.cs" />
     <Compile Include="Transaction\TransactionCreate.cs" />
     <Compile Include="Transaction\TransactionDetail.cs" />
     <Compile Include="Transaction\TransactionEdit.cs" />

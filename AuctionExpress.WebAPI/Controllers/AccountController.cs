@@ -551,6 +551,62 @@ namespace AuctionExpress.WebAPI.Controllers
             return InternalServerError();
         }
 
+        [HttpGet]
+        [Route("GetRoleUsers")]
+        public IHttpActionResult EditUsersInRole(string roleId)
+        {
+            var role = RoleManager.FindById(roleId);
+            if (role == null)
+            {
+                return BadRequest($"Role Id {roleId} not found.");
+            }
+            var model = new List<UserRoleView>();
+
+            foreach (ApplicationUser user in UserManager.Users)
+            {
+                UserRoleView userRoleView = new UserRoleView
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName
+                };
+                if(UserManager.IsInRole(userRoleView.UserId,roleId))
+                {
+                    userRoleView.IsSelected = true;
+                }
+                model.Add(userRoleView);
+            }
+
+            return Ok(model);
+        }
+
+        [HttpPut]
+        [Route("UpdateRoleUsers")]
+        public IHttpActionResult EditUsersInRole(List<UserRoleView> model, string roleId)
+        {
+            var role = RoleManager.FindById(roleId);
+            if (role == null)
+            {
+                return BadRequest($"Role Id {roleId} not found.");
+            }
+            foreach (var user in model)
+            {
+                IdentityResult result = null;
+                var dbUser = UserManager.FindById(user.UserId);
+                if(user.IsSelected && ! UserManager.IsInRole(user.UserId,role.Name))
+                {
+                   result = UserManager.AddToRole(dbUser.Id, role.Name);
+                }
+                else if(!user.IsSelected && UserManager.IsInRole(user.UserId, role.Name))
+                {
+                    result = UserManager.RemoveFromRole(dbUser.Id, role.Name);
+                }
+
+                if (!result.Succeeded)
+                    return InternalServerError();
+            }
+            return Ok("Role successfully updated with users.");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)

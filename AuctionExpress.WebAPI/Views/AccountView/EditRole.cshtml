@@ -56,7 +56,7 @@
                 }
             </div>
             <div class="card-footer">
-                <a href="#" class="btn btn-default" style="width:auto">Add or Remove Users</a>
+                @Html.ActionLink("Add or Remove Users", "EditUserRole", new { id = Model.Id })
             </div>
         </div>
     </div>
