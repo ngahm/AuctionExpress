@@ -7,6 +7,10 @@
 
 <h2>PostProduct</h2>
 
+<p>
+    @Html.ActionLink("View All Categories", "GetCategories", "CategoryView", new { /*id = */ }, htmlAttributes: new { @class = "btn" }) |
+    @Html.ActionLink("Create New Category", "CreateCategory", "CategoryView", new { /*id = */ }, htmlAttributes: new { @class = "btn" })
+</p>
 
 @using (Html.BeginForm()) 
 {
