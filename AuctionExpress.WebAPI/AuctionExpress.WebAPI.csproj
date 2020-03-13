@@ -374,6 +374,7 @@
     <Content Include="Views\TransactionView\GetTransaction.cshtml" />
     <Content Include="Views\AccountView\CreateRole.cshtml" />
     <Content Include="Views\AccountView\GetRoles.cshtml" />
+    <Content Include="Views\AccountView\EditRole.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

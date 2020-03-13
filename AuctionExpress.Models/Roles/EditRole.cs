@@ -9,10 +9,6 @@ namespace AuctionExpress.Models.Roles
 {
     public class EditRole
     {
-        public EditRole()
-        {
-            Users = new List<string>();
-        }
         public string Id { get; set; }
 
         [Required(ErrorMessage ="Role Name is required")]
