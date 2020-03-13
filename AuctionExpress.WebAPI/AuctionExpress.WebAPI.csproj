@@ -372,6 +372,8 @@
     <Content Include="Views\TransactionView\GetTransactionById.cshtml" />
     <Content Include="Views\TransactionView\PutTransaction.cshtml" />
     <Content Include="Views\TransactionView\GetTransaction.cshtml" />
+    <Content Include="Views\AccountView\CreateRole.cshtml" />
+    <Content Include="Views\AccountView\GetRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

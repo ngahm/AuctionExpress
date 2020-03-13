@@ -68,6 +68,7 @@
     <Compile Include="Product\ProductListItem.cs" />
     <Compile Include="Product\ProductEdit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Roles\EditRole.cs" />
     <Compile Include="Roles\RoleDetail.cs" />
     <Compile Include="Transaction\TransactionCreate.cs" />
     <Compile Include="Transaction\TransactionDetail.cs" />

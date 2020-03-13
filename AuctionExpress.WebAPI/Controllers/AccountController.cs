@@ -22,7 +22,7 @@ using AuctionExpress.Models.Roles;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
@@ -468,7 +468,7 @@ namespace AuctionExpress.WebAPI.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return Ok();
         }
-        [Authorize]
+        //[Authorize]
         // [RoutePrefix("api/Admininstration")]
         [Route("AddRole")]
         public async Task<IHttpActionResult> CreateRole(CreateRoleModel model)
@@ -512,7 +512,8 @@ namespace AuctionExpress.WebAPI.Controllers
             return Ok(roleDetails);
         }
 
-        public IHttpActionResult EditRole(string id)
+        [Route("GetRoleById")]
+        public IHttpActionResult GetRole(string id)
         {
            var role = RoleManager.FindById(id);
             if (role == null)
@@ -523,14 +524,31 @@ namespace AuctionExpress.WebAPI.Controllers
                 RoleName = role.Name,
             };
 
-            foreach (var user in UserManager.Users)
-            {
-                if (UserManager.IsInRole(user.Id, role.Name))
-                {
-                    model.Users.Add(user.UserName);
-                }
-            }
+            //foreach (var user in UserManager.Users)
+            //{
+            //    if (UserManager.IsInRole(user.Id, role.Name))
+            //    {
+            //        model.Users.Add(user.UserName);
+            //    }
+            //}
             return Ok(model);
+        }
+
+        [Route("UpdateRole")]
+        [HttpPut]
+        public IHttpActionResult UpdateRole(EditRole model)
+        {
+            var role = RoleManager.FindById(model.Id);
+            if(role==null)
+            {
+                return BadRequest($"Role Id {model.Id} not found.");
+            }
+
+            role.Name = model.RoleName;
+            IdentityResult result = RoleManager.Update(role);
+            if (result.Succeeded)
+                return Ok("Role successfully updated.");
+            return InternalServerError();
         }
 
         protected override void Dispose(bool disposing)
