@@ -83,6 +83,11 @@ namespace AuctionExpress.WebAPI.Controllers
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
+        /// <summary>
+        /// Add a new user role
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         //[Authorize]
         [Route("AddRole")]
         public async Task<IHttpActionResult> CreateRole(RoleCreate model)
@@ -105,6 +110,10 @@ namespace AuctionExpress.WebAPI.Controllers
 
             return Ok();
         }
+        /// <summary>
+        /// See a list of all roles.
+        /// </summary>
+        /// <returns></returns>
         [Route("GetRoles")]
         public IHttpActionResult GetRoles()
         {
@@ -125,7 +134,11 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             return Ok(roleDetails);
         }
-
+        /// <summary>
+        /// See a specific role by supplying the role id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("GetRoleById")]
         public IHttpActionResult GetRole(string id)
         {
@@ -148,7 +161,11 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             return Ok(model);
         }
-
+        /// <summary>
+        /// Update a role name.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [Route("UpdateRole")]
         [HttpPut]
         public IHttpActionResult UpdateRole(RoleEdit model)
@@ -165,7 +182,11 @@ namespace AuctionExpress.WebAPI.Controllers
                 return Ok("Role successfully updated.");
             return InternalServerError();
         }
-
+        /// <summary>
+        /// See List of all users in a specified role.
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetRoleUsers")]
         public IHttpActionResult EditUsersInRole(string roleId)
@@ -201,6 +222,11 @@ namespace AuctionExpress.WebAPI.Controllers
 
             return Ok(userRoleList);
         }
+        /// <summary>
+        /// Update the users in a role
+        /// </summary>
+        /// <param name="userRoleList"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("UpdateRoleUsers")]
         public IHttpActionResult EditUsersInRole(RoleUserList userRoleList)
@@ -229,7 +255,11 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             return Ok("Role successfully updated with users.");
         }
-
+        /// <summary>
+        /// Delete a role.
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         [Route("DeleteRole")]
         public IHttpActionResult DeleteRole(string Id)
         {
