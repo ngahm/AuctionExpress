@@ -190,6 +190,8 @@ namespace AuctionExpress.WebAPI.Controllers
         }
 
 
+
+
         [HttpPost]
         public ActionResult EditRole(EditRole role)
         {
@@ -210,8 +212,105 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             return View(role);
         }
+
+
+        public ActionResult EditUserRole(string id)
+        {
+            UserRoleList userRoleList = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                //HTTP GET
+                var responseTask = client.GetAsync("Account/GetRoleUsers?roleId=" + id);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readtask = result.Content.ReadAsAsync<UserRoleList>();
+                    readtask.Wait();
+
+                    userRoleList = readtask.Result;
+                }
+            }
+
+            return View(userRoleList);
+        }
+
+        [HttpPost]
+        public ActionResult EditUserRole(UserRoleList userRoleList)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+
+                //HTTP POST
+                var putTask = client.PutAsJsonAsync<UserRoleList>("Account/UpdateRoleUsers", userRoleList);
+                putTask.Wait();
+
+                var result = putTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+
+                    return RedirectToAction("GetRoles");
+                }
+            }
+            return View(userRoleList);
+        }
     }
+    // public ActionResult
 
+    //public ActionResult EditUserRole(string id)
+    //{
+    //    UserRoleList userRoleList = null; new UserRoleList();
 
+    //    using (var client = new HttpClient())
+    //    {
+    //        client.BaseAddress = new Uri("https://localhost:44320/api/");
+    //        //HTTP GET
+    //        var responseTask = client.GetAsync("Account/GetRoleUsers?roleId=" + id);
+    //        responseTask.Wait();
 
+    //        var result = responseTask.Result;
+    //        if (result.IsSuccessStatusCode)
+    //        {
+    //            var readTask = result.Content.ReadAsAsync<UserRoleList>();
+    //            readTask.Wait();
+
+    //            userRoleList = readTask.Result;
+    //        }
+    //        else      //web api sent error response
+    //        {         //log response status here.
+
+    //            userRoleList = new UserRoleList();
+    //            ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+
+    //        }
+    //    }
+    //    return View(userRoleList);
+    //}
+
+    //[HttpPost]
+    //public ActionResult EditUserRole(UserRoleList userRoleList)
+    //{
+    //    using (var client = new HttpClient())
+    //    {
+    //        client.BaseAddress = new Uri("https://localhost:44320/api/");
+    //        //HTTP POST
+    //        var putTask = client.PutAsJsonAsync<UserRoleList>("Account/UpdateRoleUsers?roleId=" + userRoleList.RoleId, userRoleList);
+    //        putTask.Wait();
+
+    //        var result = putTask.Result;
+    //        if (result.IsSuccessStatusCode)
+    //        {
+    //            return RedirectToAction("GetRoles");
+    //        }
+    //    }
+    //    return View(userRoleList);
+    //}
 }
+
+
+
+
