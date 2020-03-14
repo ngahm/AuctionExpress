@@ -38,5 +38,8 @@ namespace AuctionExpress.Models
 
         [Display(Name = "Highest Bid")]
         public double HighestBid { get; set; }
+
+        [Display(Name = "Minimum Selling Price")]
+        public double MinimumSellingPrice { get; set; }
     }
 }

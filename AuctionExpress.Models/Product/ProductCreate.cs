@@ -33,5 +33,9 @@ namespace AuctionExpress.Models
         [Display(Name = "Product Close")]
         [DataType(DataType.Date)]
         public DateTimeOffset ProductCloseTime { get; set; }
+
+        [Display(Name = "Minimum Selling Price")]
+        [Range(0,double.MaxValue, ErrorMessage ="Price must be a number greater than zero.")]
+        public double MinimumSellingPrice { get; set; }
     }
 }
