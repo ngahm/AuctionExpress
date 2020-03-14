@@ -230,6 +230,18 @@ namespace AuctionExpress.WebAPI.Controllers
             return Ok("Role successfully updated with users.");
         }
 
+        [Route("DeleteRole")]
+        public IHttpActionResult DeleteRole(string Id)
+        {
+            var role = RoleManager.FindById(Id);
+            if(role==null)
+                return BadRequest($"Role Id {Id} not found.");
+            var result = RoleManager.Delete(role);
+            if (!result.Succeeded)
+                return InternalServerError();
+            return Ok("Role successfully removed.");
+        }
+
 
         protected override void Dispose(bool disposing)
         {

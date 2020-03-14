@@ -168,5 +168,29 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             return View(userRoleList);
         }
+
+        public ActionResult DeleteRole(string Id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+
+                //HTTP DELETE
+                var deleteTask = client.DeleteAsync("Admin/DeleteRole?Id=" + Id);
+                deleteTask.Wait();
+
+                var result = deleteTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("GetRoles");
+                }
+            }
+
+            return RedirectToAction("GetRoles");
+
+
+        }
+
+  
     }
 }
