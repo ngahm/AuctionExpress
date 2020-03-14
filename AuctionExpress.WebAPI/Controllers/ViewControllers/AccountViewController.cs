@@ -4,6 +4,7 @@ using AuctionExpress.WebAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
@@ -56,26 +57,23 @@ namespace AuctionExpress.WebAPI.Controllers
         [HttpPost]
 
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginBindingModel model, string returnUrl)
+        public string Login(LoginBindingModel model, string returnUrl)
         {
+                var pairs = new List<KeyValuePair<string, string>>
+                    {
+                        new KeyValuePair<string, string>( "grant_type", "password" ),
+                        new KeyValuePair<string, string>( "username", model.UserName ),
+                        new KeyValuePair<string, string> ( "Password", model.Password )
+                    };
+                var content = new FormUrlEncodedContent(pairs);
+                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44320/api/");
-
-                var postTask = client.PostAsJsonAsync<LoginBindingModel>("Account/Login", model);
-                postTask.Wait();
-
-                var result = postTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("Index");
-                }
+                client.BaseAddress = new Uri("https://localhost:44320/");
+                var response = client.PostAsync("token", content).Result;
+                return response.Content.ReadAsStringAsync().Result;
+                
             }
-
-            ModelState.AddModelError(string.Empty, "Server Error.  Please contact administrator.");
-
-            return View(model);
-
         }
 
         [HttpPost]
@@ -102,213 +100,33 @@ namespace AuctionExpress.WebAPI.Controllers
 
         }
 
-
-        public ActionResult CreateRole()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateRole(RoleCreate model)
-        {
-            using (var client = new HttpClient())
-            {
-
-
-
-                client.BaseAddress = new Uri("https://localhost:44320/api/");
-
-                var postTask = client.PostAsJsonAsync<RoleCreate>("Account/AddRole", model);
-                postTask.Wait();
-
-                var result = postTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("Index");
-                }
-            }
-            ModelState.AddModelError(string.Empty, "Server Error.  Please contact administrator.");
-            return View(model);
-        }
-
-        [HttpGet]
+        //[HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult GetRoles()
-        {
-
-            IEnumerable<RoleDetail> roleViewer = null;
-
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://localhost:44320/api/");
-
-                var responseTask = client.GetAsync("Account/GetRoles");
-                responseTask.Wait();
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<RoleDetail>>();
-                    readTask.Wait();
-
-                    roleViewer = readTask.Result;
-                }
-                else      //web api sent error response
-                {         //log response status here.
-                    roleViewer = Enumerable.Empty<RoleDetail>();
-
-                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
-
-                }
-
-            }
-            return View(roleViewer);
-        }
-
-        public ActionResult EditRole(string id)
-        {
-            RoleEdit role = null;
-
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://localhost:44320/api/");
-                //HTTP GET
-                var responseTask = client.GetAsync("Account/GetRoleById?id=" + id);
-                responseTask.Wait();
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<RoleEdit>();
-                    readTask.Wait();
-
-                    role = readTask.Result;
-                }
-            }
-
-            return View(role);
-        }
+        //public ActionResult GetToken()
+        //{
+        //    string GetToken(string url, string userName, string password)
+        //    {
+        //        var pairs = new List<KeyValuePair<string, string>>
+        //            {
+        //                new KeyValuePair<string, string>( "grant_type", "password" ),
+        //                new KeyValuePair<string, string>( "username", userName ),
+        //                new KeyValuePair<string, string> ( "Password", password )
+        //            };
+        //        var content = new FormUrlEncodedContent(pairs);
+        //        ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+        //        using (var client = new HttpClient())
+        //        {
+        //            var response = client.PostAsync(url + "Token", content).Result;
+        //            return response.Content.ReadAsStringAsync().Result;
+        //        }
+        //    }
+        //}
 
 
 
 
-        [HttpPost]
-        public ActionResult EditRole(RoleEdit role)
-        {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://localhost:44320/api/");
-
-                //HTTP POST
-                var putTask = client.PutAsJsonAsync<RoleEdit>("Account/UpdateRole", role);
-                putTask.Wait();
-
-                var result = putTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-
-                    return RedirectToAction("GetRoles");
-                }
-            }
-            return View(role);
-        }
-
-
-        public ActionResult EditUserRole(string id)
-        {
-            RoleUserList userRoleList = null;
-
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://localhost:44320/api/");
-                //HTTP GET
-                var responseTask = client.GetAsync("Account/GetRoleUsers?roleId=" + id);
-                responseTask.Wait();
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readtask = result.Content.ReadAsAsync<RoleUserList>();
-                    readtask.Wait();
-
-                    userRoleList = readtask.Result;
-                }
-            }
-
-            return View(userRoleList);
-        }
-
-        [HttpPost]
-        public ActionResult EditUserRole(RoleUserList userRoleList)
-        {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://localhost:44320/api/");
-
-                //HTTP POST
-                var putTask = client.PutAsJsonAsync<RoleUserList>("Account/UpdateRoleUsers", userRoleList);
-                putTask.Wait();
-
-                var result = putTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-
-                    return RedirectToAction("GetRoles");
-                }
-            }
-            return View(userRoleList);
-        }
     }
-    // public ActionResult
 
-    //public ActionResult EditUserRole(string id)
-    //{
-    //    UserRoleList userRoleList = null; new UserRoleList();
-
-    //    using (var client = new HttpClient())
-    //    {
-    //        client.BaseAddress = new Uri("https://localhost:44320/api/");
-    //        //HTTP GET
-    //        var responseTask = client.GetAsync("Account/GetRoleUsers?roleId=" + id);
-    //        responseTask.Wait();
-
-    //        var result = responseTask.Result;
-    //        if (result.IsSuccessStatusCode)
-    //        {
-    //            var readTask = result.Content.ReadAsAsync<UserRoleList>();
-    //            readTask.Wait();
-
-    //            userRoleList = readTask.Result;
-    //        }
-    //        else      //web api sent error response
-    //        {         //log response status here.
-
-    //            userRoleList = new UserRoleList();
-    //            ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
-
-    //        }
-    //    }
-    //    return View(userRoleList);
-    //}
-
-    //[HttpPost]
-    //public ActionResult EditUserRole(UserRoleList userRoleList)
-    //{
-    //    using (var client = new HttpClient())
-    //    {
-    //        client.BaseAddress = new Uri("https://localhost:44320/api/");
-    //        //HTTP POST
-    //        var putTask = client.PutAsJsonAsync<UserRoleList>("Account/UpdateRoleUsers?roleId=" + userRoleList.RoleId, userRoleList);
-    //        putTask.Wait();
-
-    //        var result = putTask.Result;
-    //        if (result.IsSuccessStatusCode)
-    //        {
-    //            return RedirectToAction("GetRoles");
-    //        }
-    //    }
-    //    return View(userRoleList);
-    //}
 }
 
 
