@@ -572,7 +572,7 @@ namespace AuctionExpress.WebAPI.Controllers
                     UserId = user.Id,
                     UserName = user.UserName
                 };
-                if (UserManager.IsInRole(userRoleView.UserId, roleId))
+                if (UserManager.IsInRole(user.Id, role.Name))
                 {
                     userRoleView.IsSelected = true;
                 }
@@ -581,12 +581,12 @@ namespace AuctionExpress.WebAPI.Controllers
 
             UserRoleList userRoleList = new UserRoleList()
             {
+                RoleId=roleId,
                 ListOfUsers = model
             };
 
             return Ok(userRoleList);
         }
-        [AllowAnonymous]
         [HttpPut]
         [Route("UpdateRoleUsers")]
         public IHttpActionResult EditUsersInRole(UserRoleList userRoleList)
@@ -600,14 +600,15 @@ namespace AuctionExpress.WebAPI.Controllers
             {
                 IdentityResult result = null;
                 var dbUser = UserManager.FindById(user.UserId);
-                if (user.IsSelected && !UserManager.IsInRole(user.UserId, role.Name))
+                if (user.IsSelected && !UserManager.IsInRole(dbUser.Id, role.Name))
                 {
                     result = UserManager.AddToRole(dbUser.Id, role.Name);
                 }
-                else if (!user.IsSelected && UserManager.IsInRole(user.UserId, role.Name))
+                else if (!user.IsSelected && UserManager.IsInRole(dbUser.Id, role.Name))
                 {
                     result = UserManager.RemoveFromRole(dbUser.Id, role.Name);
                 }
+                else { result = IdentityResult.Success; }
 
                 if (!result.Succeeded)
                     return InternalServerError();
