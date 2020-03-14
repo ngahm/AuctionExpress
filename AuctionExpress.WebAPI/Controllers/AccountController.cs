@@ -515,22 +515,23 @@ namespace AuctionExpress.WebAPI.Controllers
         [Route("GetRoleById")]
         public IHttpActionResult GetRole(string id)
         {
-           var role = RoleManager.FindById(id);
+            var role = RoleManager.FindById(id);
             if (role == null)
                 return BadRequest("Role not found.");
             var model = new EditRole
             {
                 Id = role.Id,
                 RoleName = role.Name,
+                Users = new List<string>()
             };
-
-            //foreach (var user in UserManager.Users)
-            //{
-            //    if (UserManager.IsInRole(user.Id, role.Name))
-            //    {
-            //        model.Users.Add(user.UserName);
-            //    }
-            //}
+            var allUsers = new List<ApplicationUser>(UserManager.Users);
+            foreach (var user in allUsers)
+            {
+                if (UserManager.IsInRole(user.Id, role.Name))
+                {
+                    model.Users.Add(user.UserName);
+                }
+            }
             return Ok(model);
         }
 
@@ -539,7 +540,7 @@ namespace AuctionExpress.WebAPI.Controllers
         public IHttpActionResult UpdateRole(EditRole model)
         {
             var role = RoleManager.FindById(model.Id);
-            if(role==null)
+            if (role == null)
             {
                 return BadRequest($"Role Id {model.Id} not found.");
             }
@@ -560,43 +561,50 @@ namespace AuctionExpress.WebAPI.Controllers
             {
                 return BadRequest($"Role Id {roleId} not found.");
             }
-            var model = new List<UserRoleView>();
+            List<UserRoleView> model = new List<UserRoleView>();
 
-            foreach (ApplicationUser user in UserManager.Users)
+            var allUsers = new List<ApplicationUser>(UserManager.Users);
+
+            foreach (ApplicationUser user in allUsers)
             {
                 UserRoleView userRoleView = new UserRoleView
                 {
                     UserId = user.Id,
                     UserName = user.UserName
                 };
-                if(UserManager.IsInRole(userRoleView.UserId,roleId))
+                if (UserManager.IsInRole(userRoleView.UserId, roleId))
                 {
                     userRoleView.IsSelected = true;
                 }
                 model.Add(userRoleView);
             }
 
-            return Ok(model);
-        }
+            UserRoleList userRoleList = new UserRoleList()
+            {
+                ListOfUsers = model
+            };
 
+            return Ok(userRoleList);
+        }
+        [AllowAnonymous]
         [HttpPut]
         [Route("UpdateRoleUsers")]
-        public IHttpActionResult EditUsersInRole(List<UserRoleView> model, string roleId)
+        public IHttpActionResult EditUsersInRole(UserRoleList userRoleList)
         {
-            var role = RoleManager.FindById(roleId);
+            var role = RoleManager.FindById(userRoleList.RoleId);
             if (role == null)
             {
-                return BadRequest($"Role Id {roleId} not found.");
+                return BadRequest($"Role Id {userRoleList.RoleId} not found.");
             }
-            foreach (var user in model)
+            foreach (var user in userRoleList.ListOfUsers)
             {
                 IdentityResult result = null;
                 var dbUser = UserManager.FindById(user.UserId);
-                if(user.IsSelected && ! UserManager.IsInRole(user.UserId,role.Name))
+                if (user.IsSelected && !UserManager.IsInRole(user.UserId, role.Name))
                 {
-                   result = UserManager.AddToRole(dbUser.Id, role.Name);
+                    result = UserManager.AddToRole(dbUser.Id, role.Name);
                 }
-                else if(!user.IsSelected && UserManager.IsInRole(user.UserId, role.Name))
+                else if (!user.IsSelected && UserManager.IsInRole(user.UserId, role.Name))
                 {
                     result = UserManager.RemoveFromRole(dbUser.Id, role.Name);
                 }
