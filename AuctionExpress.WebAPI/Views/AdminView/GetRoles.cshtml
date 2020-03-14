@@ -3,13 +3,12 @@
 @{
     ViewBag.Title = "GetRoles";
     Layout = "~/Views/Shared/_Layout.cshtml";
- 
 }
 
 <h2>GetRoles</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add New Role", "CreateRole")
 </p>
 <table class="table">
     <tr>
@@ -26,11 +25,10 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "EditRole", new { id=item.Id }) |
-          @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
         </td>
     </tr>
 }
 
 </table>
-

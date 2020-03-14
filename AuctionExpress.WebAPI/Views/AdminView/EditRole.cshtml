@@ -1,4 +1,4 @@
-﻿@model AuctionExpress.Models.Roles.EditRole
+﻿@model AuctionExpress.Models.Roles.RoleEdit
 
 @{
     ViewBag.Title = "EditRole";
@@ -43,7 +43,7 @@
             </div>
             <div class="card-body">
 
-                @if (Model.Users != null)
+                @if (Model.Users.Count>0)
                 {
                     foreach (var user in Model.Users)
                     {
@@ -63,5 +63,5 @@
     }
 
     <div>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Back to List", "GetRoles")
     </div>

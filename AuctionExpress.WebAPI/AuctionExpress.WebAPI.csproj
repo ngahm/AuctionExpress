@@ -207,18 +207,20 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AccountViewController.cs" />
-    <Compile Include="Controllers\BidController.cs" />
-    <Compile Include="Controllers\BidViewController.cs" />
-    <Compile Include="Controllers\CategoryController.cs" />
-    <Compile Include="Controllers\CategoryViewController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ProductViewController.cs" />
-    <Compile Include="Controllers\ProductController.cs" />
-    <Compile Include="Controllers\TransactionController.cs" />
-    <Compile Include="Controllers\TransactionViewController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\ApiControllers\AccountController.cs" />
+    <Compile Include="Controllers\ViewControllers\AccountViewController.cs" />
+    <Compile Include="Controllers\ApiControllers\AdminController.cs" />
+    <Compile Include="Controllers\ViewControllers\AdminViewController.cs" />
+    <Compile Include="Controllers\ApiControllers\BidController.cs" />
+    <Compile Include="Controllers\ViewControllers\BidViewController.cs" />
+    <Compile Include="Controllers\ApiControllers\CategoryController.cs" />
+    <Compile Include="Controllers\ViewControllers\CategoryViewController.cs" />
+    <Compile Include="Controllers\ApiControllers\HomeController.cs" />
+    <Compile Include="Controllers\ViewControllers\ProductViewController.cs" />
+    <Compile Include="Controllers\ApiControllers\ProductController.cs" />
+    <Compile Include="Controllers\ApiControllers\TransactionController.cs" />
+    <Compile Include="Controllers\ViewControllers\TransactionViewController.cs" />
+    <Compile Include="Controllers\ApiControllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -372,10 +374,10 @@
     <Content Include="Views\TransactionView\GetTransactionById.cshtml" />
     <Content Include="Views\TransactionView\PutTransaction.cshtml" />
     <Content Include="Views\TransactionView\GetTransaction.cshtml" />
-    <Content Include="Views\AccountView\CreateRole.cshtml" />
-    <Content Include="Views\AccountView\GetRoles.cshtml" />
-    <Content Include="Views\AccountView\EditRole.cshtml" />
-    <Content Include="Views\AccountView\EditUserRole.cshtml" />
+    <Content Include="Views\AdminView\CreateRole.cshtml" />
+    <Content Include="Views\AdminView\EditRole.cshtml" />
+    <Content Include="Views\AdminView\EditUserRole.cshtml" />
+    <Content Include="Views\AdminView\GetRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

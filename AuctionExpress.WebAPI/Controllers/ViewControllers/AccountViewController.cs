@@ -109,7 +109,7 @@ namespace AuctionExpress.WebAPI.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateRole(CreateRoleModel model)
+        public ActionResult CreateRole(RoleCreate model)
         {
             using (var client = new HttpClient())
             {
@@ -118,7 +118,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
 
-                var postTask = client.PostAsJsonAsync<CreateRoleModel>("Account/AddRole", model);
+                var postTask = client.PostAsJsonAsync<RoleCreate>("Account/AddRole", model);
                 postTask.Wait();
 
                 var result = postTask.Result;
@@ -167,7 +167,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
         public ActionResult EditRole(string id)
         {
-            EditRole role = null;
+            RoleEdit role = null;
 
             using (var client = new HttpClient())
             {
@@ -179,7 +179,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<EditRole>();
+                    var readTask = result.Content.ReadAsAsync<RoleEdit>();
                     readTask.Wait();
 
                     role = readTask.Result;
@@ -193,14 +193,14 @@ namespace AuctionExpress.WebAPI.Controllers
 
 
         [HttpPost]
-        public ActionResult EditRole(EditRole role)
+        public ActionResult EditRole(RoleEdit role)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
 
                 //HTTP POST
-                var putTask = client.PutAsJsonAsync<EditRole>("Account/UpdateRole", role);
+                var putTask = client.PutAsJsonAsync<RoleEdit>("Account/UpdateRole", role);
                 putTask.Wait();
 
                 var result = putTask.Result;
@@ -216,7 +216,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
         public ActionResult EditUserRole(string id)
         {
-            UserRoleList userRoleList = null;
+            RoleUserList userRoleList = null;
 
             using (var client = new HttpClient())
             {
@@ -228,7 +228,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readtask = result.Content.ReadAsAsync<UserRoleList>();
+                    var readtask = result.Content.ReadAsAsync<RoleUserList>();
                     readtask.Wait();
 
                     userRoleList = readtask.Result;
@@ -239,14 +239,14 @@ namespace AuctionExpress.WebAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditUserRole(UserRoleList userRoleList)
+        public ActionResult EditUserRole(RoleUserList userRoleList)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
 
                 //HTTP POST
-                var putTask = client.PutAsJsonAsync<UserRoleList>("Account/UpdateRoleUsers", userRoleList);
+                var putTask = client.PutAsJsonAsync<RoleUserList>("Account/UpdateRoleUsers", userRoleList);
                 putTask.Wait();
 
                 var result = putTask.Result;

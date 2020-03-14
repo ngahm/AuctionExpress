@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace AuctionExpress.Models.Roles
 {
-    public class EditRole
+    public class RoleUserList
     {
-        public string Id { get; set; }
-
-        [Required(ErrorMessage ="Role Name is required")]
-        public string RoleName { get; set; }
-
-        public List<string> Users { get; set; }
+        [Display(Name = "Role Id")]
+        public string RoleId { get; set; }
+        [Display(Name = "Users in this role.")]
+        public List<RoleUserView> ListOfUsers { get; set; }
     }
 }
