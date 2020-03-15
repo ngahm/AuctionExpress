@@ -272,7 +272,34 @@ namespace AuctionExpress.WebAPI.Controllers
             return Ok("Role successfully removed.");
         }
 
+        [Route("GetAllUsers")]
+        public IHttpActionResult GetAllUsers()
+        {
+            List<UserListView> model = new List<UserListView>();
 
+            var allUsers = new List<ApplicationUser>(UserManager.Users);
+            var allRoles = new List<IdentityRole>(RoleManager.Roles);
+
+            foreach (ApplicationUser user in allUsers)
+            {
+                UserListView userListView = new UserListView
+                {
+                    UserId = user.Id,
+                    Email = user.Email,
+                    UserName = user.UserName,
+                    IsActive = user.IsActive,
+                    UserRoles = new List<IdentityRole>()
+                };
+
+                foreach (var role in allRoles)
+                {
+                    if (UserManager.IsInRole(user.Id, role.Name))
+                        userListView.UserRoles.Add(role);
+                }
+                model.Add(userListView);
+            }
+            return Ok(model);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)

@@ -195,6 +195,41 @@ namespace AuctionExpress.WebAPI.Controllers
 
             return RedirectToAction("GetRoles");
         }
+
+        [HttpGet]
+        //[ValidateAntiForgeryToken]
+        public ActionResult GetUsers()
+        {
+
+            IEnumerable<UserListView> userViewer = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                var responseTask = client.GetAsync("Admin/GetAllUsers");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<UserListView>>();
+                    readTask.Wait();
+
+                    userViewer = readTask.Result;
+                }
+                else
+                {
+                    userViewer = Enumerable.Empty<UserListView>();
+
+                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+                }
+            }
+            return View(userViewer);
+        }
         #region Helper
         private HttpCookie CreateCookie(string token)
         {
