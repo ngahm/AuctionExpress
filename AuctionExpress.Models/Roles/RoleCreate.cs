@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace AuctionExpress.Models
 {
-    public class CreateRoleModel
+    public class RoleCreate
     {
         [Required]
+        [Display(Name ="Role Name")]
         public string RoleName { get; set; }
     }
 }

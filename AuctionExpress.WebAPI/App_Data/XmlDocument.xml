@@ -481,12 +481,61 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.AdminController.CreateRole(AuctionExpress.Models.RoleCreate)">
+            <summary>
+            Add a new user role
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.AdminController.GetRoles">
+            <summary>
+            See a list of all roles.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.AdminController.GetRole(System.String)">
+            <summary>
+            See a specific role by supplying the role id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.AdminController.UpdateRole(AuctionExpress.Models.Roles.RoleEdit)">
+            <summary>
+            Update a role name.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.AdminController.EditUsersInRole(System.String)">
+            <summary>
+            See List of all users in a specified role.
+            </summary>
+            <param name="roleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.AdminController.EditUsersInRole(AuctionExpress.Models.Roles.RoleUserList)">
+            <summary>
+            Update the users in a role
+            </summary>
+            <param name="userRoleList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.AdminController.DeleteRole(System.String)">
+            <summary>
+            Delete a role.
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.BidController.Post(AuctionExpress.Models.BidCreate)">
             <summary>
             Place a new bid on an auction.
             </summary>
             <param name="bid"></param>
             <returns></returns>
+            
         </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.BidController.GetBid(System.Int32)">
             <summary>
