@@ -164,7 +164,7 @@ namespace AuctionExpress.WebAPI.Controllers
             return Ok();
         }
 
-        //DeleteUser
+        //DeActivateUser
         [Route("DeactivateUser")]
         public async Task<IHttpActionResult> DeactivateUser()
         {
@@ -174,13 +174,15 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             var userId = User.Identity.GetUserId();
             ApplicationUser user = new ApplicationUser() { Id = userId };
-            IdentityResult result = await UserManager.DeleteAsync(user);
-
+            IdentityResult result = UserManager.RemoveFromRole(userId, "ActiveUser");
             if (!result.Succeeded)
-            {
                 return GetErrorResult(result);
-            }
-
+            result = UserManager.AddToRole(userId, "InActiveUser");
+            if (!result.Succeeded)
+                return GetErrorResult(result);
+            result = await UserManager.DeleteAsync(user);
+            if (!result.Succeeded)
+                return GetErrorResult(result);
             return Ok();
         }
 
