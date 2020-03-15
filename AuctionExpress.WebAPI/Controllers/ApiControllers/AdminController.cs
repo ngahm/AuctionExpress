@@ -278,8 +278,7 @@ namespace AuctionExpress.WebAPI.Controllers
             List<UserListView> model = new List<UserListView>();
 
             var allUsers = new List<ApplicationUser>(UserManager.Users);
-            var allRoles = new List<IdentityRole>(RoleManager.Roles);
-
+           
             foreach (ApplicationUser user in allUsers)
             {
                 UserListView userListView = new UserListView
@@ -288,18 +287,61 @@ namespace AuctionExpress.WebAPI.Controllers
                     Email = user.Email,
                     UserName = user.UserName,
                     IsActive = user.IsActive,
-                    UserRoles = new List<IdentityRole>()
+                    UserRoles = UserManager.GetRoles(user.Id)
                 };
-
-                foreach (var role in allRoles)
-                {
-                    if (UserManager.IsInRole(user.Id, role.Name))
-                        userListView.UserRoles.Add(role);
-                }
+                
                 model.Add(userListView);
             }
             return Ok(model);
         }
+
+        [Route("GetUser")]
+        public IHttpActionResult GetUser(string id)
+        {
+            var user = UserManager.FindById(id);
+            if (user == null)
+                return BadRequest($"User with id {id} can not be found.");
+            UserListView userListView = new UserListView
+            {
+                UserId = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+                IsActive = user.IsActive,
+                UserRoles = UserManager.GetRoles(user.Id)
+            };
+
+            return Ok(userListView);
+        }
+
+        [Route("UpdateUser")]
+        public IHttpActionResult UpdateUser(UserUpdateView model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var user = UserManager.FindById(model.UserId);
+            user.UserName = model.UserName;
+            user.Email = model.Email;
+            user.IsActive = model.IsActive;
+            UserManager.Update(user);
+
+            foreach (var role in model.UpdateRoles)
+            {
+                if(role.IsSelected&&!UserManager.IsInRole(model.UserId,role.RoleName))
+                {
+                    UserManager.AddToRole(model.UserId, role.RoleName);
+                }
+                else if(!role.IsSelected&&UserManager.IsInRole(model.UserId, role.RoleName))
+                {
+                    UserManager.RemoveFromRole(model.UserId, role.RoleName);
+                }
+            }
+            return Ok("User Successfully Updated");
+        }
+
+
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)

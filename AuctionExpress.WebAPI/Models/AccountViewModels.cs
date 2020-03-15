@@ -48,6 +48,6 @@ namespace AuctionExpress.WebAPI.Models
         public string UserName { get; set; }
         public string Email { get; set; }
         public bool IsActive { get; set; }
-        public List<IdentityRole> UserRoles { get; set; }
+        public IList<string> UserRoles { get; set; }
     }
 }
