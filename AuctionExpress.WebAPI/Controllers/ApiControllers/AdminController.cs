@@ -307,22 +307,26 @@ namespace AuctionExpress.WebAPI.Controllers
                 Email = user.Email,
                 UserName = user.UserName,
                 IsActive = user.IsActive,
+                UpdateRoles = new List<RoleView>()
             };
 
-            RoleView userRoles = new RoleView();
-            foreach (var role in RoleManager.Roles)
+            var allRoles = RoleManager.Roles.ToList();
+            foreach (var role in allRoles)
             {
+                RoleView userRoles = new RoleView();
                 userRoles.RoleId = role.Id;
                 userRoles.RoleName = role.Name;
 
                 if (UserManager.IsInRole(model.UserId, role.Name))
                     userRoles.IsSelected = true;
+                else
+                    userRoles.IsSelected = false;
                 model.UpdateRoles.Add(userRoles);
             }
 
             return Ok(model);
         }
-
+        [HttpPut]
         [Route("UpdateUser")]
         public IHttpActionResult UpdateUser(UserUpdateView model)
         {
@@ -333,18 +337,24 @@ namespace AuctionExpress.WebAPI.Controllers
             user.UserName = model.UserName;
             user.Email = model.Email;
             user.IsActive = model.IsActive;
-            UserManager.Update(user);
-
+            IdentityResult userResult = UserManager.Update(user);
+            if (!userResult.Succeeded)
+                return InternalServerError();
+            IdentityResult result = null;
             foreach (var role in model.UpdateRoles)
             {
                 if(role.IsSelected&&!UserManager.IsInRole(model.UserId,role.RoleName))
                 {
-                    UserManager.AddToRole(model.UserId, role.RoleName);
+                    result=UserManager.AddToRole(model.UserId, role.RoleName);
                 }
                 else if(!role.IsSelected&&UserManager.IsInRole(model.UserId, role.RoleName))
                 {
-                    UserManager.RemoveFromRole(model.UserId, role.RoleName);
+                    result=UserManager.RemoveFromRole(model.UserId, role.RoleName);
                 }
+                else { result = IdentityResult.Success; }
+
+                if (!result.Succeeded)
+                    return InternalServerError();
             }
             return Ok("User Successfully Updated");
         }
