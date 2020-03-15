@@ -14,7 +14,6 @@ namespace AuctionExpress.WebAPI.Controllers
 {
     public class AccountViewController : Controller
     {
-
         // POST: Register User
         public ActionResult Create()
         {
@@ -57,7 +56,7 @@ namespace AuctionExpress.WebAPI.Controllers
         [HttpPost]
 
         [ValidateAntiForgeryToken]
-        public string Login(LoginBindingModel model, string returnUrl)
+        public ActionResult Login(LoginBindingModel model, string returnUrl)
         {
                 var pairs = new List<KeyValuePair<string, string>>
                     {
@@ -71,9 +70,12 @@ namespace AuctionExpress.WebAPI.Controllers
             {
                 client.BaseAddress = new Uri("https://localhost:44320/");
                 var response = client.PostAsync("token", content).Result;
-                return response.Content.ReadAsStringAsync().Result;
-                
+                var token= response.Content.ReadAsStringAsync().Result;
+                Response.Cookies.Add(CreateStudentCookie(token));
+                //Response.Flush();
+                return View();
             }
+            //Response.Cookies.Append("Token", token);
         }
 
         [HttpPost]
@@ -90,7 +92,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 var result = postTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("GetProduct");
                 }
             }
 
@@ -99,6 +101,17 @@ namespace AuctionExpress.WebAPI.Controllers
             return View();
 
         }
+
+        private HttpCookie CreateStudentCookie(string token)
+        {
+            HttpCookie StudentCookies = new HttpCookie("UserToken");
+            StudentCookies.Value = token;
+            StudentCookies.Expires = DateTime.Now.AddHours(1);
+            return StudentCookies;
+        }
+
+        //some action method
+        
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]

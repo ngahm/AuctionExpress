@@ -1,7 +1,10 @@
 ﻿using AuctionExpress.Models;
+using AuctionExpress.WebAPI.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
@@ -17,8 +20,10 @@ namespace AuctionExpress.WebAPI.Controllers
 
             using (var client = new HttpClient())
             {
+                string token = DeserializeToken();
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
-
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                 var responseTask = client.GetAsync("product");
                 responseTask.Wait();
 
@@ -53,7 +58,10 @@ namespace AuctionExpress.WebAPI.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44320/api/product");
+                string token = DeserializeToken();
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 //HTTP Post
                 var postTask = client.PostAsJsonAsync<ProductCreate>("product", product);
@@ -146,7 +154,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 return View(product);
             }
         }
-        
+
 
         //public ActionResult Delete(int id)
         //{
@@ -168,6 +176,21 @@ namespace AuctionExpress.WebAPI.Controllers
         //     return RedirectToAction("GetProduct")
         //}
 
-    }   
+        #region Helper
+        private string DeserializeToken()
+        {
+                var cookieValue = Request.Cookies["UserToken"];
+                if (!string.IsNullOrWhiteSpace(cookieValue.Value))
+                {
+                    var t = JsonConvert.DeserializeObject<Token>(cookieValue.Value);
+                    return t.access_token;
+                    
+
+                }
+                return null;
+        }
+        #endregion
+
+    }
 
 }

@@ -15,8 +15,8 @@ namespace AuctionExpress.WebAPI.Controllers
     {
         private ProductService CreateProductService()
         {
-            var userId = Guid.Parse("0b379cf2-d867-4c45-ab0e-e9cab151ac19");
-            //User.Identity.GetUserId());
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            //"0b379cf2-d867-4c45-ab0e-e9cab151ac19");
             var productService = new ProductService(userId);
             return productService;
         }
