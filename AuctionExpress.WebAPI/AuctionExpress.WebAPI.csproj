@@ -379,6 +379,7 @@
     <Content Include="Views\AdminView\EditRole.cshtml" />
     <Content Include="Views\AdminView\EditUserRole.cshtml" />
     <Content Include="Views\AdminView\GetRoles.cshtml" />
+    <Content Include="Views\AccountView\LogOff.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

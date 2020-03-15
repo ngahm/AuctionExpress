@@ -20,6 +20,7 @@ namespace AuctionExpress.WebAPI.Controllers
             { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }
             else
             { userId = Guid.Parse(User.Identity.GetUserId()); }
+
             var productService = new ProductService(userId);
             return productService;
         }
@@ -133,7 +134,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Authorize]
-        [Route("Delete")]
+        [Route("Product/Delete")]
         public IHttpActionResult Delete(int id)
         {
             var service = CreateProductService();

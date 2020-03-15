@@ -71,43 +71,28 @@ namespace AuctionExpress.WebAPI.Controllers
                 client.BaseAddress = new Uri("https://localhost:44320/");
                 var response = client.PostAsync("token", content).Result;
                 var token= response.Content.ReadAsStringAsync().Result;
-                Response.Cookies.Add(CreateStudentCookie(token));
+                Response.Cookies.Add(CreateCookie(token));
                 //Response.Flush();
                 return View();
             }
             //Response.Cookies.Append("Token", token);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            using (var client = new HttpClient())
+            if (Request.Cookies["UserToken"] != null)
             {
-                client.BaseAddress = new Uri("https://localhost:44320/api/");
-
-                var postTask = client.DeleteAsync("Account/LogOff");
-                postTask.Wait();
-
-                var result = postTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("GetProduct");
-                }
+                Response.Cookies["UserToken"].Expires = DateTime.Now.AddDays(-1);
             }
-
-            ModelState.AddModelError(string.Empty, "Server Error.  Please contact administrator.");
-
-            return View();
-
+            return RedirectToAction("Login","AccountView");
         }
 
-        private HttpCookie CreateStudentCookie(string token)
+        private HttpCookie CreateCookie(string token)
         {
-            HttpCookie StudentCookies = new HttpCookie("UserToken");
-            StudentCookies.Value = token;
-            StudentCookies.Expires = DateTime.Now.AddHours(1);
-            return StudentCookies;
+            HttpCookie logInCookies = new HttpCookie("UserToken");
+            logInCookies.Value = token;
+            //StudentCookies.Expires = DateTime.Now.AddHours(1);
+            return logInCookies;
         }
 
         //some action method

@@ -79,7 +79,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
         }
 
-        
+
         public ActionResult GetProductById(int id)
         {
             ProductDetail product = null;
@@ -87,7 +87,10 @@ namespace AuctionExpress.WebAPI.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
-
+                string token = DeserializeToken();
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                 //HTTP Get
                 var responseTask = client.GetAsync("product/" + id.ToString());
                 responseTask.Wait();
@@ -117,6 +120,10 @@ namespace AuctionExpress.WebAPI.Controllers
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
                 //HTTP GET
+                string token = DeserializeToken();
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                 var responseTask = client.GetAsync("product/" + id.ToString());
                 responseTask.Wait();
 
@@ -141,6 +148,10 @@ namespace AuctionExpress.WebAPI.Controllers
             {
 
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 //HTTP 
                 var putTask = client.PutAsJsonAsync<ProductEdit>("product", product);
@@ -161,8 +172,11 @@ namespace AuctionExpress.WebAPI.Controllers
         //    using (var client = new HttpClient())
         //    {
         //        client.BaseAddress = new Uri("https://localhost:44320/api/");
-
-        //        //HTTP Delete
+        //string token = DeserializeToken();
+        //client.BaseAddress = new Uri("https://localhost:44320/api/");
+        //client.DefaultRequestHeaders.Clear();
+        //        client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+        ////        //HTTP Delete
         //        var deleteTask = Client.DeleteAsync("student/" + id.ToString());
         //        deleteTask.Wait();
 
@@ -179,15 +193,13 @@ namespace AuctionExpress.WebAPI.Controllers
         #region Helper
         private string DeserializeToken()
         {
-                var cookieValue = Request.Cookies["UserToken"];
-                if (!string.IsNullOrWhiteSpace(cookieValue.Value))
-                {
-                    var t = JsonConvert.DeserializeObject<Token>(cookieValue.Value);
-                    return t.access_token;
-                    
-
-                }
-                return null;
+            var cookieValue = Request.Cookies["UserToken"];
+            if (cookieValue!=null)
+            {
+                var t = JsonConvert.DeserializeObject<Token>(cookieValue.Value);
+                return t.access_token;
+            }
+            return null;
         }
         #endregion
 
