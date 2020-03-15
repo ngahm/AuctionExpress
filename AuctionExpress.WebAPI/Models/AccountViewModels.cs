@@ -50,4 +50,20 @@ namespace AuctionExpress.WebAPI.Models
         public bool IsActive { get; set; }
         public IList<string> UserRoles { get; set; }
     }
+
+    public class UserUpdateView
+    {
+        public string UserId { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public bool IsActive { get; set; }
+        public List<RoleView> UpdateRoles { get; set; }
+
+    }
+    public class RoleView
+    {
+    public string RoleId { get; set; }
+        public string RoleName { get; set; }
+        public bool IsSelected { get; set; }
+    }
 }

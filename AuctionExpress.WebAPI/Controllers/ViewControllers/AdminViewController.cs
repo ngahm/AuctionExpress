@@ -230,6 +230,54 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             return View(userViewer);
         }
+
+        public ActionResult UpdateUser(string id)
+        {
+            UserUpdateView user = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                //HTTP GET
+                var responseTask = client.GetAsync("Admin/GetUser?id=" + id);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<UserUpdateView>();
+                    readTask.Wait();
+                    user = readTask.Result;
+                }
+            }
+
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateUser(UserUpdateView user)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                var putTask = client.PutAsJsonAsync<UserUpdateView>("Admin/UpdateUser", user);
+                putTask.Wait();
+
+                var result = putTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("GetUsers");
+                }
+            }
+            return View(user);
+        }
         #region Helper
         private HttpCookie CreateCookie(string token)
         {

@@ -301,16 +301,26 @@ namespace AuctionExpress.WebAPI.Controllers
             var user = UserManager.FindById(id);
             if (user == null)
                 return BadRequest($"User with id {id} can not be found.");
-            UserListView userListView = new UserListView
+            UserUpdateView model = new UserUpdateView
             {
                 UserId = user.Id,
                 Email = user.Email,
                 UserName = user.UserName,
                 IsActive = user.IsActive,
-                UserRoles = UserManager.GetRoles(user.Id)
             };
 
-            return Ok(userListView);
+            RoleView userRoles = new RoleView();
+            foreach (var role in RoleManager.Roles)
+            {
+                userRoles.RoleId = role.Id;
+                userRoles.RoleName = role.Name;
+
+                if (UserManager.IsInRole(model.UserId, role.Name))
+                    userRoles.IsSelected = true;
+                model.UpdateRoles.Add(userRoles);
+            }
+
+            return Ok(model);
         }
 
         [Route("UpdateUser")]
