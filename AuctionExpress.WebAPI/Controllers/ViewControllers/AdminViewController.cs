@@ -1,5 +1,7 @@
 ﻿using AuctionExpress.Models;
 using AuctionExpress.Models.Roles;
+using AuctionExpress.WebAPI.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +29,9 @@ namespace AuctionExpress.WebAPI.Controllers
 
 
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 var postTask = client.PostAsJsonAsync<RoleCreate>("Admin/AddRole", model);
                 postTask.Wait();
@@ -51,6 +56,9 @@ namespace AuctionExpress.WebAPI.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 var responseTask = client.GetAsync("Admin/GetRoles");
                 responseTask.Wait();
@@ -82,6 +90,9 @@ namespace AuctionExpress.WebAPI.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                 //HTTP GET
                 var responseTask = client.GetAsync("Admin/GetRoleById?id=" + id);
                 responseTask.Wait();
@@ -108,6 +119,9 @@ namespace AuctionExpress.WebAPI.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 //HTTP POST
                 var putTask = client.PutAsJsonAsync<RoleEdit>("Admin/UpdateRole", role);
@@ -131,6 +145,9 @@ namespace AuctionExpress.WebAPI.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                 //HTTP GET
                 var responseTask = client.GetAsync("Admin/GetRoleUsers?roleId=" + id);
                 responseTask.Wait();
@@ -154,6 +171,9 @@ namespace AuctionExpress.WebAPI.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 //HTTP POST
                 var putTask = client.PutAsJsonAsync<RoleUserList>("Admin/UpdateRoleUsers", userRoleList);
@@ -174,6 +194,9 @@ namespace AuctionExpress.WebAPI.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 //HTTP DELETE
                 var deleteTask = client.DeleteAsync("Admin/DeleteRole?Id=" + Id);
@@ -190,7 +213,26 @@ namespace AuctionExpress.WebAPI.Controllers
 
 
         }
+        #region Helper
+        private HttpCookie CreateCookie(string token)
+        {
+            HttpCookie logInCookies = new HttpCookie("UserToken");
+            logInCookies.Value = token;
+            //StudentCookies.Expires = DateTime.Now.AddHours(1);
+            return logInCookies;
+        }
 
-  
+        private string DeserializeToken()
+        {
+            var cookieValue = Request.Cookies["UserToken"];
+            if (cookieValue != null)
+            {
+                var t = JsonConvert.DeserializeObject<Token>(cookieValue.Value);
+                return t.access_token;
+            }
+            return null;
+        }
+        #endregion
+
     }
 }

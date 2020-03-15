@@ -117,7 +117,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
             return View(model);
         }
-
+        #region Helper
         private HttpCookie CreateCookie(string token)
         {
             HttpCookie logInCookies = new HttpCookie("UserToken");
@@ -126,8 +126,6 @@ namespace AuctionExpress.WebAPI.Controllers
             return logInCookies;
         }
 
-
-        #region Helper
         private string DeserializeToken()
         {
             var cookieValue = Request.Cookies["UserToken"];

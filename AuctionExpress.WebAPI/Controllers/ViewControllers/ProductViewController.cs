@@ -20,8 +20,8 @@ namespace AuctionExpress.WebAPI.Controllers
 
             using (var client = new HttpClient())
             {
-                string token = DeserializeToken();
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                 var responseTask = client.GetAsync("product");
