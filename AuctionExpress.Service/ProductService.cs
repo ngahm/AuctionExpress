@@ -147,6 +147,8 @@ namespace AuctionExpress.Service
 
             if (prodDetail == null)
                 return "Product has been removed or does not exist.";
+            if (prodDetail.ProductSeller == _userId.ToString())
+                return "Users can not bid on products they are selling.";
             if (!prodDetail.ProductIsActive)
                 return "Auction is closed";
             if (prodDetail.MinimumSellingPrice > bid.BidPrice)
