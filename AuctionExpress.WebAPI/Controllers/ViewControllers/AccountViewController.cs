@@ -1,6 +1,7 @@
 ﻿using AuctionExpress.Models;
 using AuctionExpress.Models.Roles;
 using AuctionExpress.WebAPI.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 var result = postTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Login", "AccountView");
                 }
             }
 
@@ -87,6 +88,36 @@ namespace AuctionExpress.WebAPI.Controllers
             return RedirectToAction("Login","AccountView");
         }
 
+        public ActionResult DeactivateUser(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult DeactivateUser(LoginBindingModel model)
+        {
+            using (var client = new HttpClient())
+            {
+                string token = DeserializeToken();
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                //HTTP Post
+                var postTask = client.PostAsJsonAsync<LoginBindingModel>("Account/DeactivateUser", model);
+                postTask.Wait();
+
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Login", "AccountView");
+                }
+            }
+            ModelState.AddModelError(string.Empty, "Server Error. Please contact administration.");
+
+            return View(model);
+        }
+
         private HttpCookie CreateCookie(string token)
         {
             HttpCookie logInCookies = new HttpCookie("UserToken");
@@ -95,33 +126,19 @@ namespace AuctionExpress.WebAPI.Controllers
             return logInCookies;
         }
 
-        //some action method
-        
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult GetToken()
-        //{
-        //    string GetToken(string url, string userName, string password)
-        //    {
-        //        var pairs = new List<KeyValuePair<string, string>>
-        //            {
-        //                new KeyValuePair<string, string>( "grant_type", "password" ),
-        //                new KeyValuePair<string, string>( "username", userName ),
-        //                new KeyValuePair<string, string> ( "Password", password )
-        //            };
-        //        var content = new FormUrlEncodedContent(pairs);
-        //        ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        //        using (var client = new HttpClient())
-        //        {
-        //            var response = client.PostAsync(url + "Token", content).Result;
-        //            return response.Content.ReadAsStringAsync().Result;
-        //        }
-        //    }
-        //}
-
-
-
+        #region Helper
+        private string DeserializeToken()
+        {
+            var cookieValue = Request.Cookies["UserToken"];
+            if (cookieValue != null)
+            {
+                var t = JsonConvert.DeserializeObject<Token>(cookieValue.Value);
+                return t.access_token;
+            }
+            return null;
+        }
+        #endregion
 
     }
 

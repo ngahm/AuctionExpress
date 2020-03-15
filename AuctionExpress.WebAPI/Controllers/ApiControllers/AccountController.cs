@@ -166,12 +166,12 @@ namespace AuctionExpress.WebAPI.Controllers
 
         //DeActivateUser
         [Route("DeactivateUser")]
-        public async Task<IHttpActionResult> DeactivateUser()
+        public async Task<IHttpActionResult> DeactivateUser(LoginBindingModel model)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+            if (User.Identity.Name != model.UserName)
+                return BadRequest("Can not remove User with different User Name.");
             var userId = User.Identity.GetUserId();
             ApplicationUser user = new ApplicationUser() { Id = userId };
             IdentityResult result = UserManager.RemoveFromRole(userId, "ActiveUser");
