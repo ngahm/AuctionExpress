@@ -14,7 +14,6 @@ namespace AuctionExpress.WebAPI.Controllers
     public class AdminViewController : Controller
     {
         // GET: AdminView
-       
         public ActionResult CreateRole()
         {
             return View();
@@ -25,9 +24,6 @@ namespace AuctionExpress.WebAPI.Controllers
         {
             using (var client = new HttpClient())
             {
-
-
-
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
                 string token = DeserializeToken();
                 client.DefaultRequestHeaders.Clear();
@@ -41,8 +37,8 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetRoles");
                 }
+                ModelState.AddModelError(string.Empty, result.ReasonPhrase) ;
             }
-            ModelState.AddModelError(string.Empty, "Server Error.  Please contact administrator.");
             return View(model);
         }
 
@@ -71,14 +67,12 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     roleViewer = readTask.Result;
                 }
-                else      //web api sent error response
-                {         //log response status here.
+                else
+                {     
                     roleViewer = Enumerable.Empty<RoleDetail>();
 
                     ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
-
                 }
-
             }
             return View(roleViewer);
         }
@@ -102,16 +96,12 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     var readTask = result.Content.ReadAsAsync<RoleEdit>();
                     readTask.Wait();
-
                     role = readTask.Result;
                 }
             }
 
             return View(role);
         }
-
-
-
 
         [HttpPost]
         public ActionResult EditRole(RoleEdit role)
@@ -123,20 +113,17 @@ namespace AuctionExpress.WebAPI.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                //HTTP POST
                 var putTask = client.PutAsJsonAsync<RoleEdit>("Admin/UpdateRole", role);
                 putTask.Wait();
 
                 var result = putTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-
                     return RedirectToAction("GetRoles");
                 }
             }
             return View(role);
         }
-
 
         public ActionResult EditUserRole(string id)
         {
@@ -148,7 +135,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 string token = DeserializeToken();
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                //HTTP GET
                 var responseTask = client.GetAsync("Admin/GetRoleUsers?roleId=" + id);
                 responseTask.Wait();
 
@@ -157,11 +143,9 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     var readtask = result.Content.ReadAsAsync<RoleUserList>();
                     readtask.Wait();
-
                     userRoleList = readtask.Result;
                 }
             }
-
             return View(userRoleList);
         }
 
@@ -210,8 +194,6 @@ namespace AuctionExpress.WebAPI.Controllers
             }
 
             return RedirectToAction("GetRoles");
-
-
         }
         #region Helper
         private HttpCookie CreateCookie(string token)
