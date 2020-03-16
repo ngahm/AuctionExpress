@@ -102,8 +102,12 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetBidsByProduct");
                 }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
+                }
+            
             }
-            ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
 
             return View(bid);
         }
