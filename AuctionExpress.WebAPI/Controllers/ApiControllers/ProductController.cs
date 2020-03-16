@@ -72,6 +72,30 @@ namespace AuctionExpress.WebAPI.Controllers
             var products = productService.GetProducts();
             return Ok(products);
         }
+        /// <summary>
+        /// Get a list of all auctions that are open for bidding.
+        /// </summary>
+        /// <returns></returns>
+        [Route("Product/GetOpenAuctions")]
+        [AllowAnonymous]
+        public IHttpActionResult GetOpenProducts()
+        {
+            ProductService productService = CreateProductService();
+            var products = productService.GetOpenProducts();
+            return Ok(products);
+        }
+        /// <summary>
+        /// Get a list of all auctions that are open for bidding under a specific category.
+        /// </summary>
+        /// <returns></returns>
+        [Route("Product/GetAuctionsByCat")]
+        [AllowAnonymous]
+        public IHttpActionResult GetOpenProdByCategory(int Id)
+        {
+            ProductService productService = CreateProductService();
+            var products = productService.GetOpenProdByCategory(Id);
+            return Ok(products);
+        }
 
         //GET products by Id
         /// <summary>

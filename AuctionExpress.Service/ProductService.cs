@@ -63,6 +63,54 @@ namespace AuctionExpress.Service
             }
         }
 
+        public IEnumerable<ProductListItem> GetOpenProducts()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                    .Product
+                    .Where(e => e.ProductCloseTime > DateTimeOffset.Now && e.ProductStartTime<DateTimeOffset.Now)
+                    .Select(e => new ProductListItem
+                    {
+                        ProductId = e.ProductId,
+                        ProductName = e.ProductName,
+                        CategoryName = e.ProductCategoryCombo.CategoryName,
+                        ProductQuantity = e.ProductQuantity,
+                        // ProductIsActive = e.DetermineIsActive(),
+                        ProductStartTime = e.ProductStartTime,
+                        ProductCloseTime = e.ProductCloseTime,
+                        MinimumSellingPrice = e.MinimumSellingPrice
+                    }
+                    );
+                return query.ToList();
+            }
+        }
+
+        public IEnumerable<ProductListItem> GetOpenProdByCategory(int Id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                    .Product
+                    .Where(e => e.ProductCloseTime > DateTimeOffset.Now && e.ProductStartTime < DateTimeOffset.Now && e.ProductCategoryId ==Id)
+                    .Select(e => new ProductListItem
+                    {
+                        ProductId = e.ProductId,
+                        ProductName = e.ProductName,
+                        CategoryName = e.ProductCategoryCombo.CategoryName,
+                        ProductQuantity = e.ProductQuantity,
+                        // ProductIsActive = e.DetermineIsActive(),
+                        ProductStartTime = e.ProductStartTime,
+                        ProductCloseTime = e.ProductCloseTime,
+                        MinimumSellingPrice = e.MinimumSellingPrice
+                    }
+                    );
+                return query.ToList();
+            }
+        }
+
         public ProductDetail GetProductById(int id)
         {
             using (var ctx = new ApplicationDbContext())

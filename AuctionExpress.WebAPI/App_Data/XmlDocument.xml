@@ -612,6 +612,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.ProductController.GetOpenProducts">
+            <summary>
+            Get a list of all auctions that are open for bidding.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.ProductController.GetOpenProdByCategory(System.Int32)">
+            <summary>
+            Get a list of all auctions that are open for bidding under a specific category.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.ProductController.Get(System.Int32)">
             <summary>
             Get a specific auction by referencing the auction id.
