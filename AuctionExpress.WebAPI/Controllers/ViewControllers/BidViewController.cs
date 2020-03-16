@@ -13,7 +13,7 @@ namespace AuctionExpress.WebAPI.Controllers
     public class BidViewController : Controller
     {
         // GET: BidViewByProductId
-        public ActionResult GetBidsByProduct()
+        public ActionResult GetBidsByProduct(int id)
         {
             IEnumerable<BidListItem> bids = null;
 
@@ -24,7 +24,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                 //HTTP GET
-                var responseTask = client.GetAsync("Bid?productId=2");
+                var responseTask = client.GetAsync("Bid?productId=" + id.ToString());
                 responseTask.Wait();
 
                 var result = responseTask.Result;
@@ -79,6 +79,43 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             return View(bid);
         }
+
+        // GET: BidViewByUser
+
+        public ActionResult GetBidsByUser()
+        {
+            IEnumerable<BidListItem> bidViewer = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                var responseTask = client.GetAsync("bid");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<BidListItem>>();
+                    readTask.Wait();
+
+                    bidViewer = readTask.Result;
+                }
+                else      //web api sent error response
+                {         //log response status here.
+                    bidViewer = Enumerable.Empty<BidListItem>();
+
+                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+
+                }
+
+            }
+            return View(bidViewer);
+        }
+
+
         public ActionResult CreateBid()
         {
             return View();
@@ -102,8 +139,12 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetBidsByProduct");
                 }
+                else
+                {
+            ModelState.AddModelError(string.Empty, result.StatusCode.ToString());
+
+                }
             }
-            ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
 
             return View(bid);
         }
