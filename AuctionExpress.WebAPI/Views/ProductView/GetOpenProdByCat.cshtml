@@ -1,0 +1,76 @@
+﻿@model IEnumerable<AuctionExpress.Models.ProductListItem>
+
+@{
+    ViewBag.Title = "GetOpenProdByCat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetOpenProdByCat</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductQuantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductIsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductCloseTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductStartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MinimumSellingPrice)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductQuantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductIsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductCloseTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductStartTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MinimumSellingPrice)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

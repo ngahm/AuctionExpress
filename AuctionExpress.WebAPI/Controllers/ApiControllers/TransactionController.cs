@@ -15,14 +15,18 @@ namespace AuctionExpress.WebAPI.Controllers
 
         private TransactionService CreateTransactionService()
         {
-            var userId = Guid.Parse("137ae0c4-7144-445d-b6c0-2918a3dd5907");
+            Guid userId = new Guid();
+            if (!User.Identity.IsAuthenticated)
+            { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }
+            else
+            { userId = Guid.Parse(User.Identity.GetUserId()); }
             var transactionService = new TransactionService(userId);
             return transactionService;
         }
 
         private ProductService CreateProductService()
         {
-            var userId = Guid.Parse("137ae0c4-7144-445d-b6c0-2918a3dd5907");
+            var userId = Guid.Parse("1ae9afff-3752-45c4-a551-dc17f56033d8");
             //User.Identity.GetUserId());
             var productService = new ProductService(userId);
             return productService;

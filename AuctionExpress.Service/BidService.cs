@@ -80,6 +80,28 @@ namespace AuctionExpress.Service
              }
         }
 
+        public IEnumerable<BidListItem> GetBidsByUser()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                    .Bid
+                    .Where(e => e.BidderId == _userId.ToString())
+                    .Select(e => new BidListItem
+                    {
+                        BidId = e.BidId,
+                        ProductId = e.ProductId,
+                        BidPrice = e.BidPrice
+
+                    }
+                    );
+                return query.ToList();
+
+            }
+        }
+
+
         public bool DeleteBid(int bidId)
         {
             using (var ctx = new ApplicationDbContext())

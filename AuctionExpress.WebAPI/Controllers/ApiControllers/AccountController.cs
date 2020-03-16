@@ -17,16 +17,19 @@ using AuctionExpress.WebAPI.Models;
 using AuctionExpress.WebAPI.Providers;
 using AuctionExpress.WebAPI.Results;
 using AuctionExpress.Data;
+using AuctionExpress.Models;
+using AuctionExpress.Models.Roles;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
         private ApplicationSignInManager _signInManager;
+        private ApplicationRoleManager _roleManager;
 
 
 
@@ -34,11 +37,13 @@ namespace AuctionExpress.WebAPI.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager,
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
+            SignInManager = signInManager;
+            RoleManager = roleManager;
         }
 
         public ApplicationUserManager UserManager
@@ -65,6 +70,15 @@ namespace AuctionExpress.WebAPI.Controllers
             }
         }
 
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? Request.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set { _roleManager = value; }
+        }
+
         private IAuthenticationManager AuthenticationManager
         {
             get
@@ -88,15 +102,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
-        }
-
-
-        // POST api/Account/Logout
-        [Route("Logout")]
-        public IHttpActionResult Logout()
-        {
-            Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
-            return Ok();
         }
 
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
@@ -159,23 +164,25 @@ namespace AuctionExpress.WebAPI.Controllers
             return Ok();
         }
 
-        //DeleteUser
+        //DeActivateUser
         [Route("DeactivateUser")]
-        public async Task<IHttpActionResult> DeactivateUser()
+        public async Task<IHttpActionResult> DeactivateUser(LoginBindingModel model)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+            if (User.Identity.Name != model.UserName)
+                return BadRequest("Can not remove User with different User Name.");
             var userId = User.Identity.GetUserId();
             ApplicationUser user = new ApplicationUser() { Id = userId };
-            IdentityResult result = await UserManager.DeleteAsync(user);
-
+            IdentityResult result = UserManager.RemoveFromRole(userId, "ActiveUser");
             if (!result.Succeeded)
-            {
                 return GetErrorResult(result);
-            }
-
+            result = UserManager.AddToRole(userId, "InActiveUser");
+            if (!result.Succeeded)
+                return GetErrorResult(result);
+            result = await UserManager.DeleteAsync(user);
+            if (!result.Succeeded)
+                return GetErrorResult(result);
             return Ok();
         }
 
@@ -417,44 +424,6 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             return Ok();
         }
-
-
-        // POST: /Account/Login
-
-        [AllowAnonymous]
-        [Route("Login")]
-        public async Task<IHttpActionResult> Login(LoginBindingModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
-            
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return Ok();
-                case SignInStatus.LockedOut:
-                    return BadRequest("account is locked out.");
-                case SignInStatus.RequiresVerification:
-                    return BadRequest("account needs verification");
-                case SignInStatus.Failure:
-                default:
-                    return BadRequest("invalid login attempt.");
-            }
-        }
-
-        [Route("Logoff")]
-        public IHttpActionResult LogOff()
-        {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return Ok();
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)

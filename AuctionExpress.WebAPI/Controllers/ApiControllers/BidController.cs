@@ -14,13 +14,21 @@ namespace AuctionExpress.WebAPI.Controllers
     {
         private BidService CreateBidService()
         {
-            var userId = Guid.Parse("1ae9afff-3752-45c4-a551-dc17f56033d8");//User.Identity.GetUserId());
+            Guid userId = new Guid();
+            if (!User.Identity.IsAuthenticated)
+            { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }
+            else
+            { userId = Guid.Parse(User.Identity.GetUserId()); }
             var bidService = new BidService(userId);
             return bidService;
         }
         private ProductService CreateProductService()
         {
-            var userId = Guid.Parse("1ae9afff-3752-45c4-a551-dc17f56033d8");//User.Identity.GetUserId());
+            Guid userId = new Guid();
+            if (!User.Identity.IsAuthenticated)
+            { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }
+            else
+            { userId = Guid.Parse(User.Identity.GetUserId()); }
             var productService = new ProductService(userId);
             return productService;
         }
@@ -33,6 +41,8 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="bid"></param>
         /// <returns></returns>
+        /// 
+        [HttpPost]
         public IHttpActionResult Post(BidCreate bid)
         {
             if (!ModelState.IsValid)
@@ -53,7 +63,7 @@ namespace AuctionExpress.WebAPI.Controllers
             
         }
 
-        //GET Bid
+        //GET Bids By Product id
         /// <summary>
         /// Get all bids associated with a product.
         /// </summary>
@@ -66,7 +76,9 @@ namespace AuctionExpress.WebAPI.Controllers
            return Ok(bids);
         }
 
-        //GET Bid BY ID
+
+
+        //GET Bid BY Bid ID
         /// <summary>
         /// Get a specific bid referenced by bid id.
         /// </summary>
@@ -80,6 +92,21 @@ namespace AuctionExpress.WebAPI.Controllers
                 return BadRequest("Bid does not exist.");
             return Ok(bid);
         }
+
+        //GET Bid BY User
+        /// <summary>
+        /// Get all bids associated with a user id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IHttpActionResult GetBidsByUser()
+        {
+            BidService bidService = CreateBidService();
+            var bids = bidService.GetBidsByUser();
+            return Ok(bids);
+        }
+
+
 
         /// <summary>
         /// Delete Bid by bid Id.

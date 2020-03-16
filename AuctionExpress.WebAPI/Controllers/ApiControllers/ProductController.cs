@@ -15,8 +15,12 @@ namespace AuctionExpress.WebAPI.Controllers
     {
         private ProductService CreateProductService()
         {
-            var userId = Guid.Parse("1ae9afff-3752-45c4-a551-dc17f56033d8");
-            //User.Identity.GetUserId());
+            Guid userId = new Guid();
+            if (!User.Identity.IsAuthenticated)
+            { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }
+            else
+            { userId = Guid.Parse(User.Identity.GetUserId()); }
+
             var productService = new ProductService(userId);
             return productService;
         }
@@ -27,11 +31,13 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
+        [Authorize]
         public IHttpActionResult Post(ProductCreate product)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
+            if (User == null)
+                return BadRequest("Must be a registered user.");
             var service = CreateProductService();
             var result = new DateValidator(product.ProductStartTime, product.ProductCloseTime);
             bool validateAllProperties = false;
@@ -59,10 +65,35 @@ namespace AuctionExpress.WebAPI.Controllers
         /// Get a list of auction that the user has created.
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         public IHttpActionResult Get()
         {
             ProductService productService = CreateProductService();
             var products = productService.GetProducts();
+            return Ok(products);
+        }
+        /// <summary>
+        /// Get a list of all auctions that are open for bidding.
+        /// </summary>
+        /// <returns></returns>
+        [Route("Product/GetOpenAuctions")]
+        [AllowAnonymous]
+        public IHttpActionResult GetOpenProducts()
+        {
+            ProductService productService = CreateProductService();
+            var products = productService.GetOpenProducts();
+            return Ok(products);
+        }
+        /// <summary>
+        /// Get a list of all auctions that are open for bidding under a specific category.
+        /// </summary>
+        /// <returns></returns>
+        [Route("Product/GetAuctionsByCat")]
+        [AllowAnonymous]
+        public IHttpActionResult GetOpenProdByCategory(int Id)
+        {
+            ProductService productService = CreateProductService();
+            var products = productService.GetOpenProdByCategory(Id);
             return Ok(products);
         }
 
@@ -72,6 +103,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         public IHttpActionResult Get(int id)
         {
             ProductService productService = CreateProductService();
@@ -85,6 +117,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
+        [Authorize]
         public IHttpActionResult Put(ProductEdit product)
         {
 
@@ -124,6 +157,8 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize]
+        [Route("Product/Delete")]
         public IHttpActionResult Delete(int id)
         {
             var service = CreateProductService();

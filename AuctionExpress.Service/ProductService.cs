@@ -27,7 +27,8 @@ namespace AuctionExpress.Service
                 ProductQuantity = model.ProductQuantity,
                 ProductStartTime = model.ProductStartTime,
                 ProductCloseTime = model.ProductCloseTime,
-                ProductSeller = _userId.ToString()
+                ProductSeller = _userId.ToString(),
+                MinimumSellingPrice = model.MinimumSellingPrice
             };
 
             using (var ctx = new ApplicationDbContext())
@@ -53,11 +54,60 @@ namespace AuctionExpress.Service
                         ProductQuantity = e.ProductQuantity,
                       // ProductIsActive = e.DetermineIsActive(),
                         ProductStartTime = e.ProductStartTime,
-                        ProductCloseTime = e.ProductCloseTime
+                        ProductCloseTime = e.ProductCloseTime,
+                        MinimumSellingPrice = e.MinimumSellingPrice
                     }
                     );
                 return query.ToList();
                 
+            }
+        }
+
+        public IEnumerable<ProductListItem> GetOpenProducts()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                    .Product
+                    .Where(e => e.ProductCloseTime > DateTimeOffset.Now && e.ProductStartTime<DateTimeOffset.Now)
+                    .Select(e => new ProductListItem
+                    {
+                        ProductId = e.ProductId,
+                        ProductName = e.ProductName,
+                        CategoryName = e.ProductCategoryCombo.CategoryName,
+                        ProductQuantity = e.ProductQuantity,
+                        // ProductIsActive = e.DetermineIsActive(),
+                        ProductStartTime = e.ProductStartTime,
+                        ProductCloseTime = e.ProductCloseTime,
+                        MinimumSellingPrice = e.MinimumSellingPrice
+                    }
+                    );
+                return query.ToList();
+            }
+        }
+
+        public IEnumerable<ProductListItem> GetOpenProdByCategory(int Id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                    .Product
+                    .Where(e => e.ProductCloseTime > DateTimeOffset.Now && e.ProductStartTime < DateTimeOffset.Now && e.ProductCategoryId ==Id)
+                    .Select(e => new ProductListItem
+                    {
+                        ProductId = e.ProductId,
+                        ProductName = e.ProductName,
+                        CategoryName = e.ProductCategoryCombo.CategoryName,
+                        ProductQuantity = e.ProductQuantity,
+                        // ProductIsActive = e.DetermineIsActive(),
+                        ProductStartTime = e.ProductStartTime,
+                        ProductCloseTime = e.ProductCloseTime,
+                        MinimumSellingPrice = e.MinimumSellingPrice
+                    }
+                    );
+                return query.ToList();
             }
         }
 
@@ -85,7 +135,8 @@ namespace AuctionExpress.Service
                         ProductStartTime = entity.ProductStartTime,
                         ProductCloseTime = entity.ProductCloseTime,
                         ProductSeller = entity.ProductSeller,
-                        HighestBid = entity.HighestBid
+                        HighestBid = entity.HighestBid,
+                        MinimumSellingPrice = entity.MinimumSellingPrice
 
                     };
             }
@@ -106,6 +157,7 @@ namespace AuctionExpress.Service
                 entity.ProductDescription = model.ProductDescription;
                 entity.ProductQuantity = model.ProductQuantity;
                 entity.ProductCloseTime = model.ProductCloseTime;
+                entity.MinimumSellingPrice = model.MinimumSellingPrice;
 
                 return ctx.SaveChanges() == 1;
             }
@@ -143,8 +195,12 @@ namespace AuctionExpress.Service
 
             if (prodDetail == null)
                 return "Product has been removed or does not exist.";
+            if (prodDetail.ProductSeller == _userId.ToString())
+                return "Users can not bid on products they are selling.";
             if (!prodDetail.ProductIsActive)
                 return "Auction is closed";
+            if (prodDetail.MinimumSellingPrice > bid.BidPrice)
+                return "Bid must be higher than produt's minimum selling price.";
             if (prodDetail.HighestBid > bid.BidPrice)
                 return "Bid must be higher than current selling price.";
             return "";

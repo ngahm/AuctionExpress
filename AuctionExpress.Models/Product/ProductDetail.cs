@@ -28,9 +28,11 @@ namespace AuctionExpress.Models
         public bool ProductIsActive { get; set; }
 
         [Display(Name = "Product Start")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy h:mm tt}")]
         public DateTimeOffset ProductStartTime { get; set; }
 
         [Display(Name = "Product Close")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy h:mm tt}")]
         public DateTimeOffset ProductCloseTime { get; set; }
 
         [Display(Name = "Product Seller")]
@@ -38,5 +40,8 @@ namespace AuctionExpress.Models
 
         [Display(Name = "Highest Bid")]
         public double HighestBid { get; set; }
+
+        [Display(Name = "Minimum Selling Price")]
+        public double MinimumSellingPrice { get; set; }
     }
 }

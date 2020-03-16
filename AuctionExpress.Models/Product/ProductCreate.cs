@@ -28,10 +28,16 @@ namespace AuctionExpress.Models
 
         [Display(Name = "Product Start")]
         [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy h:mm}")]
         public DateTimeOffset ProductStartTime { get; set; }
 
         [Display(Name = "Product Close")]
         [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy h:mm tt}")]
         public DateTimeOffset ProductCloseTime { get; set; }
+
+        [Display(Name = "Minimum Selling Price")]
+        [Range(0,double.MaxValue, ErrorMessage ="Price must be a number greater than zero.")]
+        public double MinimumSellingPrice { get; set; }
     }
 }

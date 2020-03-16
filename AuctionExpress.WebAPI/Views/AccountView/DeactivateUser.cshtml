@@ -1,11 +1,11 @@
 ﻿@model AuctionExpress.WebAPI.Models.LoginBindingModel
 
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "DeactivateUser";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Login</h2>
+<h2>DeactivateUser</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -43,15 +43,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Log In" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Register Account", "Create") |
-    @Html.ActionLink("View My Products", "GetProduct", "ProductView", new { /*id = */ }, htmlAttributes: new { @class = "btn" }) |
-    @Html.ActionLink("View My Bids", "GetBidsByUser", "BidView", new { /*id = */ }, htmlAttributes: new { @class = "btn" }) |
-
+    @Html.ActionLink("Back to List", "Index")
 </div>

@@ -1,4 +1,6 @@
 ﻿using AuctionExpress.Models;
+using AuctionExpress.WebAPI.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,9 @@ namespace AuctionExpress.WebAPI.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                 //HTTP GET
                 var responseTask = client.GetAsync("category");
                 responseTask.Wait();
@@ -52,7 +57,9 @@ namespace AuctionExpress.WebAPI.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/category");
-
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                 //HTTP POST
                 var postTask = client.PostAsJsonAsync<CategoryCreate>("category", category);
                 postTask.Wait();
@@ -76,6 +83,9 @@ namespace AuctionExpress.WebAPI.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                 //HTTP GET
                 var responseTask = client.GetAsync("category/" + id.ToString());
                 responseTask.Wait();
@@ -100,6 +110,9 @@ namespace AuctionExpress.WebAPI.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 //HTTP POST
                 var putTask = client.PutAsJsonAsync<CategoryEdit>("category", category);
@@ -122,6 +135,9 @@ namespace AuctionExpress.WebAPI.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                 //HTTP GET
                 var responseTask = client.GetAsync("category/" + id.ToString());
                 responseTask.Wait();
@@ -150,6 +166,9 @@ namespace AuctionExpress.WebAPI.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                 //HTTP DELETE
                 var deleteTask = client.DeleteAsync("category/" + id.ToString());
@@ -165,6 +184,18 @@ namespace AuctionExpress.WebAPI.Controllers
 
             return RedirectToAction("GetCategories");
         }
+        #region Helper
+        private string DeserializeToken()
+        {
+            var cookieValue = Request.Cookies["UserToken"];
+            if (cookieValue != null)
+            {
+                var t = JsonConvert.DeserializeObject<Token>(cookieValue.Value);
+                return t.access_token;
+            }
+            return null;
+        }
+        #endregion
 
     }
 
