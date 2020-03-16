@@ -39,7 +39,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     //log response status here..
                     bids = Enumerable.Empty<BidListItem>();
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
                 }
 
             }
@@ -73,7 +73,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     //log response status here..
                   //bid = //Enumerable.Empty<BidDetail>();
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
                 }
 
             }
@@ -107,7 +107,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {         //log response status here.
                     bidViewer = Enumerable.Empty<BidListItem>();
 
-                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
 
                 }
 

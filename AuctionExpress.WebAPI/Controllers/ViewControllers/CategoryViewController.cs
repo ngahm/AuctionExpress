@@ -41,7 +41,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     categories = Enumerable.Empty<CategoryListItem>();
 
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
                 }
             }
             return View(categories);
@@ -69,9 +69,13 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetCategories");
                 }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
+                }
             }
 
-            ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+           
 
             return View(category);
         }
@@ -154,7 +158,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     //log response status here..
                     //bid = //Enumerable.Empty<CategoryDetail>();
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
                 }
 
             }
