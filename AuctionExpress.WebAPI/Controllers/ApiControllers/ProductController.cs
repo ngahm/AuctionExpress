@@ -15,8 +15,17 @@ namespace AuctionExpress.WebAPI.Controllers
     {
         private ProductService CreateProductService()
         {
+<<<<<<< HEAD:AuctionExpress.WebAPI/Controllers/ProductController.cs
             var userId = Guid.Parse("137ae0c4-7144-445d-b6c0-2918a3dd5907");
             //User.Identity.GetUserId());
+=======
+            Guid userId = new Guid();
+            if (!User.Identity.IsAuthenticated)
+            { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }
+            else
+            { userId = Guid.Parse(User.Identity.GetUserId()); }
+
+>>>>>>> d97ee118e3b517dd7714c640f9c3ada5db551b9d:AuctionExpress.WebAPI/Controllers/ApiControllers/ProductController.cs
             var productService = new ProductService(userId);
             return productService;
         }
@@ -27,11 +36,13 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
+        [Authorize]
         public IHttpActionResult Post(ProductCreate product)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
+            if (User == null)
+                return BadRequest("Must be a registered user.");
             var service = CreateProductService();
             var result = new DateValidator(product.ProductStartTime, product.ProductCloseTime);
             bool validateAllProperties = false;
@@ -59,6 +70,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// Get a list of auction that the user has created.
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         public IHttpActionResult Get()
         {
             ProductService productService = CreateProductService();
@@ -72,6 +84,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         public IHttpActionResult Get(int id)
         {
             ProductService productService = CreateProductService();
@@ -85,6 +98,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
+        [Authorize]
         public IHttpActionResult Put(ProductEdit product)
         {
 
@@ -124,6 +138,8 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize]
+        [Route("Product/Delete")]
         public IHttpActionResult Delete(int id)
         {
             var service = CreateProductService();

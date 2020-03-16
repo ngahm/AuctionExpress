@@ -104,15 +104,6 @@ namespace AuctionExpress.WebAPI.Controllers
             };
         }
 
-
-        // POST api/Account/Logout
-        [Route("Logout")]
-        public IHttpActionResult Logout()
-        {
-            Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
-            return Ok();
-        }
-
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
         [Route("ManageInfo")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
@@ -173,23 +164,25 @@ namespace AuctionExpress.WebAPI.Controllers
             return Ok();
         }
 
-        //DeleteUser
+        //DeActivateUser
         [Route("DeactivateUser")]
-        public async Task<IHttpActionResult> DeactivateUser()
+        public async Task<IHttpActionResult> DeactivateUser(LoginBindingModel model)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+            if (User.Identity.Name != model.UserName)
+                return BadRequest("Can not remove User with different User Name.");
             var userId = User.Identity.GetUserId();
             ApplicationUser user = new ApplicationUser() { Id = userId };
-            IdentityResult result = await UserManager.DeleteAsync(user);
-
+            IdentityResult result = UserManager.RemoveFromRole(userId, "ActiveUser");
             if (!result.Succeeded)
-            {
                 return GetErrorResult(result);
-            }
-
+            result = UserManager.AddToRole(userId, "InActiveUser");
+            if (!result.Succeeded)
+                return GetErrorResult(result);
+            result = await UserManager.DeleteAsync(user);
+            if (!result.Succeeded)
+                return GetErrorResult(result);
             return Ok();
         }
 
@@ -431,126 +424,6 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             return Ok();
         }
-
-
-        // POST: /Account/Login
-
-        [AllowAnonymous]
-        [Route("Login")]
-        public async Task<IHttpActionResult> Login(LoginBindingModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
-
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return Ok();
-                case SignInStatus.LockedOut:
-                    return BadRequest("account is locked out.");
-                case SignInStatus.RequiresVerification:
-                    return BadRequest("account needs verification");
-                case SignInStatus.Failure:
-                default:
-                    return BadRequest("invalid login attempt.");
-            }
-        }
-
-        [Route("Logoff")]
-        public IHttpActionResult LogOff()
-        {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return Ok();
-        }
-        //[Authorize]
-        // [RoutePrefix("api/Admininstration")]
-        [Route("AddRole")]
-        public async Task<IHttpActionResult> CreateRole(CreateRoleModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            IdentityRole identityRole = new IdentityRole
-            {
-                Name = model.RoleName
-            };
-
-            IdentityResult result = await RoleManager.CreateAsync(identityRole);
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
-
-            return Ok();
-        }
-        [Route("GetRoles")]
-        public IHttpActionResult GetRoles()
-        {
-            List<RoleDetail> roleDetails = new List<RoleDetail>();
-            var roles = RoleManager.Roles;
-            foreach (var item in roles)
-            {
-                new RoleDetail()
-                {
-                    Id = item.Id,
-                    Name = item.Name
-                };
-                roleDetails.Add(new RoleDetail()
-                {
-                    Id = item.Id,
-                    Name = item.Name
-                });
-            }
-            return Ok(roleDetails);
-        }
-
-        [Route("GetRoleById")]
-        public IHttpActionResult GetRole(string id)
-        {
-           var role = RoleManager.FindById(id);
-            if (role == null)
-                return BadRequest("Role not found.");
-            var model = new EditRole
-            {
-                Id = role.Id,
-                RoleName = role.Name,
-            };
-
-            //foreach (var user in UserManager.Users)
-            //{
-            //    if (UserManager.IsInRole(user.Id, role.Name))
-            //    {
-            //        model.Users.Add(user.UserName);
-            //    }
-            //}
-            return Ok(model);
-        }
-
-        [Route("UpdateRole")]
-        [HttpPut]
-        public IHttpActionResult UpdateRole(EditRole model)
-        {
-            var role = RoleManager.FindById(model.Id);
-            if(role==null)
-            {
-                return BadRequest($"Role Id {model.Id} not found.");
-            }
-
-            role.Name = model.RoleName;
-            IdentityResult result = RoleManager.Update(role);
-            if (result.Succeeded)
-                return Ok("Role successfully updated.");
-            return InternalServerError();
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)

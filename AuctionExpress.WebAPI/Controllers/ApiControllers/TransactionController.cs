@@ -15,7 +15,11 @@ namespace AuctionExpress.WebAPI.Controllers
 
         private TransactionService CreateTransactionService()
         {
-            var userId = Guid.Parse("1ae9afff-3752-45c4-a551-dc17f56033d8");
+            Guid userId = new Guid();
+            if (!User.Identity.IsAuthenticated)
+            { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }
+            else
+            { userId = Guid.Parse(User.Identity.GetUserId()); }
             var transactionService = new TransactionService(userId);
             return transactionService;
         }

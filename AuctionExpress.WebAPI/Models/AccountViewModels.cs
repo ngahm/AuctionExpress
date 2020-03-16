@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 
 namespace AuctionExpress.WebAPI.Models
@@ -39,5 +40,30 @@ namespace AuctionExpress.WebAPI.Models
         public string LoginProvider { get; set; }
 
         public string ProviderKey { get; set; }
+    }
+
+    public class UserListView
+    {
+        public string UserId { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public bool IsActive { get; set; }
+        public IList<string> UserRoles { get; set; }
+    }
+
+    public class UserUpdateView
+    {
+        public string UserId { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public bool IsActive { get; set; }
+        public List<RoleView> UpdateRoles { get; set; }
+
+    }
+    public class RoleView
+    {
+    public string RoleId { get; set; }
+        public string RoleName { get; set; }
+        public bool IsSelected { get; set; }
     }
 }
