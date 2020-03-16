@@ -74,6 +74,12 @@ namespace AuctionExpress.WebAPI.Controllers
                 var token= response.Content.ReadAsStringAsync().Result;
                 Response.Cookies.Add(CreateCookie(token));
                 //Response.Flush();
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("GetProduct", "ProductView");
+                }
+                ModelState.AddModelError(string.Empty, "Invalid Login. Please try again");
+
                 return View();
             }
             //Response.Cookies.Append("Token", token);
