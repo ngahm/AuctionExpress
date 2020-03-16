@@ -551,6 +551,13 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.BidController.GetBidsByUser">
+            <summary>
+            Get all bids associated with a user id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.BidController.Delete(System.Int32)">
             <summary>
             Delete Bid by bid Id.

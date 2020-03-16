@@ -383,6 +383,7 @@
     <Content Include="Views\AccountView\DeactivateUser.cshtml" />
     <Content Include="Views\AdminView\GetUsers.cshtml" />
     <Content Include="Views\AdminView\UpdateUser.cshtml" />
+    <Content Include="Views\BidView\GetBidsByUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
