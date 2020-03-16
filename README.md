@@ -14,6 +14,7 @@ https://www.codeproject.com/Questions/1000957/Multiplicity-not-allowed-in-Entity
 
 
 Unmapped database entries
+
 https://forums.asp.net/t/2031441.aspx?LINQ+to+Entities+does+not+recognize+the+method+method+and+this+method+cannot+be+translated+into+a+store+expression+
 https://stackoverflow.com/questions/6919709/only-initializers-entity-members-and-entity-navigation-properties-are-supporte
 
