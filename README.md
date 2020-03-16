@@ -8,6 +8,11 @@ DIRECTIONS FOR RUNNING APP LOCALLY
 
 
 RESOURCES USED
+Preserve User Data
+
+https://stackoverflow.com/questions/8594448/best-way-to-store-deleted-user-data
+https://github.com/dotnet/aspnetcore/blob/master/src/Identity/Core/src/SignInManager.cs
+https://stackoverflow.com/questions/22652118/disable-user-in-aspnet-identity-2-0
 
 Dealing with Multiplicity
 https://www.codeproject.com/Questions/1000957/Multiplicity-not-allowed-in-Entity-Framework
