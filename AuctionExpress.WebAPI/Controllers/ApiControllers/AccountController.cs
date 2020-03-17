@@ -22,7 +22,7 @@ using AuctionExpress.Models.Roles;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
@@ -123,6 +123,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        [Authorize(Roles = "Admin, ActiveUser")]
         [Route("DeactivateUser")]
         public async Task<IHttpActionResult> DeactivateUser(LoginBindingModel model)
         {

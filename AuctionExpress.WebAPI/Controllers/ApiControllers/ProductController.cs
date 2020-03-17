@@ -76,7 +76,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// Get a list of all auctions that are open for bidding.
         /// </summary>
         /// <returns></returns>
-        [Route("api/Product/GetOpenAuctions")]
+        [Route("Product/GetOpenAuctions")]
         [AllowAnonymous]
         public IHttpActionResult GetOpenProducts()
         {
@@ -88,7 +88,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// Get a list of all auctions that are open for bidding under a specific category.
         /// </summary>
         /// <returns></returns>
-        [Route("api/Product/GetAuctionsByCat")]
+        [Route("Product/GetAuctionsByCat")]
         [AllowAnonymous]
         public IHttpActionResult GetOpenProdByCategory(int Id)
         {
