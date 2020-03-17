@@ -184,6 +184,8 @@ namespace AuctionExpress.Service
             
             if (prodDetail == null)
                 return "Product has been removed or does not exist.";
+            if (prodDetail.ProductSeller != _userId.ToString())
+                return "UnAuthorized to make this change.";
             if (!prodDetail.ProductIsActive)
                 return "Auction is closed";
             return "";

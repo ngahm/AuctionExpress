@@ -128,7 +128,6 @@ namespace AuctionExpress.WebAPI.Controllers
             var prodDetail = service.ValidateAuctionStatus(product.ProductId);
             if (prodDetail == "")
             {
-
                 var result = new DateValidator(product.ProductCloseTime);
                 bool validateAllProperties = false;
                 var results = new List<ValidationResult>();

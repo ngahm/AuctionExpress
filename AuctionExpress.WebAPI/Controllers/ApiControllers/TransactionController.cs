@@ -47,7 +47,6 @@ namespace AuctionExpress.WebAPI.Controllers
             var prodDetail = prodService.ValidateAuctionStatus(transaction.ProductId);
             if (prodDetail == "Auction is closed")
             {
-
                 var service = CreateTransactionService();
 
                 if (!service.CreateTransaction(transaction))
