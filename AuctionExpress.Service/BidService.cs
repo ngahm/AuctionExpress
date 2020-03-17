@@ -42,7 +42,7 @@ namespace AuctionExpress.Service
                 var query =
                     ctx
                         .Bid
-                        .Where(e => e.ProductId == productid)                 /*get all rows with the common productid*/ 
+                        .Where(e => e.ProductId == productid)                 /*get all rows with the common productid*/
                         .Select(
                             e =>
                                 new BidListItem
@@ -50,7 +50,7 @@ namespace AuctionExpress.Service
                                     BidId = e.BidId,
                                     ProductId = e.ProductId,
                                     BidderId = e.BidderId,
-                                    BidPrice= e.BidPrice,
+                                    BidPrice = e.BidPrice,
                                 }
                         );
 
@@ -77,7 +77,7 @@ namespace AuctionExpress.Service
                         BidPrice = entity.BidPrice
                     };
 
-             }
+            }
         }
 
         public IEnumerable<BidListItem> GetBidsByUser()
@@ -111,16 +111,21 @@ namespace AuctionExpress.Service
                         .Bid
                         .Single(e => e.BidId == bidId);
 
-                try { 
-                ctx.Bid.Remove(entity);
-                    ctx.SaveChanges();
-                    return "Bid successfully deleted";
+                if (entity.BidderId == _userId.ToString())
+                {
+                    try
+                    {
+                        ctx.Bid.Remove(entity);
+                        ctx.SaveChanges();
+                        return "Bid successfully deleted";
+                    }
+                    catch (Exception e)
+                    {
+                        return e.Message;
+                    }
+                }
+                return "User not Authorized to delete this bid.";
             }
-                catch (Exception e)
-            {
-                return e.Message;
-            }
-        }
         }
 
 

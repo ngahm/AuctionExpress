@@ -85,12 +85,13 @@ namespace AuctionExpress.Service
         }
 
 
-        //Update Transaction <--Update IsPaid, currently Sellers allowed to edit
+        //Update Transaction <--Updates IsPaid, currently Sellers allowed to edit
 
         public bool UpdateTransaction(TransactionEdit model)
         {
             using (var ctx = new ApplicationDbContext())
             {
+
                 var entity =
                     ctx
                     .Transaction
@@ -113,18 +114,25 @@ namespace AuctionExpress.Service
                     ctx
                         .Transaction
                         .Single(e => e.TransactionId == transactionId);
+                if (entity.TransactionProduct.ProductSeller == _userId.ToString())
+                {
+                    try
+                    {
+                        ctx.Transaction.Remove(entity);
+                        ctx.SaveChanges();
 
-                try { 
-                ctx.Transaction.Remove(entity);
-                    ctx.SaveChanges();
+                        return "Transaction successfully deleted";
+                    }
+                    catch (Exception e)
+                    {
+                        return e.Message;
+                    }
+                }
 
-                    return "Transaction successfully deleted";
+                return "User unauthorized to delete this transaction.";
             }
-                catch (Exception e)
-            {
-                return e.Message;
-            }
-            }
+
         }
     }
+
 }
