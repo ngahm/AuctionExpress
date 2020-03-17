@@ -113,6 +113,8 @@ namespace AuctionExpress.WebAPI.Controllers
             {
                 return GetErrorResult(result);
             }
+            var registeredUser = await UserManager.FindByNameAsync(model.UserName);
+            await UserManager.AddToRoleAsync(registeredUser.Id, "ActiveUser");
 
             return Ok();
         }
