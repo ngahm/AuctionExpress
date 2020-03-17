@@ -39,7 +39,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {         //log response status here.
                     productViewer = Enumerable.Empty<ProductListItem>();
 
-                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
 
                 }
 
@@ -72,7 +72,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {         //log response status here.
                     productViewer = Enumerable.Empty<ProductListItem>();
 
-                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
 
                 }
 
@@ -105,7 +105,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {         //log response status here.
                     productViewer = Enumerable.Empty<ProductListItem>();
 
-                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
 
                 }
 

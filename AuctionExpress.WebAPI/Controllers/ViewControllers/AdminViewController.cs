@@ -71,7 +71,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {     
                     roleViewer = Enumerable.Empty<RoleDetail>();
 
-                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
                 }
             }
             return View(roleViewer);
@@ -225,7 +225,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     userViewer = Enumerable.Empty<UserListView>();
 
-                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
                 }
             }
             return View(userViewer);

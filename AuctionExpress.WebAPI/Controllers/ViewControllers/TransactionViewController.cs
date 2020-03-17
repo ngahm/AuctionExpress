@@ -38,7 +38,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {         //log response status here.
                     transactionViewer = Enumerable.Empty<TransactionListItem>();
 
-                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
 
                 }
 
