@@ -137,7 +137,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 var result = postTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("GetBidsByProduct");
+                    return RedirectToAction("GetBidsByUser");
                 }
                 else
                 {
@@ -148,6 +148,31 @@ namespace AuctionExpress.WebAPI.Controllers
 
             return View(bid);
         }
+
+        public ActionResult DeleteBid(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                //HTTP DELETE
+                var deleteTask = client.DeleteAsync("bid/" + id.ToString());
+                deleteTask.Wait();
+
+                var result = deleteTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+
+                    return RedirectToAction("GetBidsByUser");
+                }
+            }
+
+            return RedirectToAction("GetBidsByUser");
+        }
+
         #region Helper
         private HttpCookie CreateCookie(string token)
         {

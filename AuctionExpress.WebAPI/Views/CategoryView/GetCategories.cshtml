@@ -32,7 +32,8 @@
         <td>
             @Html.ActionLink("Edit", "EditCategory", new { id = item.CategoryId }) |
             @Html.ActionLink("Details", "GetCategoryById", new { id = item.CategoryId }) |
-            @Html.ActionLink("Delete", "DeleteCategory", new {id = item.CategoryId })
+            @Html.ActionLink("See Related Products", "GetOpenProdByCat", "ProductView", new { id = item.CategoryId }, htmlAttributes: new { @class = "btn" }) |
+            @Html.ActionLink("Delete", "DeleteCategory", new { id = item.CategoryId })
         </td>
     </tr>
 }

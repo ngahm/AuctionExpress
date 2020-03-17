@@ -76,7 +76,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 //Response.Flush();
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("GetProduct", "ProductView");
+                    return RedirectToAction("GetOpenProduct", "ProductView");
                 }
                 ModelState.AddModelError(string.Empty, "Invalid Login. Please try again");
 
