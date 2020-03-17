@@ -231,6 +231,30 @@ namespace AuctionExpress.WebAPI.Controllers
             }
         }
 
+        public ActionResult DeleteProduct(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                //HTTP DELETE
+                var deleteTask = client.DeleteAsync("product/" + id.ToString());
+                deleteTask.Wait();
+
+                var result = deleteTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+
+                    return RedirectToAction("GetProduct");
+                }
+            }
+                return RedirectToAction("GetProduct");
+
+        }
+
 
         #region Helper
         private string DeserializeToken()
