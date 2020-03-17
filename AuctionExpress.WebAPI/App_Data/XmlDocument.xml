@@ -481,6 +481,20 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.AccountController.Register(AuctionExpress.WebAPI.Models.RegisterBindingModel)">
+            <summary>
+            Register a new user.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.AccountController.DeactivateUser(AuctionExpress.WebAPI.Models.LoginBindingModel)">
+            <summary>
+            Deactiving user will disable user's ability to interact with the site.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.AdminController.CreateRole(AuctionExpress.Models.RoleCreate)">
             <summary>
             Add a new user role
@@ -501,6 +515,26 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.AdminController.EditUsersInRole(System.String)">
+            <summary>
+            See list of all users in a specified role.
+            </summary>
+            <param name="roleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.AdminController.GetAllUsers">
+            <summary>
+            Get a list of all registered users.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.AdminController.GetUser(System.String)">
+            <summary>
+            Get a specific user by referencing the user's Id.  
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.AdminController.UpdateRole(AuctionExpress.Models.Roles.RoleEdit)">
             <summary>
             Update a role name.
@@ -508,18 +542,18 @@
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:AuctionExpress.WebAPI.Controllers.AdminController.EditUsersInRole(System.String)">
-            <summary>
-            See List of all users in a specified role.
-            </summary>
-            <param name="roleId"></param>
-            <returns></returns>
-        </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.AdminController.EditUsersInRole(AuctionExpress.Models.Roles.RoleUserList)">
             <summary>
             Update the users in a role
             </summary>
             <param name="userRoleList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.AdminController.UpdateUser(AuctionExpress.WebAPI.Models.UserUpdateView)">
+            <summary>
+            Update user's info.
+            </summary>
+            <param name="model"></param>
             <returns></returns>
         </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.AdminController.DeleteRole(System.String)">
@@ -565,17 +599,17 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:AuctionExpress.WebAPI.Controllers.CategoryController.Get">
-            <summary>
-            Get a list of all available categories.
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.CategoryController.Post(AuctionExpress.Models.CategoryCreate)">
             <summary>
             Create a new category.
             </summary>
             <param name="category"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.CategoryController.Get">
+            <summary>
+            Get a list of all available categories.
+            </summary>
             <returns></returns>
         </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.CategoryController.Get(System.Int32)">
