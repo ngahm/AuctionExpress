@@ -101,11 +101,12 @@ namespace AuctionExpress.WebAPI.Controllers
         public IHttpActionResult Delete(int id)
         {
             var service = CreateCategoryService();
-
-            if (!service.DeleteCategory(id))
+            string deleteResponse = service.DeleteCategory(id);
+            if (deleteResponse == "Category successfully deleted")
+                return Ok(deleteResponse);
+            
                 return InternalServerError();
 
-            return Ok();
         }
     }
 }
