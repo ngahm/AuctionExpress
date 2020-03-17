@@ -163,11 +163,12 @@ namespace AuctionExpress.WebAPI.Controllers
         public IHttpActionResult Delete(int id)
         {
             var service = CreateProductService();
-
-            if (!service.DeleteProduct(id))
+            string deleteResponse = service.DeleteProduct(id);
+            if (deleteResponse == "Product successfully removed.")
+                return Ok(deleteResponse);
+            else if (deleteResponse == "")
                 return InternalServerError();
-
-            return Ok();
+            return BadRequest(deleteResponse);
         }
     }
 }
