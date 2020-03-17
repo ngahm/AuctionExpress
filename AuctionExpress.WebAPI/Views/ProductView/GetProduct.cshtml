@@ -69,10 +69,10 @@
         @Html.DisplayFor(modelItem => item.ProductCloseTime)
     </td>
     <td>
-        @Html.ActionLink("Edit", "PutProduct", new { id = item.ProductId }) |
         @Html.ActionLink("Details", "GetProductById", new { id = item.ProductId }) |
         @Html.ActionLink("See Bids", "GetBidsByProduct", "BidView", new { id =item.ProductId }, htmlAttributes: new { @class = "btn" }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.ProductId }) |
+        @Html.ActionLink("Edit", "PutProduct", new { id = item.ProductId }) |
+        @Html.ActionLink("Delete", "DeleteProduct", new { id = item.ProductId }) |
     </td>
 </tr>
     }

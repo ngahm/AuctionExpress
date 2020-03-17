@@ -156,8 +156,9 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize]
-        [Route("api/Product/Delete")]
+       //  [Authorize]
+       // [Route("Product/Delete")]
+
         public IHttpActionResult Delete(int id)
         {
             var service = CreateProductService();
