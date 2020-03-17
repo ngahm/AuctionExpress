@@ -10,6 +10,7 @@ using System.Web.Http;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
+    [Authorize(Roles = "ActiveUser")]
     public class BidController : ApiController
     {
         private BidService CreateBidService()

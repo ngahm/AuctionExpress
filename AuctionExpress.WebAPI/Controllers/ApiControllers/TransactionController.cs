@@ -10,6 +10,8 @@ using System.Web.Http;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
+    [AllowAnonymous]
+    [Authorize(Roles = "ActiveUser")]
     public class TransactionController : ApiController
     {
 

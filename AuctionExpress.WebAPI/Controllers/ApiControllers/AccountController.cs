@@ -125,7 +125,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [Authorize(Roles = "Admin, ActiveUser")]
+        [Authorize(Roles = "ActiveUser")]
         [Route("DeactivateUser")]
         public async Task<IHttpActionResult> DeactivateUser(LoginBindingModel model)
         {
