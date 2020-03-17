@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AuctionExpress.Models
 {
-    public class BidDetail
+    public class TransactionCreate
     {
-        public int BidId { get; set; }
+        [Display(Name = "Product Id")]
         public int ProductId { get; set; }
-        public int BidderId { get; set; }
-        public DateTimeOffset TimeOfBid { get; set; }
-        public double BidPrice { get; set; }
 
+        [Display(Name = "Is Paid")]
+        public bool IsPaid { get; set; }
     }
 }

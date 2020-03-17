@@ -20,10 +20,13 @@ namespace AuctionExpress.Data
 
         [ForeignKey(nameof(Buyer))]
         [Required]
-        public int BidderId { get; set; }
-        public virtual User Buyer { get; set; }
+        public string BidderId { get; set; }
+        public virtual ApplicationUser Buyer { get; set; }
 
-        public DateTime TimeOfBid { get; set; } = DateTime.Now;
+        public DateTimeOffset TimeOfBid {
+            get
+            { return DateTimeOffset.Now; }
+            }
         [Required]
         [DataType(DataType.Currency)]
         public double BidPrice { get; set; }

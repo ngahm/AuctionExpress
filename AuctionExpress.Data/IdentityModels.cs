@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace AuctionExpress.Data
 {
-    // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
+    // You can add profile data for the user by adding more properties to your  class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
@@ -19,6 +19,10 @@ namespace AuctionExpress.Data
             // Add custom user claims here
             return userIdentity;
         }
+
+        public bool IsActive { get; set; } = true;
+        public string BusinessName { get; set; }
+
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -33,7 +37,6 @@ namespace AuctionExpress.Data
             return new ApplicationDbContext();
         }
 
-        public DbSet<Bid> User { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Bid> Bid { get; set; }
@@ -68,7 +71,7 @@ namespace AuctionExpress.Data
     {
         public IdentityUserRoleConfiguration()
         {
-            HasKey(iur => iur.UserId);
+            HasKey(iur => new { iur.UserId, iur.RoleId });
         }
     }
 }

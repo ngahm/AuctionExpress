@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AuctionExpress.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace AuctionExpress.Models
 {
     public class BidCreate
     {
-        [Required]
+        [Display(Name = "Product Id")]
         public int ProductId { get; set; }
-        [Required]
-        public int BidderId { get; set; }
-        [Required]
+        //public string BidderId { get; set; }
+
+        [Display(Name = "Bid Price")]
         public double BidPrice { get; set; }
     }
 }
