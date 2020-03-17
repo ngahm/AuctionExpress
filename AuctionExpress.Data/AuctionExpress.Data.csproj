@@ -86,17 +86,9 @@
   <ItemGroup>
     <Compile Include="Category.cs" />
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\202003141424452_InitialMigration.cs" />
-    <Compile Include="Migrations\202003141424452_InitialMigration.Designer.cs">
-      <DependentUpon>202003141424452_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003161739268_TestUserRoleKey.cs" />
-    <Compile Include="Migrations\202003161739268_TestUserRoleKey.Designer.cs">
-      <DependentUpon>202003161739268_TestUserRoleKey.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003162310047_RevertingDatabase.cs" />
-    <Compile Include="Migrations\202003162310047_RevertingDatabase.Designer.cs">
-      <DependentUpon>202003162310047_RevertingDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\202003172044346_initial.cs" />
+    <Compile Include="Migrations\202003172044346_initial.Designer.cs">
+      <DependentUpon>202003172044346_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Product.cs" />
@@ -109,14 +101,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202003141424452_InitialMigration.resx">
-      <DependentUpon>202003141424452_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003161739268_TestUserRoleKey.resx">
-      <DependentUpon>202003161739268_TestUserRoleKey.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003162310047_RevertingDatabase.resx">
-      <DependentUpon>202003162310047_RevertingDatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003172044346_initial.resx">
+      <DependentUpon>202003172044346_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -14,29 +14,23 @@ namespace AuctionExpress.WebAPI.Controllers
     {
         private BidService CreateBidService()
         {
-<<<<<<< HEAD:AuctionExpress.WebAPI/Controllers/BidController.cs
-            var userId = Guid.Parse("137ae0c4-7144-445d-b6c0-2918a3dd5907");//User.Identity.GetUserId());
-=======
+
+ 
             Guid userId = new Guid();
             if (!User.Identity.IsAuthenticated)
             { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }
             else
             { userId = Guid.Parse(User.Identity.GetUserId()); }
->>>>>>> d97ee118e3b517dd7714c640f9c3ada5db551b9d:AuctionExpress.WebAPI/Controllers/ApiControllers/BidController.cs
             var bidService = new BidService(userId);
             return bidService;
         }
         private ProductService CreateProductService()
         {
-<<<<<<< HEAD:AuctionExpress.WebAPI/Controllers/BidController.cs
-            var userId = Guid.Parse("137ae0c4-7144-445d-b6c0-2918a3dd5907");//User.Identity.GetUserId());
-=======
             Guid userId = new Guid();
             if (!User.Identity.IsAuthenticated)
             { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }
             else
             { userId = Guid.Parse(User.Identity.GetUserId()); }
->>>>>>> d97ee118e3b517dd7714c640f9c3ada5db551b9d:AuctionExpress.WebAPI/Controllers/ApiControllers/BidController.cs
             var productService = new ProductService(userId);
             return productService;
         }
