@@ -102,6 +102,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     category = readTask.Result;
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
 
             return View(category);
@@ -128,6 +129,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     return RedirectToAction("GetCategories");
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
             return View(category);
         }
@@ -184,6 +186,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     return RedirectToAction("GetCategories");
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
 
             return RedirectToAction("GetCategories");

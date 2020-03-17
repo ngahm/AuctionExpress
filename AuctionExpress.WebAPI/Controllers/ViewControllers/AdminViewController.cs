@@ -37,7 +37,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetRoles");
                 }
-                ModelState.AddModelError(string.Empty, result.ReasonPhrase) ;
+                ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result) ;
             }
             return View(model);
         }
@@ -98,6 +98,7 @@ namespace AuctionExpress.WebAPI.Controllers
                     readTask.Wait();
                     role = readTask.Result;
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
 
             return View(role);
@@ -121,6 +122,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetRoles");
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
             return View(role);
         }
@@ -145,6 +147,7 @@ namespace AuctionExpress.WebAPI.Controllers
                     readtask.Wait();
                     userRoleList = readtask.Result;
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
             return View(userRoleList);
         }
@@ -169,6 +172,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     return RedirectToAction("GetRoles");
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
             return View(userRoleList);
         }
@@ -191,6 +195,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetRoles");
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
 
             return RedirectToAction("GetRoles");
@@ -252,6 +257,7 @@ namespace AuctionExpress.WebAPI.Controllers
                     readTask.Wait();
                     user = readTask.Result;
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
 
             return View(user);
@@ -275,6 +281,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetUsers");
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
             return View(user);
         }

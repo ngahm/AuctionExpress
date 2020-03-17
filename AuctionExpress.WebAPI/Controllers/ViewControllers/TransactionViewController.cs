@@ -101,10 +101,9 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     model = readTask.Result;
                 }
-                else
-                {
+
                     else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
-                }
+                
             }
 
             return View(model);
