@@ -121,3 +121,6 @@ Consume WebAPI MVC Razer
 
 https://www.tutorialsteacher.com/webapi/consume-web-api-get-method-in-aspnet-mvc
 
+Integrating Bootstrap with CSHTML in View Layout
+https://stackoverflow.com/questions/32420028/how-to-create-dropdown-navbar-menu-item-in-layout-cshtml-in-asp-net
+
