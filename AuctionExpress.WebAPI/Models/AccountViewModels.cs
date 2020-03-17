@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AuctionExpress.WebAPI.Models
 {
@@ -44,26 +45,37 @@ namespace AuctionExpress.WebAPI.Models
 
     public class UserListView
     {
+        [Display(Name = "User Id")]
         public string UserId { get; set; }
+        [Display(Name = "User Name")]
         public string UserName { get; set; }
         public string Email { get; set; }
+        [Display(Name = "User Has Active Account?")]
         public bool IsActive { get; set; }
+        [Display(Name = "Roles Assigned to User")]
         public IList<string> UserRoles { get; set; }
     }
 
     public class UserUpdateView
     {
+        [Display(Name = "User Id")]
         public string UserId { get; set; }
+        [Display(Name = "User Name")]
         public string UserName { get; set; }
         public string Email { get; set; }
+        [Display(Name = "User Has Active Account?")]
         public bool IsActive { get; set; }
+        [Display(Name = "Roles Assigned to User")]
         public List<RoleView> UpdateRoles { get; set; }
 
     }
     public class RoleView
     {
-    public string RoleId { get; set; }
+        [Display(Name = "Role Id")]
+        public string RoleId { get; set; }
+        [Display(Name = "Role Name")]
         public string RoleName { get; set; }
+        [Display(Name = "Is User in Role?")]
         public bool IsSelected { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace AuctionExpress.WebAPI.Controllers
     public class BidViewController : Controller
     {
         // GET: BidViewByProductId
-        public ActionResult GetBidsByProduct()
+        public ActionResult GetBidsByProduct(int id)
         {
             IEnumerable<BidListItem> bids = null;
 
@@ -24,7 +24,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                 //HTTP GET
-                var responseTask = client.GetAsync("Bid?productId=2");
+                var responseTask = client.GetAsync("Bid?productId=" + id.ToString());
                 responseTask.Wait();
 
                 var result = responseTask.Result;
@@ -39,7 +39,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     //log response status here..
                     bids = Enumerable.Empty<BidListItem>();
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
                 }
 
             }
@@ -73,12 +73,49 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     //log response status here..
                   //bid = //Enumerable.Empty<BidDetail>();
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
                 }
 
             }
             return View(bid);
         }
+
+        // GET: BidViewByUser
+
+        public ActionResult GetBidsByUser()
+        {
+            IEnumerable<BidListItem> bidViewer = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                var responseTask = client.GetAsync("bid");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<BidListItem>>();
+                    readTask.Wait();
+
+                    bidViewer = readTask.Result;
+                }
+                else      //web api sent error response
+                {         //log response status here.
+                    bidViewer = Enumerable.Empty<BidListItem>();
+
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
+
+                }
+
+            }
+            return View(bidViewer);
+        }
+
+
         public ActionResult CreateBid()
         {
             return View();
@@ -100,13 +137,42 @@ namespace AuctionExpress.WebAPI.Controllers
                 var result = postTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("GetBidsByProduct");
+                    return RedirectToAction("GetBidsByUser");
                 }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
+                }
+            
             }
-            ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
 
             return View(bid);
         }
+
+        public ActionResult DeleteBid(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                //HTTP DELETE
+                var deleteTask = client.DeleteAsync("bid/" + id.ToString());
+                deleteTask.Wait();
+
+                var result = deleteTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+
+                    return RedirectToAction("GetBidsByUser");
+                }
+            }
+
+            return RedirectToAction("GetBidsByUser");
+        }
+
         #region Helper
         private HttpCookie CreateCookie(string token)
         {

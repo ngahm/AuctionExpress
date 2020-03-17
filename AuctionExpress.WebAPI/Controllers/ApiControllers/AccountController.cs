@@ -89,7 +89,64 @@ namespace AuctionExpress.WebAPI.Controllers
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
+        // POST api/Account/Register
+        /// <summary>
+        /// Register a new user.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        
+        [AllowAnonymous]
+        [Route("Register")]
+        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = new ApplicationUser() { UserName = model.UserName, Email = model.Email };
+
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            return Ok();
+        }
+
+        //DeActivateUser
+        /// <summary>
+        /// Deactiving user will disable user's ability to interact with the site.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Route("DeactivateUser")]
+        public async Task<IHttpActionResult> DeactivateUser(LoginBindingModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            if (User.Identity.Name != model.UserName)
+                return BadRequest("Can not remove User with different User Name.");
+            var userId = User.Identity.GetUserId();
+            ApplicationUser user = new ApplicationUser() { Id = userId };
+            IdentityResult result = UserManager.RemoveFromRole(userId, "ActiveUser");
+            if (!result.Succeeded)
+                return GetErrorResult(result);
+            result = UserManager.AddToRole(userId, "InActiveUser");
+            if (!result.Succeeded)
+                return GetErrorResult(result);
+            result = await UserManager.DeleteAsync(user);
+            if (!result.Succeeded)
+                return GetErrorResult(result);
+            return Ok();
+        }
+
+
         // GET api/Account/UserInfo
+
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
         public UserInfoViewModel GetUserInfo()
@@ -161,28 +218,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 return GetErrorResult(result);
             }
 
-            return Ok();
-        }
-
-        //DeActivateUser
-        [Route("DeactivateUser")]
-        public async Task<IHttpActionResult> DeactivateUser(LoginBindingModel model)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            if (User.Identity.Name != model.UserName)
-                return BadRequest("Can not remove User with different User Name.");
-            var userId = User.Identity.GetUserId();
-            ApplicationUser user = new ApplicationUser() { Id = userId };
-            IdentityResult result = UserManager.RemoveFromRole(userId, "ActiveUser");
-            if (!result.Succeeded)
-                return GetErrorResult(result);
-            result = UserManager.AddToRole(userId, "InActiveUser");
-            if (!result.Succeeded)
-                return GetErrorResult(result);
-            result = await UserManager.DeleteAsync(user);
-            if (!result.Succeeded)
-                return GetErrorResult(result);
             return Ok();
         }
 
@@ -368,28 +403,6 @@ namespace AuctionExpress.WebAPI.Controllers
             }
 
             return logins;
-        }
-
-        // POST api/Account/Register
-        [AllowAnonymous]
-        [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var user = new ApplicationUser() { UserName = model.UserName, Email = model.Email };
-
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
-
-            return Ok();
         }
 
         // POST api/Account/RegisterExternal

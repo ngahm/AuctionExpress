@@ -71,7 +71,7 @@ namespace AuctionExpress.WebAPI.Controllers
             
         }
 
-        //GET Bid
+        //GET Bids By Product id
         /// <summary>
         /// Get all bids associated with a product.
         /// </summary>
@@ -84,7 +84,9 @@ namespace AuctionExpress.WebAPI.Controllers
            return Ok(bids);
         }
 
-        //GET Bid BY ID
+
+
+        //GET Bid BY Bid ID
         /// <summary>
         /// Get a specific bid referenced by bid id.
         /// </summary>
@@ -98,6 +100,21 @@ namespace AuctionExpress.WebAPI.Controllers
                 return BadRequest("Bid does not exist.");
             return Ok(bid);
         }
+
+        //GET Bid BY User
+        /// <summary>
+        /// Get all bids associated with a user id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IHttpActionResult GetBidsByUser()
+        {
+            BidService bidService = CreateBidService();
+            var bids = bidService.GetBidsByUser();
+            return Ok(bids);
+        }
+
+
 
         /// <summary>
         /// Delete Bid by bid Id.

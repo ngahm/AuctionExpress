@@ -38,7 +38,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {         //log response status here.
                     transactionViewer = Enumerable.Empty<TransactionListItem>();
 
-                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
 
                 }
 
@@ -160,25 +160,29 @@ namespace AuctionExpress.WebAPI.Controllers
             }
         }
 
-        //public ActionResult Delete(int id)
-        //{
-        //    using (var client = new HttpClient())
-        //    {
-        //        client.BaseAddress = new Uri("http://localhost:44320/api/");
+        public ActionResult DeleteTransaction(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-        //        //HTTP Delete
-        //        var deleteTask = client.DeleteAsync("transaction/" + id.ToString());
-        //        deleteTask.Wait();
+                //HTTP DELETE
+                var deleteTask = client.DeleteAsync("transaction/" + id.ToString());
+                deleteTask.Wait();
 
-        //        var result = deleteTask.Result;
-        //        if (result.IsSuccessStatusCode)
-        //        {
-        //            return RedirectToAction("GetTransaction");
-        //        }
+                var result = deleteTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
 
-        //    }
-        //    return RedirectToAction("GetTransaction");
-        //}
+                    return RedirectToAction("GetTransaction");
+                }
+            }
+
+            return RedirectToAction("GetTransaction");
+        }
         #region Helper
         private HttpCookie CreateCookie(string token)
         {

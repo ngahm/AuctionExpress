@@ -27,22 +27,6 @@ namespace AuctionExpress.WebAPI.Controllers
             return categoryService;
         }
 
-
-
-
-
-        //GET ALL
-        /// <summary>
-        /// Get a list of all available categories.
-        /// </summary>
-        /// <returns></returns>
-        public IHttpActionResult Get()
-        {
-            CategoryService categoryService = CreateCategoryService();
-            var category = categoryService.GetCategory();
-            return Ok(category);
-        }
-
         //POST
         /// <summary>
         /// Create a new category.
@@ -60,6 +44,18 @@ namespace AuctionExpress.WebAPI.Controllers
                 return InternalServerError();
 
             return Ok("Category successfully added.");
+        }
+
+        //GET ALL
+        /// <summary>
+        /// Get a list of all available categories.
+        /// </summary>
+        /// <returns></returns>
+        public IHttpActionResult Get()
+        {
+            CategoryService categoryService = CreateCategoryService();
+            var category = categoryService.GetCategory();
+            return Ok(category);
         }
 
         //GET BY ID

@@ -90,6 +90,14 @@
     <Compile Include="Migrations\202003141424452_InitialMigration.Designer.cs">
       <DependentUpon>202003141424452_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003161739268_TestUserRoleKey.cs" />
+    <Compile Include="Migrations\202003161739268_TestUserRoleKey.Designer.cs">
+      <DependentUpon>202003161739268_TestUserRoleKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003162310047_RevertingDatabase.cs" />
+    <Compile Include="Migrations\202003162310047_RevertingDatabase.Designer.cs">
+      <DependentUpon>202003162310047_RevertingDatabase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,6 +111,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202003141424452_InitialMigration.resx">
       <DependentUpon>202003141424452_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003161739268_TestUserRoleKey.resx">
+      <DependentUpon>202003161739268_TestUserRoleKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003162310047_RevertingDatabase.resx">
+      <DependentUpon>202003162310047_RevertingDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

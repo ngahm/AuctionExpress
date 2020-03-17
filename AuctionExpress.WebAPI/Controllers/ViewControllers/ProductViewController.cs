@@ -39,7 +39,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {         //log response status here.
                     productViewer = Enumerable.Empty<ProductListItem>();
 
-                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
 
                 }
 
@@ -47,6 +47,71 @@ namespace AuctionExpress.WebAPI.Controllers
             return View(productViewer);
         }
 
+        public ActionResult GetOpenProduct()
+        {
+            IEnumerable<ProductListItem> productViewer = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                var responseTask = client.GetAsync("Product/GetOpenAuctions");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<ProductListItem>>();
+                    readTask.Wait();
+
+                    productViewer = readTask.Result;
+                }
+                else      //web api sent error response
+                {         //log response status here.
+                    productViewer = Enumerable.Empty<ProductListItem>();
+
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
+
+                }
+
+            }
+            return View(productViewer);
+        }
+
+        public ActionResult GetOpenProdByCat(int Id)
+        {
+            IEnumerable<ProductListItem> productViewer = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                var responseTask = client.GetAsync("Product/GetAuctionsByCat?Id=" + Id.ToString());
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<ProductListItem>>();
+                    readTask.Wait();
+
+                    productViewer = readTask.Result;
+                }
+                else      //web api sent error response
+                {         //log response status here.
+                    productViewer = Enumerable.Empty<ProductListItem>();
+
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
+
+                }
+
+            }
+            return View(productViewer);
+        }
 
         public ActionResult PostProduct()
         {
@@ -164,6 +229,30 @@ namespace AuctionExpress.WebAPI.Controllers
                 }
                 return View(product);
             }
+        }
+
+        public ActionResult DeleteProduct(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                //HTTP DELETE
+                var deleteTask = client.DeleteAsync("product/" + id.ToString());
+                deleteTask.Wait();
+
+                var result = deleteTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+
+                    return RedirectToAction("GetProduct");
+                }
+            }
+                return RedirectToAction("GetProduct");
+
         }
 
 

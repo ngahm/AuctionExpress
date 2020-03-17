@@ -386,6 +386,7 @@
     <Content Include="Views\ProductView\GetOpenProduct.cshtml" />
     <Content Include="Views\ProductView\GetOpenProdByCat.cshtml" />
     <Content Include="Views\BidView\GetBidsByUser.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
