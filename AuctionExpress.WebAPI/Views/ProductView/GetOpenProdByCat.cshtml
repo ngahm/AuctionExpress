@@ -8,7 +8,8 @@
 <h2>GetOpenProdByCat</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("All Products", "GetOpenProduct", new { /*id = */ }, htmlAttributes: new { @class = "btn" })
+    @Html.ActionLink("All Categories", "GetCategories", "CategoryView", new { /*id = */ }, htmlAttributes: new { @class = "btn" })
 </p>
 <table class="table">
     <tr>
@@ -66,9 +67,10 @@
             @Html.DisplayFor(modelItem => item.MinimumSellingPrice)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "PutProduct", new { id = item.ProductId }) |
+            @Html.ActionLink("Details", "GetProductById", new { id = item.ProductId }) |
+            @Html.ActionLink("Bid", "CreateBid", "BidView", new { /*id = */ }, htmlAttributes: new { @class = "btn" })
+            @Html.ActionLink("Delete", "DeleteProduct", new { id=item.ProductId})
         </td>
     </tr>
 }
