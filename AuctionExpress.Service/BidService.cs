@@ -102,7 +102,7 @@ namespace AuctionExpress.Service
         }
 
 
-        public bool DeleteBid(int bidId)
+        public string DeleteBid(int bidId)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -111,10 +111,16 @@ namespace AuctionExpress.Service
                         .Bid
                         .Single(e => e.BidId == bidId);
 
+                try { 
                 ctx.Bid.Remove(entity);
-
-                return ctx.SaveChanges() == 1;
+                    ctx.SaveChanges();
+                    return "Bid successfully deleted";
             }
+                catch (Exception e)
+            {
+                return e.Message;
+            }
+        }
         }
 
 

@@ -110,11 +110,11 @@ namespace AuctionExpress.WebAPI.Controllers
         public IHttpActionResult Delete(int id)
         {
             var service = CreateTransactionService();
+            string deleteResponse = service.DeleteTransaction(id);
+            if (deleteResponse == "Transaction successfully deleted")
+                return Ok(deleteResponse);
 
-            if (!service.DeleteTransaction(id))
-                return InternalServerError();
-
-            return Ok();
+            return InternalServerError();
         }
     }
 }

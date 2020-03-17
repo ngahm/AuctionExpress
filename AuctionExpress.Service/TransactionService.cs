@@ -105,7 +105,7 @@ namespace AuctionExpress.Service
             }
         }
 
-        public bool DeleteTransaction(int transactionId)
+        public string DeleteTransaction(int transactionId)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -114,9 +114,16 @@ namespace AuctionExpress.Service
                         .Transaction
                         .Single(e => e.TransactionId == transactionId);
 
+                try { 
                 ctx.Transaction.Remove(entity);
+                    ctx.SaveChanges();
 
-                return ctx.SaveChanges() == 1;
+                    return "Transaction successfully deleted";
+            }
+                catch (Exception e)
+            {
+                return e.Message;
+            }
             }
         }
     }
