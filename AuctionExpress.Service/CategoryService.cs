@@ -89,7 +89,7 @@ namespace AuctionExpress.Service
             }
         }
 
-        public bool DeleteCategory(int categoryId)                                                
+        public string DeleteCategory(int categoryId)                                                
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -98,9 +98,16 @@ namespace AuctionExpress.Service
                         .Category                       
                         .Single(e => e.CategoryId == categoryId);
 
+                try
+                {
                 ctx.Category.Remove(entity);
-
-                return ctx.SaveChanges() == 1;
+                    ctx.SaveChanges();
+                    return "Category successfully deleted";
+                }
+                catch (Exception e)
+                {
+                    return e.Message;
+                }
             }
         }
 
