@@ -86,13 +86,13 @@
   <ItemGroup>
     <Compile Include="Category.cs" />
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\202003171401277_InitialMigration.cs" />
-    <Compile Include="Migrations\202003171401277_InitialMigration.Designer.cs">
-      <DependentUpon>202003171401277_InitialMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202003180311002_TestSeed.cs" />
+    <Compile Include="Migrations\202003180311002_TestSeed.Designer.cs">
+      <DependentUpon>202003180311002_TestSeed.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202003171359076_NewMigration.cs" />
-    <Compile Include="Migrations\202003171359076_NewMigration.Designer.cs">
-      <DependentUpon>202003171359076_NewMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202003180313070_TestIsActiveFalse.cs" />
+    <Compile Include="Migrations\202003180313070_TestIsActiveFalse.Designer.cs">
+      <DependentUpon>202003180313070_TestIsActiveFalse.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Product.cs" />
@@ -105,11 +105,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202003171401277_InitialMigration.resx">
-      <DependentUpon>202003171401277_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003180311002_TestSeed.resx">
+      <DependentUpon>202003180311002_TestSeed.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003171359076_NewMigration.resx">
-      <DependentUpon>202003171359076_NewMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003180313070_TestIsActiveFalse.resx">
+      <DependentUpon>202003180313070_TestIsActiveFalse.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

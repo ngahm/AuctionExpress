@@ -3,7 +3,7 @@ namespace AuctionExpress.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class NewMigration : DbMigration
+    public partial class TestIsActiveFalse : DbMigration
     {
         public override void Up()
         {

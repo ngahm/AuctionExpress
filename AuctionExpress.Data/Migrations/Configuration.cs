@@ -1,6 +1,9 @@
 namespace AuctionExpress.Data.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -26,6 +29,30 @@ namespace AuctionExpress.Data.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            UserStore<ApplicationUser> userStore = new UserStore<ApplicationUser>(context);
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(userStore);
+
+            context.Users.AddOrUpdate(
+                x => x.UserName,
+                new ApplicationUser() { Id = Guid.NewGuid().ToString(), Email = "Admin@AuctionExpress.com", UserName = "Admin", BusinessName = "AuctionExpress", PasswordHash = new PasswordHasher().HashPassword("@dmin1") },
+                new ApplicationUser() { Id = Guid.NewGuid().ToString(), Email = "TestActiveUser@AuctionExpress.com", UserName = "TestActiveUser", BusinessName = "AuctionExpress", PasswordHash = new PasswordHasher().HashPassword("TestActiveUser") },
+                new ApplicationUser() { Id = Guid.NewGuid().ToString(), Email = "TestInActiveUser@AuctionExpress.com", UserName = "TestInActiveUser", BusinessName = "AuctionExpress", IsActive=false, PasswordHash = new PasswordHasher().HashPassword("TestInActiveUser") });
+
+            context.SaveChanges();
+
+            List<string> userNames = new List<string>() { "Admin", "TestActiveUser", "TestInActiveUser" };
+            foreach (var user in userNames)
+            {
+                string userId = context.Users.Where(x => x.UserName == user && string.IsNullOrEmpty(x.SecurityStamp)).Select(x => x.Id).FirstOrDefault();
+
+                if (!string.IsNullOrEmpty(userId))
+                    userManager.UpdateSecurityStamp(userId);
+
+                context.SaveChanges();
+            }
+
+            
         }
     }
 }
