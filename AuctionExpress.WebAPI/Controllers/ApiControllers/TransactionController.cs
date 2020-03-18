@@ -10,6 +10,8 @@ using System.Web.Http;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
+    [AllowAnonymous]
+    [Authorize(Roles = "ActiveUser")]
     public class TransactionController : ApiController
     {
 
@@ -47,7 +49,6 @@ namespace AuctionExpress.WebAPI.Controllers
             var prodDetail = prodService.ValidateAuctionStatus(transaction.ProductId);
             if (prodDetail == "Auction is closed")
             {
-
                 var service = CreateTransactionService();
 
                 if (!service.CreateTransaction(transaction))
@@ -125,11 +126,11 @@ namespace AuctionExpress.WebAPI.Controllers
         public IHttpActionResult Delete(int id)
         {
             var service = CreateTransactionService();
+            string deleteResponse = service.DeleteTransaction(id);
+            if (deleteResponse == "Transaction successfully deleted")
+                return Ok(deleteResponse);
 
-            if (!service.DeleteTransaction(id))
-                return InternalServerError();
-
-            return Ok();
+            return InternalServerError();
         }
     }
 }

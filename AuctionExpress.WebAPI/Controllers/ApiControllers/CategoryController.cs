@@ -10,6 +10,7 @@ using System.Web.Http;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CategoryController : ApiController
     {
         private CategoryService CreateCategoryService()
@@ -48,6 +49,8 @@ namespace AuctionExpress.WebAPI.Controllers
         /// Get a list of all available categories.
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
+        [Authorize(Roles = "ActiveUser")]
         public IHttpActionResult Get()
         {
             CategoryService categoryService = CreateCategoryService();
@@ -61,6 +64,8 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [AllowAnonymous]
+        [Authorize(Roles = "ActiveUser")]
         public IHttpActionResult Get(int id)
         {
             CategoryService categoryService = CreateCategoryService();
@@ -97,11 +102,12 @@ namespace AuctionExpress.WebAPI.Controllers
         public IHttpActionResult Delete(int id)
         {
             var service = CreateCategoryService();
-
-            if (!service.DeleteCategory(id))
+            string deleteResponse = service.DeleteCategory(id);
+            if (deleteResponse == "Category successfully deleted")
+                return Ok(deleteResponse);
+            
                 return InternalServerError();
 
-            return Ok();
         }
     }
 }

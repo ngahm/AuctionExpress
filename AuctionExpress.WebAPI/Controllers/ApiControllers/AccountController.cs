@@ -22,7 +22,7 @@ using AuctionExpress.Models.Roles;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
@@ -113,6 +113,8 @@ namespace AuctionExpress.WebAPI.Controllers
             {
                 return GetErrorResult(result);
             }
+            var registeredUser = await UserManager.FindByNameAsync(model.UserName);
+            await UserManager.AddToRoleAsync(registeredUser.Id, "ActiveUser");
 
             return Ok();
         }
@@ -123,6 +125,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        [Authorize(Roles = "ActiveUser")]
         [Route("DeactivateUser")]
         public async Task<IHttpActionResult> DeactivateUser(LoginBindingModel model)
         {

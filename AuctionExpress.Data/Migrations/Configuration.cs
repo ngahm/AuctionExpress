@@ -19,9 +19,9 @@ namespace AuctionExpress.Data.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
             //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
+            ////       context.Product.AddOrUpdate(
+            //      p => p.ProductStartTime,
+            //      new Product { ProductStartTime = DateTimeOffset.Now.AddDays(5) },
             //      new Person { FullName = "Brice Lambson" },
             //      new Person { FullName = "Rowan Miller" }
             //    );

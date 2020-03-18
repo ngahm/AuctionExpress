@@ -204,6 +204,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     return RedirectToAction("GetBidsByUser");
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
 
             return RedirectToAction("GetBidsByUser");

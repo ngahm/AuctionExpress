@@ -70,7 +70,7 @@ namespace AuctionExpress.Service
                                     BidId = e.BidId,
                                     ProductId = e.ProductId,
                                     BidderId = e.BidderId,
-                                    BidPrice= e.BidPrice,
+                                    BidPrice = e.BidPrice,
                                 }
                         );
 
@@ -98,7 +98,7 @@ namespace AuctionExpress.Service
                         BidPrice = entity.BidPrice
                     };
 
-             }
+            }
         }
 
         //GET My Bids
@@ -125,7 +125,7 @@ namespace AuctionExpress.Service
         }
 
 
-        public bool DeleteBid(int bidId)
+        public string DeleteBid(int bidId)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -134,9 +134,20 @@ namespace AuctionExpress.Service
                         .Bid
                         .Single(e => e.BidId == bidId);
 
-                ctx.Bid.Remove(entity);
-
-                return ctx.SaveChanges() == 1;
+                if (entity.BidderId == _userId.ToString())
+                {
+                    try
+                    {
+                        ctx.Bid.Remove(entity);
+                        ctx.SaveChanges();
+                        return "Bid successfully deleted";
+                    }
+                    catch (Exception e)
+                    {
+                        return e.Message;
+                    }
+                }
+                return "User not Authorized to delete this bid.";
             }
         }
 

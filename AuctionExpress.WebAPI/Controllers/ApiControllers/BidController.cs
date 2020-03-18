@@ -10,6 +10,7 @@ using System.Web.Http;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
+    [Authorize(Roles = "ActiveUser")]
     public class BidController : ApiController
     {
         private BidService CreateBidService()
@@ -134,11 +135,11 @@ namespace AuctionExpress.WebAPI.Controllers
         public IHttpActionResult Delete(int id)
         {
             var service = CreateBidService();
+            string deleteResponse = service.DeleteBid(id);
+            if (deleteResponse == "Bid successfully deleted")
+                return Ok(deleteResponse);
 
-            if (!service.DeleteBid(id))
-                return InternalServerError();
-
-            return Ok();
+            return InternalServerError();
         }
     }
 }

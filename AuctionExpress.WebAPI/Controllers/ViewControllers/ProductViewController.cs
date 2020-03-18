@@ -171,8 +171,8 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetProduct");
                 }
+            else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
-            ModelState.AddModelError(string.Empty, "Server Error. Please contact administration.");
 
             return View(product);
 
@@ -234,12 +234,9 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     product = readTask.Result;
                 }
-                else
-                {
-                     ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
 
-                    return View(product);
-                }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
+
                 return View(product);
 
             }
@@ -268,8 +265,10 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetProduct");
                 }
-            }
+
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
                 return View(product);
+
         }
 
         public ActionResult DeleteProduct(int id)
@@ -288,9 +287,9 @@ namespace AuctionExpress.WebAPI.Controllers
                 var result = deleteTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-
                     return RedirectToAction("GetProduct");
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
                 return RedirectToAction("GetProduct");
 

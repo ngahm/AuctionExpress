@@ -53,14 +53,14 @@ namespace AuctionExpress.Service
                         ProductName = e.ProductName,
                         CategoryName = e.ProductCategoryCombo.CategoryName,
                         ProductQuantity = e.ProductQuantity,
-                      // ProductIsActive = e.DetermineIsActive(),
+                        // ProductIsActive = e.DetermineIsActive(),
                         ProductStartTime = e.ProductStartTime,
                         ProductCloseTime = e.ProductCloseTime,
                         MinimumSellingPrice = e.MinimumSellingPrice
                     }
                     );
                 return query.ToList();
-                
+
             }
         }
 
@@ -96,7 +96,7 @@ namespace AuctionExpress.Service
                 var query =
                     ctx
                     .Product
-                    .Where(e => e.ProductCloseTime > DateTimeOffset.Now && e.ProductStartTime<DateTimeOffset.Now)
+                    .Where(e => e.ProductCloseTime > DateTimeOffset.Now && e.ProductStartTime < DateTimeOffset.Now)
                     .Select(e => new ProductListItem
                     {
                         ProductId = e.ProductId,
@@ -120,7 +120,7 @@ namespace AuctionExpress.Service
                 var query =
                     ctx
                     .Product
-                    .Where(e => e.ProductCloseTime > DateTimeOffset.Now && e.ProductStartTime < DateTimeOffset.Now && e.ProductCategoryId ==Id)
+                    .Where(e => e.ProductCloseTime > DateTimeOffset.Now && e.ProductStartTime < DateTimeOffset.Now && e.ProductCategoryId == Id)
                     .Select(e => new ProductListItem
                     {
                         ProductId = e.ProductId,
@@ -152,7 +152,7 @@ namespace AuctionExpress.Service
                 return
                     new ProductDetail
                     {
-                        ProductId=entity.ProductId,
+                        ProductId = entity.ProductId,
                         ProductName = entity.ProductName,
                         ProductCategoryId = entity.ProductCategoryId,
                         ProductDescription = entity.ProductDescription,
@@ -189,7 +189,7 @@ namespace AuctionExpress.Service
             }
         }
 
-        public bool DeleteProduct(int productId)
+        public string DeleteProduct(int productId)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -198,18 +198,28 @@ namespace AuctionExpress.Service
                         .Product
                         .Single(e => e.ProductId == productId);
 
+                if (entity.Seller.Id != _userId.ToString())
+                    return "UnAuthorized to make this change.";
+                if (entity.ProductBids.Count > 0)
+                    return "Product can not be deleted, as bids have been placed.  Please contact site administration for assistance.";
+
                 ctx.Product.Remove(entity);
 
-                return ctx.SaveChanges() == 1;
+                if (ctx.SaveChanges() == 1)
+                    return "Product successfully removed.";
+
+                return "";
             }
         }
 
         public string ValidateAuctionStatus(int id)
         {
             var prodDetail = GetProductById(id);
-            
+
             if (prodDetail == null)
                 return "Product has been removed or does not exist.";
+            if (prodDetail.ProductSeller != _userId.ToString())
+                return "UnAuthorized to make this change.";
             if (!prodDetail.ProductIsActive)
                 return "Auction is closed";
             return "";

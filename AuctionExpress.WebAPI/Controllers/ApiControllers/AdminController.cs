@@ -18,6 +18,7 @@ using System.Web.Http;
 namespace AuctionExpress.WebAPI.Controllers
 {
     [RoutePrefix("api/Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : ApiController
     {
         private const string LocalLoginProvider = "Local";

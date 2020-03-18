@@ -11,6 +11,7 @@ using System.Web.Http;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
+    [Authorize]
     public class ProductController : ApiController
     {
         private ProductService CreateProductService()
@@ -32,7 +33,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
-        [Authorize]
+        [Authorize(Roles = "ActiveUser")]
         public IHttpActionResult Post(ProductCreate product)
         {
             if (!ModelState.IsValid)
@@ -66,7 +67,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// Get a list of auction that the user has created.
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        [Authorize(Roles = "ActiveUser")]
         public IHttpActionResult Get()
         {
             ProductService productService = CreateProductService();
@@ -133,7 +134,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
-        [Authorize]
+        [Authorize(Roles = "ActiveUser")]
         public IHttpActionResult Put(ProductEdit product)
         {
 
@@ -144,7 +145,6 @@ namespace AuctionExpress.WebAPI.Controllers
             var prodDetail = service.ValidateAuctionStatus(product.ProductId);
             if (prodDetail == "")
             {
-
                 var result = new DateValidator(product.ProductCloseTime);
                 bool validateAllProperties = false;
                 var results = new List<ValidationResult>();
@@ -173,17 +173,18 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-       //  [Authorize]
-       // [Route("Product/Delete")]
-
+        //  [Authorize]
+        // [Route("Product/Delete")]
+        [Authorize(Roles = "ActiveUser")]
         public IHttpActionResult Delete(int id)
         {
             var service = CreateProductService();
-
-            if (!service.DeleteProduct(id))
+            string deleteResponse = service.DeleteProduct(id);
+            if (deleteResponse == "Product successfully removed.")
+                return Ok(deleteResponse);
+            else if (deleteResponse == "")
                 return InternalServerError();
-
-            return Ok();
+            return BadRequest(deleteResponse);
         }
     }
 }

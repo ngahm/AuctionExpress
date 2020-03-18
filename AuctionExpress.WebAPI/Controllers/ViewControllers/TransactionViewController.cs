@@ -104,8 +104,9 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetTransaction");
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
-            ModelState.AddModelError(string.Empty, "Server Error. Please contact administration.");
+            
 
             return View(model);
 
@@ -134,10 +135,9 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     model = readTask.Result;
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Server Error.Please contact administration.");
-                }
+
+                    else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
+                
             }
 
             return View(model);
@@ -165,6 +165,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     model = readTask.Result;
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
 
             return View(model);
@@ -190,6 +191,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetTransaction");
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
                 return View(model);
             }
         }
@@ -213,6 +215,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     return RedirectToAction("GetTransaction");
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
 
             return RedirectToAction("GetTransaction");
