@@ -16,7 +16,6 @@ namespace AuctionExpress.WebAPI.Controllers
     {
         private ProductService CreateProductService()
         {
-
             Guid userId = new Guid();
             if (!User.Identity.IsAuthenticated)
             { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }
@@ -137,7 +136,6 @@ namespace AuctionExpress.WebAPI.Controllers
         [Authorize(Roles = "ActiveUser, Admin")]
         public IHttpActionResult Put(ProductEdit product)
         {
-
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
@@ -173,8 +171,6 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        //  [Authorize]
-        // [Route("Product/Delete")]
         [Authorize(Roles = "ActiveUser, Admin")]
         public IHttpActionResult Delete(int id)
         {

@@ -569,7 +569,6 @@
             </summary>
             <param name="bid"></param>
             <returns></returns>
-            
         </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.BidController.GetAllBids">
             <summary>

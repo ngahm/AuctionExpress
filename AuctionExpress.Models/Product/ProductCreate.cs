@@ -10,7 +10,7 @@ namespace AuctionExpress.Models
     public class ProductCreate
     {
         [Display(Name = "Product Name")]
-        [MaxLength(20,ErrorMessage ="Product Name must be less than 20 characters.")]
+        [MaxLength(20, ErrorMessage = "Product Name must be less than 20 characters.")]
         [MinLength(2, ErrorMessage = "Product Name must be more than 2 characters.")]
         public string ProductName { get; set; }
 
@@ -23,7 +23,7 @@ namespace AuctionExpress.Models
         public string ProductDescription { get; set; }
 
         [Display(Name = "Product Quantity")]
-        [Range(0,int.MaxValue, ErrorMessage ="Quantity must be a number greater than zero.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Quantity must be a number greater than zero.")]
         public int ProductQuantity { get; set; }
 
         [Display(Name = "Product Start")]
@@ -37,7 +37,7 @@ namespace AuctionExpress.Models
         public DateTimeOffset ProductCloseTime { get; set; }
 
         [Display(Name = "Minimum Selling Price")]
-        [Range(0,double.MaxValue, ErrorMessage ="Price must be a number greater than zero.")]
+        [Range(0, double.MaxValue, ErrorMessage = "Price must be a number greater than zero.")]
         public double MinimumSellingPrice { get; set; }
     }
 }

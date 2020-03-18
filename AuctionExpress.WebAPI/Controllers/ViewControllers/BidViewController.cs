@@ -12,7 +12,6 @@ namespace AuctionExpress.WebAPI.Controllers
 {
     public class BidViewController : Controller
     {
-
         public ActionResult GetAllBids()
         {
             IEnumerable<BidListItem> bidViewer = null;
@@ -34,8 +33,8 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     bidViewer = readTask.Result;
                 }
-                else      //web api sent error response
-                {         //log response status here.
+                else
+                {
                     bidViewer = Enumerable.Empty<BidListItem>();
 
                     ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
@@ -45,8 +44,6 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             return View(bidViewer);
         }
-
-
 
         // GET: BidViewByProductId
         public ActionResult GetBidsByProduct(int id)
@@ -59,7 +56,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 string token = DeserializeToken();
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                //HTTP GET
                 var responseTask = client.GetAsync("Bid?productId=" + id.ToString());
                 responseTask.Wait();
 
@@ -71,9 +67,8 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     bids = readTask.Result;
                 }
-                else //web api sent error response
+                else
                 {
-                    //log response status here..
                     bids = Enumerable.Empty<BidListItem>();
                     ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
                 }
@@ -93,7 +88,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 string token = DeserializeToken();
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                //HTTP GET
                 var responseTask = client.GetAsync("bid/" + id.ToString());
                 responseTask.Wait();
 
@@ -105,10 +99,8 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     bid = readTask.Result;
                 }
-                else //web api sent error response
+                else
                 {
-                    //log response status here..
-                  //bid = //Enumerable.Empty<BidDetail>();
                     ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
                 }
 
@@ -117,7 +109,6 @@ namespace AuctionExpress.WebAPI.Controllers
         }
 
         // GET: BidViewByUser
-
         public ActionResult GetBidsByUser()
         {
             IEnumerable<BidListItem> bidViewer = null;
@@ -139,18 +130,15 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     bidViewer = readTask.Result;
                 }
-                else      //web api sent error response
-                {         //log response status here.
+                else
+                {
                     bidViewer = Enumerable.Empty<BidListItem>();
 
                     ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
-
                 }
-
             }
             return View(bidViewer);
         }
-
 
         public ActionResult CreateBid()
         {
@@ -166,7 +154,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                //HTTP POST
                 var postTask = client.PostAsJsonAsync<BidCreate>("bid", bid);
                 postTask.Wait();
 
@@ -179,7 +166,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
                 }
-            
             }
 
             return View(bid);
@@ -194,7 +180,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                //HTTP DELETE
                 var deleteTask = client.DeleteAsync("bid/" + id.ToString());
                 deleteTask.Wait();
 
@@ -215,7 +200,6 @@ namespace AuctionExpress.WebAPI.Controllers
         {
             HttpCookie logInCookies = new HttpCookie("UserToken");
             logInCookies.Value = token;
-            //StudentCookies.Expires = DateTime.Now.AddHours(1);
             return logInCookies;
         }
 

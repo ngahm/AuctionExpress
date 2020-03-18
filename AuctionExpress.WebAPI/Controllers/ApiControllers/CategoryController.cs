@@ -15,7 +15,6 @@ namespace AuctionExpress.WebAPI.Controllers
     {
         private CategoryService CreateCategoryService()
         {
-
             Guid userId = new Guid();
             if (!User.Identity.IsAuthenticated)
             { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }
@@ -75,7 +74,6 @@ namespace AuctionExpress.WebAPI.Controllers
             return Ok(category);
         }
 
-        
         //PUT
         /// <summary>
         /// Update a category.
@@ -105,9 +103,8 @@ namespace AuctionExpress.WebAPI.Controllers
             string deleteResponse = service.DeleteCategory(id);
             if (deleteResponse == "Category successfully deleted")
                 return Ok(deleteResponse);
-            
-                return InternalServerError();
 
+            return InternalServerError();
         }
     }
 }

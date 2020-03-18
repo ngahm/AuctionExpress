@@ -13,10 +13,6 @@ namespace AuctionExpress.Data
         [Key]
         public int CategoryId { get; set; }
         [Required]
-        [Description("Name of the Category, meant to be displayed to user.  Products can be assigned to a category for grouping purposes.")]
-        /// <summary>
-        /// Name of the Category, meant to be displayed to user.  Products can be assigned to a category for grouping purposes.
-        /// </summary>
         public string CategoryName { get; set; }
     }
 }
