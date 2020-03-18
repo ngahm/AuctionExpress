@@ -1,0 +1,61 @@
+﻿@model AuctionExpress.Models.BidDetail
+
+@{
+    ViewBag.Title = "GetBidById";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetBidById</h2>
+
+<div>
+    <h4>BidDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BidId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BidId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BidderId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BidderId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeOfBid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeOfBid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BidPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BidPrice)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <!--@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |-->
+    @Html.ActionLink("Delete", "DeleteBid", new { id = Model.BidId }) |
+    @Html.ActionLink("All Bids on This Product", "GetBidsByProduct", new { id = Model.ProductId }) |
+    @Html.ActionLink("My Bids", "GetBidsByUser")
+</p>

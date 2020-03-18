@@ -1,0 +1,73 @@
+﻿@model AuctionExpress.WebAPI.Models.Token
+
+@{
+    ViewBag.Title = "LogOff";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>LogOff</h2>
+
+<h3>Are you sure you want to LogOff?</h3>
+<div>
+    <h4>Token</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.access_token)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.access_token)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.token_type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.token_type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.expires_in)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.expires_in)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.userName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.userName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.issued)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.issued)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.expires)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.expires)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="LogOff" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

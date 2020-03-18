@@ -19,23 +19,45 @@ namespace AuctionExpress.Data
         [Required]
         [Range(0, int.MaxValue)]
         public int ProductQuantity { get; set; }
-        public DateTime ProductStartTime { get; set; } = DateTime.Now;
+        public DateTimeOffset ProductStartTime { get; set; } = DateTimeOffset.Now;
         [Required]
-        public DateTime ProductCloseTime { get; set; }
-        public bool ProductIsActive { get; set; }
-
-        [ForeignKey(nameof(ProductTransaction))]
-        public int ProductTransactionKey { get; set; }
-        public virtual Transaction ProductTransaction { get; set; }
+        public DateTimeOffset ProductCloseTime { get; set; }
+        public bool ProductIsActive
+        {
+            get
+            {
+                if (DateTimeOffset.Now < ProductStartTime || DateTimeOffset.Now > ProductCloseTime)
+                {
+                    return false;
+                }
+                else
+                    return true;
+            }
+        }
 
         [ForeignKey(nameof(ProductCategoryCombo))]
-        public int ProductCategoryId { get; set; }
+        public int? ProductCategoryId { get; set; }
         public virtual Category ProductCategoryCombo { get; set; }
 
         [ForeignKey(nameof(Seller))]
         [Required]
-        public int ProductSeller { get; set; }
-        public virtual User Seller { get; set; }
+        public string ProductSeller { get; set; }
+        public virtual ApplicationUser Seller { get; set; }
 
+        public virtual ICollection<Bid> ProductBids { get; set; }
+
+        public double HighestBid
+        {
+            get
+            {
+                if (ProductBids.Count > 0)
+                {
+                    var item = ProductBids.Max(x => x.BidPrice);
+                    return item;
+                }
+                return 0;
+            }
+        }
+        public double MinimumSellingPrice { get; set; }
     }
 }

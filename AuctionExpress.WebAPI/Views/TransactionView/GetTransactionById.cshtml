@@ -1,0 +1,92 @@
+﻿@model AuctionExpress.Models.TransactionDetail
+
+@{
+    ViewBag.Title = "GetTransactionById";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetTransactionById</h2>
+
+<div>
+    <h4>TransactionDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransactionId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BuyerId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BuyerId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BuyerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BuyerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BuyerEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BuyerEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HighestBid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HighestBid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPaid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsPaid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "PutTransaction", new { id = Model.TransactionId }) |
+    @Html.ActionLink("Delete", "DeleteTransaction", new { id = Model.TransactionId }) |
+    @Html.ActionLink("Back to List", "GetTransaction")
+</p>

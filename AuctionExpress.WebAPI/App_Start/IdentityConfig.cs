@@ -3,8 +3,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using Microsoft.Owin.Security;
 using AuctionExpress.WebAPI.Models;
 using AuctionExpress.Data;
+using System.Linq;
 
 namespace AuctionExpress.WebAPI
 {
@@ -42,5 +44,62 @@ namespace AuctionExpress.WebAPI
             }
             return manager;
         }
+
+        public override Task<IdentityResult> DeleteAsync(ApplicationUser user)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                  ctx
+                    .Users
+                      .Single(e => e.Id == user.Id);
+
+                entity.IsActive = false;
+
+                ctx.SaveChanges();
+            }
+            //  bool wasSaved = (ctx.SaveChangesAsync().Result==1);
+            //Need to save this to database
+
+            return Task.FromResult(IdentityResult.Success);
+        }
+
     }
+    public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
+    {
+        public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
+            : base(userManager, authenticationManager)
+        {
+        }
+
+        public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
+        {
+            return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
+        }
+
+
+        public override Task<SignInStatus> PasswordSignInAsync(string userName, string password, bool rememberMe, bool shouldLockout)
+        {
+            var user = UserManager.FindByNameAsync(userName).Result;
+
+            if (!user.IsActive)
+            {
+                return Task.FromResult<SignInStatus>(SignInStatus.LockedOut);
+            }
+
+            return base.PasswordSignInAsync(user.UserName, password, rememberMe, shouldLockout);
+        }
+    }
+
+    public class ApplicationRoleManager : RoleManager<IdentityRole>
+{
+    public ApplicationRoleManager(IRoleStore<IdentityRole, string> store) : base(store)
+    {
+    }
+    public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
+    {
+        var roleStore = new RoleStore<IdentityRole>(context.Get<ApplicationDbContext>());
+        return new ApplicationRoleManager(roleStore);
+    }
+}
 }
