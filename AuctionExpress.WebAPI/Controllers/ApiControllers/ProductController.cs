@@ -33,7 +33,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
-        [Authorize(Roles = "ActiveUser")]
+        [Authorize(Roles = "ActiveUser, Admin")]
         public IHttpActionResult Post(ProductCreate product)
         {
             if (!ModelState.IsValid)
@@ -81,6 +81,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("Product/GetAllAuctions")]
+        [Authorize(Roles = "ActiveUser, Admin")]
         public IHttpActionResult GetAllProducts()
         {
             ProductService productService = CreateProductService();
@@ -133,7 +134,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
-        [Authorize(Roles = "ActiveUser")]
+        [Authorize(Roles = "ActiveUser, Admin")]
         public IHttpActionResult Put(ProductEdit product)
         {
 
@@ -174,7 +175,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// <returns></returns>
         //  [Authorize]
         // [Route("Product/Delete")]
-        [Authorize(Roles = "ActiveUser")]
+        [Authorize(Roles = "ActiveUser, Admin")]
         public IHttpActionResult Delete(int id)
         {
             var service = CreateProductService();

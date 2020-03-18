@@ -94,6 +94,10 @@
     <Compile Include="Migrations\202003180313070_TestIsActiveFalse.Designer.cs">
       <DependentUpon>202003180313070_TestIsActiveFalse.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003181419430_TestAddCategory.cs" />
+    <Compile Include="Migrations\202003181419430_TestAddCategory.Designer.cs">
+      <DependentUpon>202003181419430_TestAddCategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -110,6 +114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003180313070_TestIsActiveFalse.resx">
       <DependentUpon>202003180313070_TestIsActiveFalse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003181419430_TestAddCategory.resx">
+      <DependentUpon>202003181419430_TestAddCategory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

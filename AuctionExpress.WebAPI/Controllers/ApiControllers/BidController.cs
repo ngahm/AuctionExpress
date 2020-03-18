@@ -46,6 +46,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// <returns></returns>
         /// 
         [HttpPost]
+        [Authorize(Roles = "ActiveUser, Admin")]
         public IHttpActionResult Post(BidCreate bid)
         {
             if (!ModelState.IsValid)
@@ -88,6 +89,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="productId"></param>
         /// <returns></returns>
+        [Authorize(Roles = "ActiveUser, Admin")]
         public IHttpActionResult GetBid(int productId)
        {
            BidService bidService = CreateBidService();
@@ -103,6 +105,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize(Roles = "ActiveUser, Admin")]
         public IHttpActionResult GetBidById(int id)
         {
             BidService bidService = CreateBidService();
@@ -133,6 +136,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize(Roles ="Admin")]
         public IHttpActionResult Delete(int id)
         {
             var service = CreateBidService();
