@@ -43,9 +43,9 @@
             @Html.DisplayFor(modelItem => item.BidPrice)
         </td>
         <td>
-            @Html.ActionLink("Details", "GetBidById", new { id = item.BidderId }) |
-            @Html.ActionLink("Delete", "DeleteBid", new { id=item.BidId })
-            @Html.ActionLink("Bids on This Product", "GetBidsByProduct", new { id=item.ProductId })
+            @Html.ActionLink("Details", "GetBidById", new { id = item.BidId }) |
+            @Html.ActionLink("Delete", "DeleteBid", new { id = item.BidId }) |
+            @Html.ActionLink("Bids on This Product", "GetBidsByProduct", new { id = item.ProductId })
         </td>
     </tr>
 }
