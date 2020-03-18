@@ -12,30 +12,26 @@ namespace AuctionExpress.Service
     {
         private readonly Guid _userId;
 
-        public CategoryService(Guid userId)                             
+        public CategoryService(Guid userId)
         {
             _userId = userId;
         }
 
-
-
-        public bool CreateCategory(CategoryCreate model)                
+        public bool CreateCategory(CategoryCreate model)
         {
-            var entity = new Category()                                     
+            var entity = new Category()
             {
                 CategoryName = model.CategoryName,
             };
 
-            using (var ctx = new ApplicationDbContext())                  
+            using (var ctx = new ApplicationDbContext())
             {
                 ctx.Category.Add(entity);
                 return ctx.SaveChanges() == 1;
             }
         }
 
-
-
-        public IEnumerable<CategoryListItem> GetCategory()          
+        public IEnumerable<CategoryListItem> GetCategory()
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -44,28 +40,27 @@ namespace AuctionExpress.Service
                         .Category
                         .Select(
                             e =>
-                                new CategoryListItem                          
+                                new CategoryListItem
                                 {
                                     CategoryId = e.CategoryId,
                                     CategoryName = e.CategoryName,
                                 }
                         );
-
                 return query.ToArray();
             }
         }
 
-        public CategoryDetail GetCategoryById(int id)                        
+        public CategoryDetail GetCategoryById(int id)
         {
-            using (var ctx = new ApplicationDbContext())                            
+            using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                      ctx
-                    .Category                                                          
+                    .Category
                     .Where(e => e.CategoryId == id)
-                    .FirstOrDefault();         
+                    .FirstOrDefault();
                 return
-                    new CategoryDetail                                                  
+                    new CategoryDetail
                     {
                         CategoryId = entity.CategoryId,
                         CategoryName = entity.CategoryName,
@@ -73,13 +68,13 @@ namespace AuctionExpress.Service
             }
         }
 
-        public bool UpdateCategory(CategoryEdit model)                 
+        public bool UpdateCategory(CategoryEdit model)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
-                    ctx                                      
-                        .Category                           
+                    ctx
+                        .Category
                         .Single(e => e.CategoryId == model.CategoryId);
 
                 entity.CategoryId = model.CategoryId;
@@ -89,18 +84,18 @@ namespace AuctionExpress.Service
             }
         }
 
-        public string DeleteCategory(int categoryId)                                                
+        public string DeleteCategory(int categoryId)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
-                        .Category                       
+                        .Category
                         .Single(e => e.CategoryId == categoryId);
 
                 try
                 {
-                ctx.Category.Remove(entity);
+                    ctx.Category.Remove(entity);
                     ctx.SaveChanges();
                     return "Category successfully deleted";
                 }
@@ -110,7 +105,6 @@ namespace AuctionExpress.Service
                 }
             }
         }
-
     }
 }
 

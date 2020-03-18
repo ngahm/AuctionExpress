@@ -104,10 +104,7 @@ namespace AuctionExpress.Service
                     };
             }
         }
-
-
         //Update Transaction <--Updates IsPaid, currently Sellers allowed to edit
-
         public bool UpdateTransaction(TransactionEdit model)
         {
             using (var ctx = new ApplicationDbContext())
@@ -149,11 +146,8 @@ namespace AuctionExpress.Service
                         return e.Message;
                     }
                 }
-
                 return "User unauthorized to delete this transaction.";
             }
-
         }
     }
-
 }

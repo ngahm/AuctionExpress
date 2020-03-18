@@ -39,11 +39,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
 
-            
-
             return View(model);
-
-
         }
 
 
@@ -53,28 +49,25 @@ namespace AuctionExpress.WebAPI.Controllers
             return View();
         }
 
-        //
         // POST: /Account/Login
         [HttpPost]
-
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginBindingModel model, string returnUrl)
         {
-                var pairs = new List<KeyValuePair<string, string>>
+            var pairs = new List<KeyValuePair<string, string>>
                     {
                         new KeyValuePair<string, string>( "grant_type", "password" ),
                         new KeyValuePair<string, string>( "username", model.UserName ),
                         new KeyValuePair<string, string> ( "Password", model.Password )
                     };
-                var content = new FormUrlEncodedContent(pairs);
-                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            var content = new FormUrlEncodedContent(pairs);
+            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/");
                 var response = client.PostAsync("token", content).Result;
-                var token= response.Content.ReadAsStringAsync().Result;
+                var token = response.Content.ReadAsStringAsync().Result;
                 Response.Cookies.Add(CreateCookie(token));
-                //Response.Flush();
                 if (response.IsSuccessStatusCode)
                 {
                     return RedirectToAction("GetOpenProduct", "ProductView");
@@ -83,7 +76,6 @@ namespace AuctionExpress.WebAPI.Controllers
 
                 return View();
             }
-            //Response.Cookies.Append("Token", token);
         }
 
         public ActionResult LogOff()
@@ -92,7 +84,7 @@ namespace AuctionExpress.WebAPI.Controllers
             {
                 Response.Cookies["UserToken"].Expires = DateTime.Now.AddDays(-1);
             }
-            return RedirectToAction("Login","AccountView");
+            return RedirectToAction("Login", "AccountView");
         }
 
         public ActionResult DeactivateUser(string returnUrl)
@@ -110,7 +102,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                //HTTP Post
                 var postTask = client.PostAsJsonAsync<LoginBindingModel>("Account/DeactivateUser", model);
                 postTask.Wait();
 
@@ -121,7 +112,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 }
                 else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
-            
 
             return View(model);
         }
@@ -130,7 +120,6 @@ namespace AuctionExpress.WebAPI.Controllers
         {
             HttpCookie logInCookies = new HttpCookie("UserToken");
             logInCookies.Value = token;
-            //StudentCookies.Expires = DateTime.Now.AddHours(1);
             return logInCookies;
         }
 

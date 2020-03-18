@@ -25,9 +25,6 @@ namespace AuctionExpress.WebAPI.Controllers
         private ApplicationUserManager _userManager;
         private ApplicationSignInManager _signInManager;
         private ApplicationRoleManager _roleManager;
-
-
-
         public AdminController()
         {
         }
@@ -81,7 +78,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 return Request.GetOwinContext().Authentication;
             }
         }
-
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
         /// <summary>
@@ -291,7 +287,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 return Ok("Role successfully updated.");
             return InternalServerError();
         }
-        
+
         /// <summary>
         /// Update the users in a role
         /// </summary>
@@ -372,7 +368,7 @@ namespace AuctionExpress.WebAPI.Controllers
         public IHttpActionResult DeleteRole(string Id)
         {
             var role = RoleManager.FindById(Id);
-            if(role==null)
+            if (role == null)
                 return BadRequest($"Role Id {Id} not found.");
             var result = RoleManager.Delete(role);
             if (!result.Succeeded)

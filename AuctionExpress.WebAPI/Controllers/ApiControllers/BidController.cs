@@ -10,13 +10,10 @@ using System.Web.Http;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
-  //  [Authorize(Roles = "ActiveUser")]
     public class BidController : ApiController
     {
         private BidService CreateBidService()
         {
-
- 
             Guid userId = new Guid();
             if (!User.Identity.IsAuthenticated)
             { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }
@@ -36,15 +33,12 @@ namespace AuctionExpress.WebAPI.Controllers
             return productService;
         }
 
-
-
         //POST Bid
         /// <summary>
         /// Place a new bid on an auction.
         /// </summary>
         /// <param name="bid"></param>
         /// <returns></returns>
-        /// 
         [HttpPost]
         [Authorize(Roles = "ActiveUser, Admin")]
         public IHttpActionResult Post(BidCreate bid)
@@ -73,7 +67,6 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("Bid/GetAllBids")]
-      //  [OverrideAuthentication]
         [Authorize(Roles = "Admin")]
         public IHttpActionResult GetAllBids()
         {
@@ -81,7 +74,6 @@ namespace AuctionExpress.WebAPI.Controllers
             var bids = bidService.GetAllBids();
             return Ok(bids);
         }
-
 
         //GET Bids By Product id
         /// <summary>
@@ -96,8 +88,6 @@ namespace AuctionExpress.WebAPI.Controllers
            var bids = bidService.GetBid(productId);
            return Ok(bids);
         }
-
-
 
         //GET Bid BY Bid ID
         /// <summary>
@@ -120,7 +110,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// Get all bids associated with a user id.
         /// </summary>
         /// <returns></returns>
-       // [Route("Bid/GetBidsByUser")]
+
        [Authorize(Roles ="ActiveUser, Admin")]
         public IHttpActionResult GetBidsByUser()
         {
@@ -128,8 +118,6 @@ namespace AuctionExpress.WebAPI.Controllers
             var bids = bidService.GetBidsByUser();
             return Ok(bids);
         }
-
-
 
         /// <summary>
         /// Delete Bid by bid Id.

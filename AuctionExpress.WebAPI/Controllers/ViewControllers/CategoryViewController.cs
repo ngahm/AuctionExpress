@@ -23,7 +23,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 string token = DeserializeToken();
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                //HTTP GET
                 var responseTask = client.GetAsync("category");
                 responseTask.Wait();
 
@@ -35,10 +34,8 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     categories = readTask.Result;
                 }
-                else //web api sent error response 
+                else
                 {
-                    //log response status here..
-
                     categories = Enumerable.Empty<CategoryListItem>();
 
                     ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
@@ -60,7 +57,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 string token = DeserializeToken();
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                //HTTP POST
                 var postTask = client.PostAsJsonAsync<CategoryCreate>("category", category);
                 postTask.Wait();
 
@@ -74,9 +70,6 @@ namespace AuctionExpress.WebAPI.Controllers
                     ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
                 }
             }
-
-           
-
             return View(category);
         }
 
@@ -90,7 +83,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 string token = DeserializeToken();
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                //HTTP GET
                 var responseTask = client.GetAsync("category/" + id.ToString());
                 responseTask.Wait();
 
@@ -119,7 +111,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                //HTTP POST
                 var putTask = client.PutAsJsonAsync<CategoryEdit>("category", category);
                 putTask.Wait();
 
@@ -144,7 +135,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 string token = DeserializeToken();
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                //HTTP GET
+
                 var responseTask = client.GetAsync("category/" + id.ToString());
                 responseTask.Wait();
 
@@ -156,10 +147,8 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     category = readTask.Result;
                 }
-                else //web api sent error response
+                else
                 {
-                    //log response status here..
-                    //bid = //Enumerable.Empty<CategoryDetail>();
                     ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
                 }
 
@@ -176,7 +165,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                //HTTP DELETE
                 var deleteTask = client.DeleteAsync("category/" + id.ToString());
                 deleteTask.Wait();
 

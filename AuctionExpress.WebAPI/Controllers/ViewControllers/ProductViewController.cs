@@ -13,7 +13,6 @@ namespace AuctionExpress.WebAPI.Controllers
 {
     public class ProductViewController : Controller
     {
-        // GET: MVC
         public ActionResult GetProduct()
         {
             IEnumerable<ProductListItem> productViewer = null;
@@ -35,8 +34,8 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     productViewer = readTask.Result;
                 }
-                else      //web api sent error response
-                {         //log response status here.
+                else
+                {
                     productViewer = Enumerable.Empty<ProductListItem>();
 
                     ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
@@ -68,14 +67,12 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     productViewer = readTask.Result;
                 }
-                else      //web api sent error response
-                {         //log response status here.
+                else
+                {
                     productViewer = Enumerable.Empty<ProductListItem>();
 
                     ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
-
                 }
-
             }
             return View(productViewer);
         }
@@ -102,8 +99,8 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     productViewer = readTask.Result;
                 }
-                else      //web api sent error response
-                {         //log response status here.
+                else
+                {
                     productViewer = Enumerable.Empty<ProductListItem>();
 
                     ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
@@ -135,14 +132,12 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     productViewer = readTask.Result;
                 }
-                else      //web api sent error response
-                {         //log response status here.
+                else
+                {
                     productViewer = Enumerable.Empty<ProductListItem>();
 
                     ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
-
                 }
-
             }
             return View(productViewer);
         }
@@ -162,7 +157,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                //HTTP Post
                 var postTask = client.PostAsJsonAsync<ProductCreate>("product", product);
                 postTask.Wait();
 
@@ -171,13 +165,12 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetProduct");
                 }
-            else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
 
             return View(product);
 
         }
-
 
         public ActionResult GetProductById(int id)
         {
@@ -190,7 +183,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                //HTTP Get
+
                 var responseTask = client.GetAsync("product/" + id.ToString());
                 responseTask.Wait();
 
@@ -218,7 +211,7 @@ namespace AuctionExpress.WebAPI.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
-                //HTTP GET
+
                 string token = DeserializeToken();
                 client.BaseAddress = new Uri("https://localhost:44320/api/");
                 client.DefaultRequestHeaders.Clear();
@@ -238,9 +231,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
 
                 return View(product);
-
             }
-
         }
 
         [HttpPost]
@@ -256,7 +247,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                //HTTP 
                 var putTask = client.PutAsJsonAsync<ProductEdit>("product", product);
                 putTask.Wait();
 
@@ -270,7 +260,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 return View(product);
             }
         }
-
         public ActionResult DeleteProduct(int id)
         {
             using (var client = new HttpClient())
@@ -280,7 +269,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                //HTTP DELETE
                 var deleteTask = client.DeleteAsync("product/" + id.ToString());
                 deleteTask.Wait();
 
@@ -291,16 +279,14 @@ namespace AuctionExpress.WebAPI.Controllers
                 }
                 else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
-                return RedirectToAction("GetProduct");
-
+            return RedirectToAction("GetProduct");
         }
-
 
         #region Helper
         private string DeserializeToken()
         {
             var cookieValue = Request.Cookies["UserToken"];
-            if (cookieValue!=null)
+            if (cookieValue != null)
             {
                 var t = JsonConvert.DeserializeObject<Token>(cookieValue.Value);
                 return t.access_token;

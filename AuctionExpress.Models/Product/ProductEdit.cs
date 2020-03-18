@@ -19,7 +19,6 @@ namespace AuctionExpress.Models
 
         [Display(Name = "Product Category Id")]
         public int? ProductCategoryId { get; set; }
-        // public bool ProductIsActive { get; set; }
 
         [Display(Name = "Product Description")]
         [MaxLength(100, ErrorMessage = "Product Description must be less than 100 characters.")]
@@ -36,7 +35,7 @@ namespace AuctionExpress.Models
         public DateTimeOffset ProductCloseTime { get; set; }
 
         [Display(Name = "Minimum Selling Price")]
-        [Range(0,double.MaxValue, ErrorMessage ="Price must be a number greater than zero.")]
+        [Range(0, double.MaxValue, ErrorMessage = "Price must be a number greater than zero.")]
         public double MinimumSellingPrice { get; set; }
     }
 }

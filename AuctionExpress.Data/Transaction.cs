@@ -14,7 +14,6 @@ namespace AuctionExpress.Data
         public int TransactionId { get; set; }
 
         [ForeignKey(nameof(TransactionProduct))]
-        //[Required]
         public int ProductId { get; set; }
         public virtual Product TransactionProduct { get; set; }
 

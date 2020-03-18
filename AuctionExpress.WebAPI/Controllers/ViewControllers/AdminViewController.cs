@@ -37,13 +37,12 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetRoles");
                 }
-                ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result) ;
+                ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
             }
             return View(model);
         }
 
         [HttpGet]
-        //[ValidateAntiForgeryToken]
         public ActionResult GetRoles()
         {
 
@@ -68,7 +67,7 @@ namespace AuctionExpress.WebAPI.Controllers
                     roleViewer = readTask.Result;
                 }
                 else
-                {     
+                {
                     roleViewer = Enumerable.Empty<RoleDetail>();
 
                     ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
@@ -87,7 +86,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 string token = DeserializeToken();
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                //HTTP GET
                 var responseTask = client.GetAsync("Admin/GetRoleById?id=" + id);
                 responseTask.Wait();
 
@@ -162,7 +160,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                //HTTP POST
                 var putTask = client.PutAsJsonAsync<RoleUserList>("Admin/UpdateRoleUsers", userRoleList);
                 putTask.Wait();
 
@@ -186,7 +183,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                //HTTP DELETE
                 var deleteTask = client.DeleteAsync("Admin/DeleteRole?Id=" + Id);
                 deleteTask.Wait();
 
@@ -202,7 +198,6 @@ namespace AuctionExpress.WebAPI.Controllers
         }
 
         [HttpGet]
-        //[ValidateAntiForgeryToken]
         public ActionResult GetUsers()
         {
 
@@ -246,7 +241,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 string token = DeserializeToken();
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                //HTTP GET
                 var responseTask = client.GetAsync("Admin/GetUser?id=" + id);
                 responseTask.Wait();
 
@@ -290,7 +284,6 @@ namespace AuctionExpress.WebAPI.Controllers
         {
             HttpCookie logInCookies = new HttpCookie("UserToken");
             logInCookies.Value = token;
-            //StudentCookies.Expires = DateTime.Now.AddHours(1);
             return logInCookies;
         }
 
