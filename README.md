@@ -75,7 +75,7 @@ git clone https://github.com/ngahm/AuctionExpress.git
 ```
 2. Restoring NuGetPackages
 ```sh
-Need to include command line for restoring
+nuget restore AuctionExpress.sln
 ```
 3. Database Setup
 - Update Database connection if needed.
