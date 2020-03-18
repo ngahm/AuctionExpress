@@ -65,13 +65,29 @@ namespace AuctionExpress.WebAPI.Controllers
             
         }
 
+        //GET All Bids
+        /// <summary>
+        /// Get all bids.
+        /// </summary>
+        /// <returns></returns>
+        [Route("Bid/GetAllBids")]
+        [AllowAnonymous]
+
+        public IHttpActionResult GetAllBids()
+        {
+            BidService bidService = CreateBidService();
+            var bids = bidService.GetAllBids();
+            return Ok(bids);
+        }
+
+
         //GET Bids By Product id
         /// <summary>
         /// Get all bids associated with a product.
         /// </summary>
         /// <param name="productId"></param>
         /// <returns></returns>
-       public IHttpActionResult GetBid(int productId)
+        public IHttpActionResult GetBid(int productId)
        {
            BidService bidService = CreateBidService();
            var bids = bidService.GetBid(productId);
@@ -99,8 +115,8 @@ namespace AuctionExpress.WebAPI.Controllers
         /// <summary>
         /// Get all bids associated with a user id.
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
+       // [Route("Bid/GetBidsByUser")]
         public IHttpActionResult GetBidsByUser()
         {
             BidService bidService = CreateBidService();

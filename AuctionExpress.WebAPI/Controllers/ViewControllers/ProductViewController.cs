@@ -47,6 +47,40 @@ namespace AuctionExpress.WebAPI.Controllers
             return View(productViewer);
         }
 
+        public ActionResult GetAllProduct()
+        {
+            IEnumerable<ProductListItem> productViewer = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                var responseTask = client.GetAsync("Product/GetAllAuctions");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<ProductListItem>>();
+                    readTask.Wait();
+
+                    productViewer = readTask.Result;
+                }
+                else      //web api sent error response
+                {         //log response status here.
+                    productViewer = Enumerable.Empty<ProductListItem>();
+
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
+
+                }
+
+            }
+            return View(productViewer);
+        }
+
+
         public ActionResult GetOpenProduct()
         {
             IEnumerable<ProductListItem> productViewer = null;
@@ -200,9 +234,16 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     product = readTask.Result;
                 }
+                else
+                {
+                     ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
+
+                    return View(product);
+                }
+                return View(product);
+
             }
 
-            return View(product);
         }
 
         [HttpPost]
@@ -227,8 +268,8 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetProduct");
                 }
-                return View(product);
             }
+                return View(product);
         }
 
         public ActionResult DeleteProduct(int id)

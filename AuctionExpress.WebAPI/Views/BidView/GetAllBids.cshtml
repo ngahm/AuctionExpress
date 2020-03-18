@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<AuctionExpress.Models.BidListItem>
 
 @{
-    ViewBag.Title = "GetBidsByUser";
+    ViewBag.Title = "GetAllBids";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>GetBidsByUser</h2>
+<h2>GetAllBids</h2>
 
 <p>
     @Html.ActionLink("Create New", "CreateBid")  |
-    @Html.ActionLink("All Bids", "GetAllBids")
+    @Html.ActionLink("My Bids", "GetBidsByUser")
 </p>
 <table class="table">
     <tr>
@@ -44,8 +44,8 @@
         </td>
         <td>
             @Html.ActionLink("Details", "GetBidById", new { id = item.BidderId }) |
-            @Html.ActionLink("Delete", "DeleteBid", new { id = item.BidId })
-            @Html.ActionLink("Bids on This Product", "GetBidsByProduct", new { id = item.ProductId })
+            @Html.ActionLink("Delete", "DeleteBid", new { id=item.BidId })
+            @Html.ActionLink("Bids on This Product", "GetBidsByProduct", new { id=item.ProductId })
         </td>
     </tr>
 }

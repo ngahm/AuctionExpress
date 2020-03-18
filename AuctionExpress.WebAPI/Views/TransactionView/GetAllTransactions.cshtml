@@ -1,15 +1,14 @@
 ﻿@model IEnumerable<AuctionExpress.Models.TransactionListItem>
 
 @{
-    ViewBag.Title = "GetTransaction";
+    ViewBag.Title = "GetAllTransactions";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>GetTransaction</h2>
+<h2>GetAllTransactions</h2>
 
 <p>
-    @Html.ActionLink("Create New", "PostTransaction")  |
-    @Html.ActionLink("All Transactions", "GetAllTransactions")
+    @Html.ActionLink("Create New Transaction", "PostTransaction")
 </p>
 <table class="table">
     <tr>
