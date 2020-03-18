@@ -8,7 +8,7 @@
 <h2>GetOpenProdByCat</h2>
 
 <p>
-    @Html.ActionLink("All Products", "GetOpenProduct", new { /*id = */ }, htmlAttributes: new { @class = "btn" })
+    @Html.ActionLink("All Products", "GetOpenProduct", new { /*id = */ }, htmlAttributes: new { @class = "btn" }) |
     @Html.ActionLink("All Categories", "GetCategories", "CategoryView", new { /*id = */ }, htmlAttributes: new { @class = "btn" })
 </p>
 <table class="table">
@@ -29,10 +29,10 @@
             @Html.DisplayNameFor(model => model.ProductIsActive)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProductCloseTime)
+            @Html.DisplayNameFor(model => model.ProductStartTime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProductStartTime)
+            @Html.DisplayNameFor(model => model.ProductCloseTime)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.MinimumSellingPrice)
@@ -58,10 +58,10 @@
             @Html.DisplayFor(modelItem => item.ProductIsActive)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ProductCloseTime)
+            @Html.DisplayFor(modelItem => item.ProductStartTime)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ProductStartTime)
+            @Html.DisplayFor(modelItem => item.ProductCloseTime)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.MinimumSellingPrice)
@@ -69,8 +69,8 @@
         <td>
             @Html.ActionLink("Edit", "PutProduct", new { id = item.ProductId }) |
             @Html.ActionLink("Details", "GetProductById", new { id = item.ProductId }) |
-            @Html.ActionLink("Bid", "CreateBid", "BidView", new { /*id = */ }, htmlAttributes: new { @class = "btn" })
-            @Html.ActionLink("Delete", "DeleteProduct", new { id=item.ProductId})
+            @Html.ActionLink("Bid", "CreateBid", "BidView", new { /*id = */ }, htmlAttributes: new { @class = "btn" }) |
+            @Html.ActionLink("Delete", "DeleteProduct", new { id = item.ProductId })
         </td>
     </tr>
 }
