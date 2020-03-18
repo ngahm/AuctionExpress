@@ -20,6 +20,46 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    @*<li>@Html.ActionLink("Index", "Index", "Home")</li>*@
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Account <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Register", "Create", "AccountView", null, new { /* id = "item 1" */ })</li>
+                            <li>@Html.ActionLink("Deactivate User", "DeactivateUser", "AccountView", null, new { /*id = "item 2"*/ })</li>
+                            <li>@Html.ActionLink("Log In", "Login", "AccountView", null, new { /*id = "item 3"*/ })</li>
+                            <li>@Html.ActionLink("Log Off", "LogOff", "AccountView", null, new { /*id = "item 3"*/ })</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Product <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("All Open Products", "GetOpenProduct", "ProductView", null, new { /* id = "item " */ })</li>
+                            <li>@Html.ActionLink("Open Products By Category", "GetOpenProdByCat", "ProductView", null, new { /*id = "item "*/ })</li>
+                            <li>@Html.ActionLink("My Products", "GetProduct", "ProductView", null, new { /*id = "item "*/ })</li>
+                            <li>@Html.ActionLink("Create Product", "PostProduct", "ProductView", null, new { /*id = "item "*/ })</li>
+
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--  <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Login", "Login", "AccountView", new { area = "" }, null)</li>
@@ -29,7 +69,7 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="container body-content">
         @RenderBody()
         <hr />

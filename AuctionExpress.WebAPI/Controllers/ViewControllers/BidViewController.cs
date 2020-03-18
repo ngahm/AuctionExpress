@@ -12,6 +12,42 @@ namespace AuctionExpress.WebAPI.Controllers
 {
     public class BidViewController : Controller
     {
+
+        public ActionResult GetAllBids()
+        {
+            IEnumerable<BidListItem> bidViewer = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                var responseTask = client.GetAsync("Bid/GetAllBids");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<BidListItem>>();
+                    readTask.Wait();
+
+                    bidViewer = readTask.Result;
+                }
+                else      //web api sent error response
+                {         //log response status here.
+                    bidViewer = Enumerable.Empty<BidListItem>();
+
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
+
+                }
+
+            }
+            return View(bidViewer);
+        }
+
+
+
         // GET: BidViewByProductId
         public ActionResult GetBidsByProduct(int id)
         {
@@ -92,7 +128,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 string token = DeserializeToken();
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                var responseTask = client.GetAsync("bid");
+                var responseTask = client.GetAsync("Bid/");
                 responseTask.Wait();
 
                 var result = responseTask.Result;

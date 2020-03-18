@@ -1,19 +1,15 @@
 ﻿@model IEnumerable<AuctionExpress.Models.ProductListItem>
 
 @{
-    ViewBag.Title = "GetOpenProduct";
+    ViewBag.Title = "GetAllProduct";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>GetOpenProduct</h2>
+<h2>GetAllProduct</h2>
 
 <p>
-    @Html.ActionLink("Create New Product", "PostProduct", "ProductView", new { /*id = */ }, htmlAttributes: new { @class = "btn" }) |
-    @Html.ActionLink("My Products", "GetProduct", "ProductView", new { /*id = */ }, htmlAttributes: new { @class = "btn" }) |
-    @Html.ActionLink("All Products", "GetAllProduct", "ProductView", new { /*id = */ }, htmlAttributes: new { @class = "btn" }) |
-    @Html.ActionLink("My Bids", "GetBidsByUser", "BidView", new { /*id = */ }, htmlAttributes: new { @class = "btn" }) |
-    @Html.ActionLink("My Transactions", "GetTransaction", "TransactionView", new { /*id = */ }, htmlAttributes: new { @class = "btn" }) |
-
+    @Html.ActionLink("Create Product", "Create")
+    @Html.ActionLink("Open Products", "GetOpenProduct")
 </p>
 <table class="table">
     <tr>
@@ -74,7 +70,7 @@
             @Html.ActionLink("Details", "GetProductById", new { id = item.ProductId }) |
             @Html.ActionLink("Bid", "CreateBid", "BidView", new { /*id = */ }, htmlAttributes: new { @class = "btn" }) |
             @Html.ActionLink("Edit", "PutProduct", new { id = item.ProductId }) |
-            @Html.ActionLink("Delete", "DeleteProduct", new { id=item.ProductId })
+            @Html.ActionLink("Delete", "DeleteProduct", new { id = item.ProductId })
         </td>
     </tr>
 }

@@ -58,7 +58,7 @@ namespace AuctionExpress.WebAPI.Controllers
             return BadRequest("BadRequest" + prodDetail);
         }
 
-        //GET POSTS
+        //GET My Transactions
         /// <summary>
         /// Get all transactions where the user is the auction winner.
         /// </summary>
@@ -70,7 +70,23 @@ namespace AuctionExpress.WebAPI.Controllers
             return Ok(transactions);
         }
 
-        //GET POSTS BY IT
+        //GET All Transactions
+        /// <summary>
+        /// Get all transactions.
+        /// </summary>
+        /// <returns></returns>
+
+        [Route("Transaction/GetAllTransactions")]
+        [AllowAnonymous]
+        public IHttpActionResult GetAllTransactions()
+        {
+            TransactionService transactionService = CreateTransactionService();
+            var transactions = transactionService.GetAllTransactions();
+            return Ok(transactions);
+        }
+
+
+        //GET Transactions BY ID
         /// <summary>
         /// Get a specific transaction by referencing the transaction id.
         /// </summary>
@@ -83,7 +99,7 @@ namespace AuctionExpress.WebAPI.Controllers
             return Ok(transaction);
         }
 
-        //EDIT POST
+        //EDIT Transaction
         /// <summary>
         /// Update the status of a transaction.
         /// </summary>
