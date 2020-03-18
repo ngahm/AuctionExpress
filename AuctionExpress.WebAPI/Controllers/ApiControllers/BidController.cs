@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
-    [Authorize(Roles = "ActiveUser")]
+  //  [Authorize(Roles = "ActiveUser")]
     public class BidController : ApiController
     {
         private BidService CreateBidService()
@@ -72,7 +72,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("Bid/GetAllBids")]
-        [OverrideAuthentication]
+      //  [OverrideAuthentication]
         [Authorize(Roles = "Admin")]
         public IHttpActionResult GetAllBids()
         {
@@ -118,6 +118,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
        // [Route("Bid/GetBidsByUser")]
+       [Authorize(Roles ="ActiveUser, Admin")]
         public IHttpActionResult GetBidsByUser()
         {
             BidService bidService = CreateBidService();
