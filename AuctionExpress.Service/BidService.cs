@@ -10,13 +10,12 @@ namespace AuctionExpress.Service
 {
     public class BidService
     {
-        private readonly Guid _userId;         /*ApplicationUser*/
+        private readonly Guid _userId;
 
         public BidService(Guid userId)
         {
             _userId = userId;
         }
-
 
         public bool CreateBid(BidCreate model)
         {
@@ -44,10 +43,10 @@ namespace AuctionExpress.Service
                         .Select(
                             e => new BidListItem
                             {
-                                    BidId = e.BidId,
-                                    ProductId = e.ProductId,
-                                    BidderId = e.BidderId,
-                                    BidPrice = e.BidPrice
+                                BidId = e.BidId,
+                                ProductId = e.ProductId,
+                                BidderId = e.BidderId,
+                                BidPrice = e.BidPrice
                             }
                         );
                 return query.ToList();
@@ -62,7 +61,7 @@ namespace AuctionExpress.Service
                 var query =
                     ctx
                         .Bid
-                        .Where(e => e.ProductId == productid)        /*get all rows with the common productid*/ 
+                        .Where(e => e.ProductId == productid)
                         .Select(
                             e =>
                                 new BidListItem
@@ -87,7 +86,7 @@ namespace AuctionExpress.Service
                     ctx
                         .Bid
                         .Where(e => e.BidId == id)
-                        .FirstOrDefault();  /*target one unique identifier*/
+                        .FirstOrDefault();
                 return
                     new BidDetail
                     {
@@ -109,7 +108,7 @@ namespace AuctionExpress.Service
                 var query =
                     ctx
                         .Bid
-                        .Where(e => e.BidderId == _userId.ToString())       
+                        .Where(e => e.BidderId == _userId.ToString())
                         .Select(
                             e =>
                                 new BidListItem
@@ -123,7 +122,6 @@ namespace AuctionExpress.Service
                 return query.ToList();
             }
         }
-
 
         public string DeleteBid(int bidId)
         {
@@ -150,9 +148,6 @@ namespace AuctionExpress.Service
                 return "User not Authorized to delete this bid.";
             }
         }
-
-
-
 
     }
 }

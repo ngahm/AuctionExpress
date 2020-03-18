@@ -34,14 +34,12 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     transactionViewer = readTask.Result;
                 }
-                else      //web api sent error response
-                {         //log response status here.
+                else
+                {
                     transactionViewer = Enumerable.Empty<TransactionListItem>();
 
                     ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
-
                 }
-
             }
             return View(transactionViewer);
         }
@@ -67,19 +65,15 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     transactionViewer = readTask.Result;
                 }
-                else      //web api sent error response
-                {         //log response status here.
+                else
+                {
                     transactionViewer = Enumerable.Empty<TransactionListItem>();
 
                     ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
-
                 }
-
             }
             return View(transactionViewer);
         }
-
-
 
         public ActionResult PostTransaction()
         {
@@ -95,7 +89,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 string token = DeserializeToken();
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                //HTTP Post
+
                 var postTask = client.PostAsJsonAsync<TransactionCreate>("transaction", model);
                 postTask.Wait();
 
@@ -106,12 +100,9 @@ namespace AuctionExpress.WebAPI.Controllers
                 }
                 else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
-            
 
             return View(model);
-
         }
-
 
         public ActionResult GetTransactionById(int id)
         {
@@ -123,7 +114,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 string token = DeserializeToken();
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                //HTTP Get
                 var responseTask = client.GetAsync("transaction/" + id.ToString());
                 responseTask.Wait();
 
@@ -135,11 +125,8 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     model = readTask.Result;
                 }
-
-                    else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
-                
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
-
             return View(model);
         }
 
@@ -153,7 +140,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 string token = DeserializeToken();
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                //HTTP GET
+
                 var responseTask = client.GetAsync("transaction/" + id.ToString());
                 responseTask.Wait();
 
@@ -167,7 +154,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 }
                 else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
-
             return View(model);
         }
 
@@ -182,7 +168,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                //HTTP 
                 var putTask = client.PutAsJsonAsync<TransactionEdit>("transaction", model);
                 putTask.Wait();
 
@@ -205,7 +190,6 @@ namespace AuctionExpress.WebAPI.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-                //HTTP DELETE
                 var deleteTask = client.DeleteAsync("transaction/" + id.ToString());
                 deleteTask.Wait();
 
@@ -225,7 +209,6 @@ namespace AuctionExpress.WebAPI.Controllers
         {
             HttpCookie logInCookies = new HttpCookie("UserToken");
             logInCookies.Value = token;
-            //StudentCookies.Expires = DateTime.Now.AddHours(1);
             return logInCookies;
         }
 

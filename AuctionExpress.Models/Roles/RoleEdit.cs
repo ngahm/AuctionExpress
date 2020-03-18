@@ -12,7 +12,7 @@ namespace AuctionExpress.Models.Roles
         [Display(Name = "Role Id")]
         public string Id { get; set; }
 
-        [Required(ErrorMessage ="Role Name is required")]
+        [Required(ErrorMessage = "Role Name is required")]
         [Display(Name = "Role Name")]
         public string RoleName { get; set; }
         [Display(Name = "Users in this role.")]

@@ -10,10 +10,8 @@ using System.Web.Http;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
-   // [Authorize(Roles = "ActiveUser")]
     public class TransactionController : ApiController
     {
-
         private TransactionService CreateTransactionService()
         {
             Guid userId = new Guid();
@@ -27,8 +25,11 @@ namespace AuctionExpress.WebAPI.Controllers
 
         private ProductService CreateProductService()
         {
-            var userId = Guid.Parse("1ae9afff-3752-45c4-a551-dc17f56033d8");
-            //User.Identity.GetUserId());
+            Guid userId = new Guid();
+            if (!User.Identity.IsAuthenticated)
+            { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }
+            else
+            { userId = Guid.Parse(User.Identity.GetUserId()); }
             var productService = new ProductService(userId);
             return productService;
         }
@@ -39,7 +40,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="transaction"></param>
         /// <returns></returns>
-        [Authorize(Roles ="ActiveUser")]
+        [Authorize(Roles = "ActiveUser")]
         public IHttpActionResult Post(TransactionCreate transaction)
         {
             if (!ModelState.IsValid)
@@ -64,7 +65,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// Get all transactions where the user is the auction winner.
         /// </summary>
         /// <returns></returns>
-        [Authorize(Roles ="ActiveUser, Admin")]
+        [Authorize(Roles = "ActiveUser, Admin")]
         public IHttpActionResult Get()
         {
             var service = CreateTransactionService();
@@ -77,9 +78,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// Get all transactions.
         /// </summary>
         /// <returns></returns>
-
         [Route("Transaction/GetAllTransactions")]
-        //[OverrideAuthentication]
         [Authorize(Roles = "Admin")]
         public IHttpActionResult GetAllTransactions()
         {

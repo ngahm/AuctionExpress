@@ -53,7 +53,6 @@ namespace AuctionExpress.Service
                         ProductName = e.ProductName,
                         CategoryName = e.ProductCategoryCombo.CategoryName,
                         ProductQuantity = e.ProductQuantity,
-                        // ProductIsActive = e.DetermineIsActive(),
                         ProductStartTime = e.ProductStartTime,
                         ProductCloseTime = e.ProductCloseTime,
                         MinimumSellingPrice = e.MinimumSellingPrice
@@ -78,7 +77,6 @@ namespace AuctionExpress.Service
                         ProductName = e.ProductName,
                         CategoryName = e.ProductCategoryCombo.CategoryName,
                         ProductQuantity = e.ProductQuantity,
-                        // ProductIsActive = e.DetermineIsActive(),
                         ProductStartTime = e.ProductStartTime,
                         ProductCloseTime = e.ProductCloseTime,
                         MinimumSellingPrice = e.MinimumSellingPrice
@@ -103,7 +101,6 @@ namespace AuctionExpress.Service
                         ProductName = e.ProductName,
                         CategoryName = e.ProductCategoryCombo.CategoryName,
                         ProductQuantity = e.ProductQuantity,
-                        // ProductIsActive = e.DetermineIsActive(),
                         ProductStartTime = e.ProductStartTime,
                         ProductCloseTime = e.ProductCloseTime,
                         MinimumSellingPrice = e.MinimumSellingPrice
@@ -127,7 +124,6 @@ namespace AuctionExpress.Service
                         ProductName = e.ProductName,
                         CategoryName = e.ProductCategoryCombo.CategoryName,
                         ProductQuantity = e.ProductQuantity,
-                        // ProductIsActive = e.DetermineIsActive(),
                         ProductStartTime = e.ProductStartTime,
                         ProductCloseTime = e.ProductCloseTime,
                         MinimumSellingPrice = e.MinimumSellingPrice
@@ -179,7 +175,6 @@ namespace AuctionExpress.Service
                 entity.ProductId = model.ProductId;
                 entity.ProductName = model.ProductName;
                 entity.ProductCategoryId = model.ProductCategoryId;
-                //entity.ProductIsActive = model.ProductIsActive;
                 entity.ProductDescription = model.ProductDescription;
                 entity.ProductQuantity = model.ProductQuantity;
                 entity.ProductCloseTime = model.ProductCloseTime;
@@ -211,7 +206,6 @@ namespace AuctionExpress.Service
                 return "";
             }
         }
-
         public string ValidateAuctionStatus(int id)
         {
             var prodDetail = GetProductById(id);

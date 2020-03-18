@@ -30,9 +30,6 @@ namespace AuctionExpress.WebAPI.Controllers
         private ApplicationUserManager _userManager;
         private ApplicationSignInManager _signInManager;
         private ApplicationRoleManager _roleManager;
-
-
-
         public AccountController()
         {
         }
@@ -95,7 +92,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        
+
         [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
