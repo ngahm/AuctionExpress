@@ -41,9 +41,20 @@ namespace AuctionExpress.Data.Migrations
                 new ApplicationUser() { Id = Guid.NewGuid().ToString(), Email = "User2@AuctionExpress.com", UserName = "User2", BusinessName = "AuctionExpress", PasswordHash = new PasswordHasher().HashPassword("User2") },
                 new ApplicationUser() { Id = Guid.NewGuid().ToString(), Email = "User3@AuctionExpress.com", UserName = "User3", BusinessName = "AuctionExpress", PasswordHash = new PasswordHasher().HashPassword("User3") },
                 new ApplicationUser() { Id = Guid.NewGuid().ToString(), Email = "TestActiveUser@AuctionExpress.com", UserName = "TestActiveUser", BusinessName = "AuctionExpress", PasswordHash = new PasswordHasher().HashPassword("TestActiveUser") },
-                new ApplicationUser() { Id = Guid.NewGuid().ToString(), Email = "TestInActiveUser@AuctionExpress.com", UserName = "TestInActiveUser", BusinessName = "AuctionExpress", IsActive=false, PasswordHash = new PasswordHasher().HashPassword("TestInActiveUser") });
+                new ApplicationUser() { Id = Guid.NewGuid().ToString(), Email = "TestInActiveUser@AuctionExpress.com", UserName = "TestInActiveUser", BusinessName = "AuctionExpress", IsActive = false, PasswordHash = new PasswordHasher().HashPassword("TestInActiveUser") });
 
             context.SaveChanges();
+
+            context.Roles.AddOrUpdate(
+                x => x.Name,
+                new IdentityRole() { Name = "Admin" },
+                new IdentityRole() { Name = "ActiveUser" },
+                new IdentityRole() { Name = "InActiveUser" }
+                );
+
+            context.SaveChanges();
+
+            userManager.AddToRole(context.Users.Single(e => e.UserName == "Admin").Id, "Admin");
 
             List<string> userNames = new List<string>() { "Admin", "TestActiveUser", "TestInActiveUser" };
             foreach (var user in userNames)
@@ -74,7 +85,7 @@ namespace AuctionExpress.Data.Migrations
                     ProductQuantity = 10,
                     ProductStartTime = DateTimeOffset.Now.AddDays(-4),
                     ProductCloseTime = DateTimeOffset.Now.AddDays(+5),
-                    ProductCategoryId = context.Category.Single(e=>e.CategoryName=="Office Chairs").CategoryId,
+                    ProductCategoryId = context.Category.Single(e => e.CategoryName == "Office Chairs").CategoryId,
                     MinimumSellingPrice = 50.00,
                     ProductSeller = context.Users.Single(e => e.UserName == "User1").Id
                 },
@@ -114,8 +125,6 @@ namespace AuctionExpress.Data.Migrations
 
                 );
             context.SaveChanges();
-
-
         }
     }
 }

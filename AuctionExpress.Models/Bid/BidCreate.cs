@@ -12,7 +12,6 @@ namespace AuctionExpress.Models
     {
         [Display(Name = "Product Id")]
         public int ProductId { get; set; }
-        //public string BidderId { get; set; }
 
         [Display(Name = "Bid Price")]
         public double BidPrice { get; set; }

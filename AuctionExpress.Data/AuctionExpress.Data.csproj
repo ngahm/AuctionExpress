@@ -110,6 +110,14 @@
     <Compile Include="Migrations\202003181702343_AddingMoreProducts.Designer.cs">
       <DependentUpon>202003181702343_AddingMoreProducts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003182217325_TestAddRole.cs" />
+    <Compile Include="Migrations\202003182217325_TestAddRole.Designer.cs">
+      <DependentUpon>202003182217325_TestAddRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003182231214_TestAddToRole.cs" />
+    <Compile Include="Migrations\202003182231214_TestAddToRole.Designer.cs">
+      <DependentUpon>202003182231214_TestAddToRole.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -138,6 +146,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003181702343_AddingMoreProducts.resx">
       <DependentUpon>202003181702343_AddingMoreProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003182217325_TestAddRole.resx">
+      <DependentUpon>202003182217325_TestAddRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003182231214_TestAddToRole.resx">
+      <DependentUpon>202003182231214_TestAddToRole.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
