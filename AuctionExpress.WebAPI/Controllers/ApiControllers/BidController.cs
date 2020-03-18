@@ -14,6 +14,8 @@ namespace AuctionExpress.WebAPI.Controllers
     {
         private BidService CreateBidService()
         {
+
+ 
             Guid userId = new Guid();
             if (!User.Identity.IsAuthenticated)
             { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }

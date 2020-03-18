@@ -14,6 +14,7 @@ namespace AuctionExpress.WebAPI.Controllers
     {
         private CategoryService CreateCategoryService()
         {
+
             Guid userId = new Guid();
             if (!User.Identity.IsAuthenticated)
             { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }
