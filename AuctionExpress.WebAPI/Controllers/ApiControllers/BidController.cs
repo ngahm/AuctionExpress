@@ -72,8 +72,8 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("Bid/GetAllBids")]
-        [AllowAnonymous]
-
+        [OverrideAuthentication]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult GetAllBids()
         {
             BidService bidService = CreateBidService();

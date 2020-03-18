@@ -81,7 +81,6 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("Product/GetAllAuctions")]
-        [AllowAnonymous]
         public IHttpActionResult GetAllProducts()
         {
             ProductService productService = CreateProductService();
