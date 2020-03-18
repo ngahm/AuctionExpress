@@ -359,6 +359,10 @@ Authorization
 https://csharp-video-tutorials.blogspot.com/2019/06/authorization-in-aspnet-core.html
 https://csharp-video-tutorials.blogspot.com/2019/07/aspnet-core-role-based-authorization.html
 
+Allow roles to access controllers
+https://stackoverflow.com/questions/700166/allow-multiple-roles-to-access-controller-action
+https://stackoverflow.com/questions/27819405/automatically-assign-default-role
+
 ### Razor Pages resources
 
 Consume WebAPI MVC Razer
