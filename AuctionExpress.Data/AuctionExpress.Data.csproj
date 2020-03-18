@@ -98,6 +98,18 @@
     <Compile Include="Migrations\202003181419430_TestAddCategory.Designer.cs">
       <DependentUpon>202003181419430_TestAddCategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003181546242_TestAddProduct.cs" />
+    <Compile Include="Migrations\202003181546242_TestAddProduct.Designer.cs">
+      <DependentUpon>202003181546242_TestAddProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003181548537_TestProductSeed2.cs" />
+    <Compile Include="Migrations\202003181548537_TestProductSeed2.Designer.cs">
+      <DependentUpon>202003181548537_TestProductSeed2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003181702343_AddingMoreProducts.cs" />
+    <Compile Include="Migrations\202003181702343_AddingMoreProducts.Designer.cs">
+      <DependentUpon>202003181702343_AddingMoreProducts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -117,6 +129,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003181419430_TestAddCategory.resx">
       <DependentUpon>202003181419430_TestAddCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003181546242_TestAddProduct.resx">
+      <DependentUpon>202003181546242_TestAddProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003181548537_TestProductSeed2.resx">
+      <DependentUpon>202003181548537_TestProductSeed2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003181702343_AddingMoreProducts.resx">
+      <DependentUpon>202003181702343_AddingMoreProducts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

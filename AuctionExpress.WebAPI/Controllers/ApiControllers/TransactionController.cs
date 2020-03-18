@@ -39,7 +39,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="transaction"></param>
         /// <returns></returns>
-        [Authorize(Roles ="ActiveUser, Admin")]
+        [Authorize(Roles ="ActiveUser")]
         public IHttpActionResult Post(TransactionCreate transaction)
         {
             if (!ModelState.IsValid)
