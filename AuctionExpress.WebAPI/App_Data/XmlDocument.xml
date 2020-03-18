@@ -571,6 +571,12 @@
             <returns></returns>
             
         </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.BidController.GetAllBids">
+            <summary>
+            Get all bids.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.BidController.GetBid(System.Int32)">
             <summary>
             Get all bids associated with a product.
@@ -589,7 +595,6 @@
             <summary>
             Get all bids associated with a user id.
             </summary>
-            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.BidController.Delete(System.Int32)">
@@ -646,6 +651,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.ProductController.GetAllProducts">
+            <summary>
+            Get a list of all products.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:AuctionExpress.WebAPI.Controllers.ProductController.GetOpenProducts">
             <summary>
             Get a list of all auctions that are open for bidding.
@@ -689,6 +700,12 @@
         <member name="M:AuctionExpress.WebAPI.Controllers.TransactionController.Get">
             <summary>
             Get all transactions where the user is the auction winner.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AuctionExpress.WebAPI.Controllers.TransactionController.GetAllTransactions">
+            <summary>
+            Get all transactions.
             </summary>
             <returns></returns>
         </member>

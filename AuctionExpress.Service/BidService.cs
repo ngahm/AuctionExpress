@@ -33,8 +33,28 @@ namespace AuctionExpress.Service
             }
         }
 
+        //GET All Bids
+        public IEnumerable<BidListItem> GetAllBids()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                        .Bid
+                        .Select(
+                            e => new BidListItem
+                            {
+                                    BidId = e.BidId,
+                                    ProductId = e.ProductId,
+                                    BidderId = e.BidderId,
+                                    BidPrice = e.BidPrice
+                            }
+                        );
+                return query.ToList();
+            }
+        }
 
-
+        //GET Bids By Product Id
         public IEnumerable<BidListItem> GetBid(int productid)
         {
             using (var ctx = new ApplicationDbContext())
@@ -42,7 +62,7 @@ namespace AuctionExpress.Service
                 var query =
                     ctx
                         .Bid
-                        .Where(e => e.ProductId == productid)                 /*get all rows with the common productid*/
+                        .Where(e => e.ProductId == productid)        /*get all rows with the common productid*/ 
                         .Select(
                             e =>
                                 new BidListItem
@@ -58,6 +78,7 @@ namespace AuctionExpress.Service
             }
         }
 
+        //GET Bid By Bid Id
         public BidDetail GetBidById(int id)
         {
             using (var ctx = new ApplicationDbContext())
@@ -66,7 +87,7 @@ namespace AuctionExpress.Service
                     ctx
                         .Bid
                         .Where(e => e.BidId == id)
-                        .FirstOrDefault();           /*target one unique identifier*/
+                        .FirstOrDefault();  /*target one unique identifier*/
                 return
                     new BidDetail
                     {
@@ -80,24 +101,26 @@ namespace AuctionExpress.Service
             }
         }
 
+        //GET My Bids
         public IEnumerable<BidListItem> GetBidsByUser()
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var query =
                     ctx
-                    .Bid
-                    .Where(e => e.BidderId == _userId.ToString())
-                    .Select(e => new BidListItem
-                    {
-                        BidId = e.BidId,
-                        ProductId = e.ProductId,
-                        BidPrice = e.BidPrice
-
-                    }
-                    );
+                        .Bid
+                        .Where(e => e.BidderId == _userId.ToString())       
+                        .Select(
+                            e =>
+                                new BidListItem
+                                {
+                                    BidId = e.BidId,
+                                    ProductId = e.ProductId,
+                                    BidderId = e.BidderId,
+                                    BidPrice = e.BidPrice,
+                                }
+                        );
                 return query.ToList();
-
             }
         }
 

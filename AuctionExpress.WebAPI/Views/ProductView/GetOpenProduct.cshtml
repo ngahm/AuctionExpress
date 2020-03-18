@@ -10,7 +10,9 @@
 <p>
     @Html.ActionLink("Create New Product", "PostProduct", "ProductView", new { /*id = */ }, htmlAttributes: new { @class = "btn" }) |
     @Html.ActionLink("My Products", "GetProduct", "ProductView", new { /*id = */ }, htmlAttributes: new { @class = "btn" }) |
+    @Html.ActionLink("All Products", "GetAllProduct", "ProductView", new { /*id = */ }, htmlAttributes: new { @class = "btn" }) |
     @Html.ActionLink("My Bids", "GetBidsByUser", "BidView", new { /*id = */ }, htmlAttributes: new { @class = "btn" }) |
+    @Html.ActionLink("My Transactions", "GetTransaction", "TransactionView", new { /*id = */ }, htmlAttributes: new { @class = "btn" }) |
 
 </p>
 <table class="table">

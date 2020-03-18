@@ -8,7 +8,8 @@
 <h2>GetBidsByUser</h2>
 
 <p>
-    @Html.ActionLink("My Products", "GetProduct", "ProductView", new { /*id = */ }, htmlAttributes: new { @class = "btn" }) |
+    @Html.ActionLink("Create New", "CreateBid")  |
+    @Html.ActionLink("All Bids", "GetAllBids")
 </p>
 <table class="table">
     <tr>
@@ -42,9 +43,9 @@
             @Html.DisplayFor(modelItem => item.BidPrice)
         </td>
         <td>
-            @Html.ActionLink("Details", "GetBidById", new { id=item.BidId}) |
-            @Html.ActionLink("All Bids on This Product", "GetBidsByProduct", new { id=item.ProductId}) |
-            @Html.ActionLink("Delete", "DeleteBid", new { id=item.BidId})
+            @Html.ActionLink("Details", "GetBidById", new { id = item.BidderId }) |
+            @Html.ActionLink("Delete", "DeleteBid", new { id = item.BidId })
+            @Html.ActionLink("Bids on This Product", "GetBidsByProduct", new { id = item.ProductId })
         </td>
     </tr>
 }

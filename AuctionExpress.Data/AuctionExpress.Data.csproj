@@ -86,17 +86,9 @@
   <ItemGroup>
     <Compile Include="Category.cs" />
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\202003141424452_InitialMigration.cs" />
-    <Compile Include="Migrations\202003141424452_InitialMigration.Designer.cs">
-      <DependentUpon>202003141424452_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003161739268_TestUserRoleKey.cs" />
-    <Compile Include="Migrations\202003161739268_TestUserRoleKey.Designer.cs">
-      <DependentUpon>202003161739268_TestUserRoleKey.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003162310047_RevertingDatabase.cs" />
-    <Compile Include="Migrations\202003162310047_RevertingDatabase.Designer.cs">
-      <DependentUpon>202003162310047_RevertingDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\202003171401277_InitialMigration.cs" />
+    <Compile Include="Migrations\202003171401277_InitialMigration.Designer.cs">
+      <DependentUpon>202003171401277_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202003171359076_NewMigration.cs" />
     <Compile Include="Migrations\202003171359076_NewMigration.Designer.cs">
@@ -113,14 +105,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202003141424452_InitialMigration.resx">
-      <DependentUpon>202003141424452_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003161739268_TestUserRoleKey.resx">
-      <DependentUpon>202003161739268_TestUserRoleKey.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003162310047_RevertingDatabase.resx">
-      <DependentUpon>202003162310047_RevertingDatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003171401277_InitialMigration.resx">
+      <DependentUpon>202003171401277_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003171359076_NewMigration.resx">
       <DependentUpon>202003171359076_NewMigration.cs</DependentUpon>

@@ -16,25 +16,73 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Auction Express", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Login", "Login", "AccountView", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Logout", "LogOff", "AccountView", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Register", "Create", "AccountView", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Deactivate Account", "DeactivateUser", "AccountView", new { area = "" }, null)</li>
+                    @*<li>@Html.ActionLink("Index", "Index", "Home")</li>*@
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Account <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Register", "Create", "AccountView", null, new { /* id = "item 1" */ })</li>
+                            <li>@Html.ActionLink("Deactivate User", "DeactivateUser", "AccountView", null, new { /*id = "item 2"*/ })</li>
+                            <li>@Html.ActionLink("Log In", "Login", "AccountView", null, new { /*id = "item 3"*/ })</li>
+                            <li>@Html.ActionLink("Log Off", "LogOff", "AccountView", null, new { /*id = "item 3"*/ })</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">User Role <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Registered Users", "GetUsers", "AdminView", null, new { /*id = "item "*/ })</li>
+                            <li>@Html.ActionLink("Add A Role", "CreateRole", "AdminView", null, new { /* id = "item " */ })</li>
+                            <li>@Html.ActionLink("List of Role Types", "GetRoles", "AdminView", null, new { /*id = "item "*/ })</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Product <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Post New Product", "PostProduct", "ProductView", null, new { /*id = "item "*/ })</li>
+                            <li>@Html.ActionLink("My Products", "GetProduct", "ProductView", null, new { /*id = "item "*/ })</li>
+                            <li>@Html.ActionLink("All Open Products", "GetOpenProduct", "ProductView", null, new { /* id = "item " */ })</li>
+                            <li>@Html.ActionLink("All Products", "GetAllProduct", "ProductView", null, new { /* id = "item " */ })</li>
+                            @*<li>@Html.ActionLink("Open Products By Category", "GetOpenProdByCat", "ProductView", new { /*id = "item 1 "*/ })</li>*@
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Category <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("My Categories", "GetCategories", "CategoryView", null, new { /* id = "item " */ })</li>
+                            <li>@Html.ActionLink("Create Category", "CreateCategory", "CategoryView", null, new { /*id = "item "*/ })</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Bids <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Create New Bid", "CreateBid", "BidView", null, new { /*id = "item "*/ })</li>
+                            <li>@Html.ActionLink("My Bids", "GetBidsByUser", "BidView", null, new { /* id = "item 1 " */ })</li>
+                            <li>@Html.ActionLink("All Bids", "GetAllBids", "BidView", null, new { /* id = "item 1 " */ })</li>
+                            @*<li>@Html.ActionLink("Get Bid By Id", "GetBidsById", "BidView", null, new { /*id = "item "*/ })</li>*@
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Transactions <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Create Transaction", "PostTransaction", "TransactionView", null, new { /*id = "item "*/ })</li>
+                            <li>@Html.ActionLink("My Transactions", "GetTransaction", "TransactionView", null, new { /* id = "item " */ })</li>
+                            <li>@Html.ActionLink("All Transactions", "GetAllTransactions", "TransactionView", null, new { /* id = "item " */ })</li>
+                            @*<li>@Html.ActionLink("Get Transaction By Id", "GetTransactionById", "TransactionView", null, new { /*id = "item 1 "*/ })</li>*@
+
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - AuctionExpress2020</p>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
 

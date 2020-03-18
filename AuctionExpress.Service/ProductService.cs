@@ -38,6 +38,7 @@ namespace AuctionExpress.Service
             }
         }
 
+        //GET My Products
         public IEnumerable<ProductListItem> GetProducts()
         {
             using (var ctx = new ApplicationDbContext())
@@ -63,6 +64,31 @@ namespace AuctionExpress.Service
             }
         }
 
+        //GET All Active and Inactive Products
+        public IEnumerable<ProductListItem> GetAllProducts()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                    .Product
+                    .Select(e => new ProductListItem
+                    {
+                        ProductId = e.ProductId,
+                        ProductName = e.ProductName,
+                        CategoryName = e.ProductCategoryCombo.CategoryName,
+                        ProductQuantity = e.ProductQuantity,
+                        // ProductIsActive = e.DetermineIsActive(),
+                        ProductStartTime = e.ProductStartTime,
+                        ProductCloseTime = e.ProductCloseTime,
+                        MinimumSellingPrice = e.MinimumSellingPrice
+                    }
+                    );
+                return query.ToList();
+            }
+        }
+
+        //GET All Open Products
         public IEnumerable<ProductListItem> GetOpenProducts()
         {
             using (var ctx = new ApplicationDbContext())

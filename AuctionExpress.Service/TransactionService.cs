@@ -33,8 +33,29 @@ namespace AuctionExpress.Service
             }
         }
 
-        //GET Transaction Currently returning all transactions where the signed in user is the winner
+        //GET All Transactions
+        public IEnumerable<TransactionListItem> GetAllTransactions()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                    .Transaction
+                    .Select(e => new TransactionListItem
+                    {
+                        TransactionId = e.TransactionId,
+                        ProductId = e.ProductId,
+                        ProductName = e.TransactionProduct.ProductName,
+                        SellerId = e.TransactionProduct.ProductSeller,
+                        IsPaid = e.IsPaid,
+                        PaymentDate = e.PaymentDate
+                    }
+                    );
+                return query.ToList();
+            }
+        }
 
+        //GET Transaction Currently returning all transactions where the signed in user is the winner
         public IEnumerable<TransactionListItem> GetTransactions()
         {
             using (var ctx = new ApplicationDbContext())

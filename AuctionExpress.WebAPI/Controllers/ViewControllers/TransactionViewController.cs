@@ -46,6 +46,40 @@ namespace AuctionExpress.WebAPI.Controllers
             return View(transactionViewer);
         }
 
+        public ActionResult GetAllTransactions()
+        {
+            IEnumerable<TransactionListItem> transactionViewer = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                var responseTask = client.GetAsync("Transaction/GetAllTransactions");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<TransactionListItem>>();
+                    readTask.Wait();
+
+                    transactionViewer = readTask.Result;
+                }
+                else      //web api sent error response
+                {         //log response status here.
+                    transactionViewer = Enumerable.Empty<TransactionListItem>();
+
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
+
+                }
+
+            }
+            return View(transactionViewer);
+        }
+
+
 
         public ActionResult PostTransaction()
         {

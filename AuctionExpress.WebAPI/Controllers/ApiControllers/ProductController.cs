@@ -16,6 +16,7 @@ namespace AuctionExpress.WebAPI.Controllers
     {
         private ProductService CreateProductService()
         {
+
             Guid userId = new Guid();
             if (!User.Identity.IsAuthenticated)
             { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }
@@ -73,6 +74,21 @@ namespace AuctionExpress.WebAPI.Controllers
             var products = productService.GetProducts();
             return Ok(products);
         }
+
+        //GET ALL Products
+        /// <summary>
+        /// Get a list of all products.
+        /// </summary>
+        /// <returns></returns>
+        [Route("Product/GetAllAuctions")]
+        [AllowAnonymous]
+        public IHttpActionResult GetAllProducts()
+        {
+            ProductService productService = CreateProductService();
+            var products = productService.GetAllProducts();
+            return Ok(products);
+        }
+
         /// <summary>
         /// Get a list of all auctions that are open for bidding.
         /// </summary>
