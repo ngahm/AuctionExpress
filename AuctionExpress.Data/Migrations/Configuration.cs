@@ -65,6 +65,11 @@ namespace AuctionExpress.Data.Migrations
                 new Category() { CategoryName = "Filing Cabinets" });
             context.SaveChanges();
 
+            //context.Product.AddOrUpdate(
+            //    x=>x.ProductName,
+            //    new Product(){ProductName="Executive Leather Office Chairs",ProductDescription="Like new black leather swivel chairs with armrests.",ProductQuantity=10,ProductStartTime=DateTimeOffset.Now.AddDays(-4),ProductCloseTime =DateTimeOffset.Now.AddDays(+5),
+
+            //    )
             
         }
     }
