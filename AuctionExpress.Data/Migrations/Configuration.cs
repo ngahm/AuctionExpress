@@ -65,12 +65,57 @@ namespace AuctionExpress.Data.Migrations
                 new Category() { CategoryName = "Filing Cabinets" });
             context.SaveChanges();
 
-            //context.Product.AddOrUpdate(
-            //    x=>x.ProductName,
-            //    new Product(){ProductName="Executive Leather Office Chairs",ProductDescription="Like new black leather swivel chairs with armrests.",ProductQuantity=10,ProductStartTime=DateTimeOffset.Now.AddDays(-4),ProductCloseTime =DateTimeOffset.Now.AddDays(+5),
+            context.Product.AddOrUpdate(
+                x => x.ProductName,
+                new Product()
+                {
+                    ProductName = "Executive Leather Office Chairs",
+                    ProductDescription = "Like new black leather swivel chairs with armrests.",
+                    ProductQuantity = 10,
+                    ProductStartTime = DateTimeOffset.Now.AddDays(-4),
+                    ProductCloseTime = DateTimeOffset.Now.AddDays(+5),
+                    ProductCategoryId = context.Category.Single(e=>e.CategoryName=="Office Chairs").CategoryId,
+                    MinimumSellingPrice = 50.00,
+                    ProductSeller = context.Users.Single(e => e.UserName == "User1").Id
+                },
+                new Product()
+                {
+                    ProductName = "Oak Desks",
+                    ProductDescription = "Brand new oak desk",
+                    ProductQuantity = 5,
+                    ProductStartTime = DateTimeOffset.Now.AddDays(-10),
+                    ProductCloseTime = DateTimeOffset.Now.AddDays(-5),
+                    ProductCategoryId = context.Category.Single(e => e.CategoryName == "Desks").CategoryId,
+                    MinimumSellingPrice = 200.00,
+                    ProductSeller = context.Users.Single(e => e.UserName == "User2").Id
+                },
+                 new Product()
+                 {
+                     ProductName = "White Folding Tables",
+                     ProductDescription = "Standard folding tables, ideal for break room",
+                     ProductQuantity = 50,
+                     ProductStartTime = DateTimeOffset.Now.AddDays(+3),
+                     ProductCloseTime = DateTimeOffset.Now.AddDays(+8),
+                     ProductCategoryId = context.Category.Single(e => e.CategoryName == "Tables").CategoryId,
+                     MinimumSellingPrice = 14.00,
+                     ProductSeller = context.Users.Single(e => e.UserName == "User3").Id
+                 },
+                 new Product()
+                 {
+                     ProductName = "Four drawer filing cabinet",
+                     ProductDescription = "Used filing cabinet, 60 inches high",
+                     ProductQuantity = 5,
+                     ProductStartTime = DateTimeOffset.Now.AddDays(-2),
+                     ProductCloseTime = DateTimeOffset.Now.AddDays(+2),
+                     ProductCategoryId = context.Category.Single(e => e.CategoryName == "Filing Cabinets").CategoryId,
+                     MinimumSellingPrice = 45.00,
+                     ProductSeller = context.Users.Single(e => e.UserName == "User2").Id
+                 }
 
-            //    )
-            
+                );
+            context.SaveChanges();
+
+
         }
     }
 }
