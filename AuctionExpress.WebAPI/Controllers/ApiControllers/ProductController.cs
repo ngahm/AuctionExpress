@@ -67,7 +67,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// Get a list of auction that the user has created.
         /// </summary>
         /// <returns></returns>
-        [Authorize(Roles = "ActiveUser")]
+        [Authorize(Roles = "ActiveUser, Admin")]
         public IHttpActionResult Get()
         {
             ProductService productService = CreateProductService();
