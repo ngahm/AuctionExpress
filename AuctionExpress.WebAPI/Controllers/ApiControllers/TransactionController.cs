@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
-    [Authorize(Roles = "ActiveUser")]
+   // [Authorize(Roles = "ActiveUser")]
     public class TransactionController : ApiController
     {
 
@@ -77,7 +77,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// <returns></returns>
 
         [Route("Transaction/GetAllTransactions")]
-        [OverrideAuthentication]
+        //[OverrideAuthentication]
         [Authorize(Roles = "Admin")]
         public IHttpActionResult GetAllTransactions()
         {
