@@ -82,6 +82,9 @@ nuget restore AuctionExpress.sln
 - Enable and add a migration
 - Update database to populate database with seed content.
 
+4. Create Account or Login
+- Once database is seeded, an account with username Admin and password @dmin1 is available and in the Admin role.
+
 <!-- USAGE EXAMPLES -->
 ## Usage
 
