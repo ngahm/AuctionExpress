@@ -10,10 +10,13 @@ using System.Web.Http;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
+  //  [Authorize(Roles = "ActiveUser")]
     public class BidController : ApiController
     {
         private BidService CreateBidService()
         {
+
+ 
             Guid userId = new Guid();
             if (!User.Identity.IsAuthenticated)
             { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }
@@ -43,6 +46,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// <returns></returns>
         /// 
         [HttpPost]
+        [Authorize(Roles = "ActiveUser, Admin")]
         public IHttpActionResult Post(BidCreate bid)
         {
             if (!ModelState.IsValid)
@@ -63,13 +67,30 @@ namespace AuctionExpress.WebAPI.Controllers
             
         }
 
+        //GET All Bids
+        /// <summary>
+        /// Get all bids.
+        /// </summary>
+        /// <returns></returns>
+        [Route("Bid/GetAllBids")]
+      //  [OverrideAuthentication]
+        [Authorize(Roles = "Admin")]
+        public IHttpActionResult GetAllBids()
+        {
+            BidService bidService = CreateBidService();
+            var bids = bidService.GetAllBids();
+            return Ok(bids);
+        }
+
+
         //GET Bids By Product id
         /// <summary>
         /// Get all bids associated with a product.
         /// </summary>
         /// <param name="productId"></param>
         /// <returns></returns>
-       public IHttpActionResult GetBid(int productId)
+        [Authorize(Roles = "ActiveUser, Admin")]
+        public IHttpActionResult GetBid(int productId)
        {
            BidService bidService = CreateBidService();
            var bids = bidService.GetBid(productId);
@@ -84,6 +105,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize(Roles = "ActiveUser, Admin")]
         public IHttpActionResult GetBidById(int id)
         {
             BidService bidService = CreateBidService();
@@ -97,8 +119,9 @@ namespace AuctionExpress.WebAPI.Controllers
         /// <summary>
         /// Get all bids associated with a user id.
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
+       // [Route("Bid/GetBidsByUser")]
+       [Authorize(Roles ="ActiveUser, Admin")]
         public IHttpActionResult GetBidsByUser()
         {
             BidService bidService = CreateBidService();
@@ -113,14 +136,15 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize(Roles ="Admin")]
         public IHttpActionResult Delete(int id)
         {
             var service = CreateBidService();
+            string deleteResponse = service.DeleteBid(id);
+            if (deleteResponse == "Bid successfully deleted")
+                return Ok(deleteResponse);
 
-            if (!service.DeleteBid(id))
-                return InternalServerError();
-
-            return Ok();
+            return InternalServerError();
         }
     }
 }

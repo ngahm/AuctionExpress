@@ -18,6 +18,7 @@ using System.Web.Http;
 namespace AuctionExpress.WebAPI.Controllers
 {
     [RoutePrefix("api/Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : ApiController
     {
         private const string LocalLoginProvider = "Local";
@@ -110,6 +111,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
             return Ok();
         }
+
         /// <summary>
         /// See a list of all roles.
         /// </summary>
@@ -134,6 +136,7 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             return Ok(roleDetails);
         }
+
         /// <summary>
         /// See a specific role by supplying the role id.
         /// </summary>
@@ -161,29 +164,9 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             return Ok(model);
         }
-        /// <summary>
-        /// Update a role name.
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        [Route("UpdateRole")]
-        [HttpPut]
-        public IHttpActionResult UpdateRole(RoleEdit model)
-        {
-            var role = RoleManager.FindById(model.Id);
-            if (role == null)
-            {
-                return BadRequest($"Role Id {model.Id} not found.");
-            }
 
-            role.Name = model.RoleName;
-            IdentityResult result = RoleManager.Update(role);
-            if (result.Succeeded)
-                return Ok("Role successfully updated.");
-            return InternalServerError();
-        }
         /// <summary>
-        /// See List of all users in a specified role.
+        /// See list of all users in a specified role.
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
@@ -222,6 +205,93 @@ namespace AuctionExpress.WebAPI.Controllers
 
             return Ok(userRoleList);
         }
+
+        /// <summary>
+        /// Get a list of all registered users.
+        /// </summary>
+        /// <returns></returns>
+        [Route("GetAllUsers")]
+        public IHttpActionResult GetAllUsers()
+        {
+            List<UserListView> model = new List<UserListView>();
+
+            var allUsers = new List<ApplicationUser>(UserManager.Users);
+
+            foreach (ApplicationUser user in allUsers)
+            {
+                UserListView userListView = new UserListView
+                {
+                    UserId = user.Id,
+                    Email = user.Email,
+                    UserName = user.UserName,
+                    IsActive = user.IsActive,
+                    UserRoles = UserManager.GetRoles(user.Id)
+                };
+
+                model.Add(userListView);
+            }
+            return Ok(model);
+        }
+
+        /// <summary>
+        /// Get a specific user by referencing the user's Id.  
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("GetUser")]
+        public IHttpActionResult GetUser(string id)
+        {
+            var user = UserManager.FindById(id);
+            if (user == null)
+                return BadRequest($"User with id {id} can not be found.");
+            UserUpdateView model = new UserUpdateView
+            {
+                UserId = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+                IsActive = user.IsActive,
+                UpdateRoles = new List<RoleView>()
+            };
+
+            var allRoles = RoleManager.Roles.ToList();
+            foreach (var role in allRoles)
+            {
+                RoleView userRoles = new RoleView();
+                userRoles.RoleId = role.Id;
+                userRoles.RoleName = role.Name;
+
+                if (UserManager.IsInRole(model.UserId, role.Name))
+                    userRoles.IsSelected = true;
+                else
+                    userRoles.IsSelected = false;
+                model.UpdateRoles.Add(userRoles);
+            }
+
+            return Ok(model);
+        }
+
+        /// <summary>
+        /// Update a role name.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Route("UpdateRole")]
+        [HttpPut]
+        public IHttpActionResult UpdateRole(RoleEdit model)
+        {
+            var role = RoleManager.FindById(model.Id);
+            if (role == null)
+            {
+                return BadRequest($"Role Id {model.Id} not found.");
+            }
+
+            role.Name = model.RoleName;
+            IdentityResult result = RoleManager.Update(role);
+            if (result.Succeeded)
+                return Ok("Role successfully updated.");
+            return InternalServerError();
+        }
+        
         /// <summary>
         /// Update the users in a role
         /// </summary>
@@ -255,77 +325,12 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             return Ok("Role successfully updated with users.");
         }
+
         /// <summary>
-        /// Delete a role.
+        /// Update user's info.
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
-        [Route("DeleteRole")]
-        public IHttpActionResult DeleteRole(string Id)
-        {
-            var role = RoleManager.FindById(Id);
-            if(role==null)
-                return BadRequest($"Role Id {Id} not found.");
-            var result = RoleManager.Delete(role);
-            if (!result.Succeeded)
-                return InternalServerError();
-            return Ok("Role successfully removed.");
-        }
-
-        [Route("GetAllUsers")]
-        public IHttpActionResult GetAllUsers()
-        {
-            List<UserListView> model = new List<UserListView>();
-
-            var allUsers = new List<ApplicationUser>(UserManager.Users);
-           
-            foreach (ApplicationUser user in allUsers)
-            {
-                UserListView userListView = new UserListView
-                {
-                    UserId = user.Id,
-                    Email = user.Email,
-                    UserName = user.UserName,
-                    IsActive = user.IsActive,
-                    UserRoles = UserManager.GetRoles(user.Id)
-                };
-                
-                model.Add(userListView);
-            }
-            return Ok(model);
-        }
-
-        [Route("GetUser")]
-        public IHttpActionResult GetUser(string id)
-        {
-            var user = UserManager.FindById(id);
-            if (user == null)
-                return BadRequest($"User with id {id} can not be found.");
-            UserUpdateView model = new UserUpdateView
-            {
-                UserId = user.Id,
-                Email = user.Email,
-                UserName = user.UserName,
-                IsActive = user.IsActive,
-                UpdateRoles = new List<RoleView>()
-            };
-
-            var allRoles = RoleManager.Roles.ToList();
-            foreach (var role in allRoles)
-            {
-                RoleView userRoles = new RoleView();
-                userRoles.RoleId = role.Id;
-                userRoles.RoleName = role.Name;
-
-                if (UserManager.IsInRole(model.UserId, role.Name))
-                    userRoles.IsSelected = true;
-                else
-                    userRoles.IsSelected = false;
-                model.UpdateRoles.Add(userRoles);
-            }
-
-            return Ok(model);
-        }
         [HttpPut]
         [Route("UpdateUser")]
         public IHttpActionResult UpdateUser(UserUpdateView model)
@@ -343,13 +348,13 @@ namespace AuctionExpress.WebAPI.Controllers
             IdentityResult result = null;
             foreach (var role in model.UpdateRoles)
             {
-                if(role.IsSelected&&!UserManager.IsInRole(model.UserId,role.RoleName))
+                if (role.IsSelected && !UserManager.IsInRole(model.UserId, role.RoleName))
                 {
-                    result=UserManager.AddToRole(model.UserId, role.RoleName);
+                    result = UserManager.AddToRole(model.UserId, role.RoleName);
                 }
-                else if(!role.IsSelected&&UserManager.IsInRole(model.UserId, role.RoleName))
+                else if (!role.IsSelected && UserManager.IsInRole(model.UserId, role.RoleName))
                 {
-                    result=UserManager.RemoveFromRole(model.UserId, role.RoleName);
+                    result = UserManager.RemoveFromRole(model.UserId, role.RoleName);
                 }
                 else { result = IdentityResult.Success; }
 
@@ -358,9 +363,22 @@ namespace AuctionExpress.WebAPI.Controllers
             }
             return Ok("User Successfully Updated");
         }
-
-
-
+        /// <summary>
+        /// Delete a role.
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [Route("DeleteRole")]
+        public IHttpActionResult DeleteRole(string Id)
+        {
+            var role = RoleManager.FindById(Id);
+            if(role==null)
+                return BadRequest($"Role Id {Id} not found.");
+            var result = RoleManager.Delete(role);
+            if (!result.Succeeded)
+                return InternalServerError();
+            return Ok("Role successfully removed.");
+        }
 
         protected override void Dispose(bool disposing)
         {

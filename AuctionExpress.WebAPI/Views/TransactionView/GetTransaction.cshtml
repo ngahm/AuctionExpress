@@ -8,7 +8,8 @@
 <h2>GetTransaction</h2>
 
 <p>
-    @Html.ActionLink("Create New", "PostTransaction")
+    @Html.ActionLink("Create New", "PostTransaction")  |
+    @Html.ActionLink("All Transactions", "GetAllTransactions")
 </p>
 <table class="table">
     <tr>
@@ -56,7 +57,7 @@
         <td>
             @Html.ActionLink("Edit", "PutTransaction", new { id=item.TransactionId }) |
             @Html.ActionLink("Details", "GetTransactionById", new { id=item.TransactionId }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Delete", "DeleteTransaction", new { id=item.TransactionId })
         </td>
     </tr>
 }

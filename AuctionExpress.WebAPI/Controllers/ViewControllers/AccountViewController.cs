@@ -36,9 +36,10 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("Login", "AccountView");
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
 
-            ModelState.AddModelError(string.Empty, "Server Error.  Please contact administrator.");
+            
 
             return View(model);
 
@@ -76,9 +77,9 @@ namespace AuctionExpress.WebAPI.Controllers
                 //Response.Flush();
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("GetProduct", "ProductView");
+                    return RedirectToAction("GetOpenProduct", "ProductView");
                 }
-                ModelState.AddModelError(string.Empty, "Invalid Login. Please try again");
+                ModelState.AddModelError(string.Empty, response.Content.ReadAsStringAsync().Result);
 
                 return View();
             }
@@ -118,8 +119,9 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("Login", "AccountView");
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
-            ModelState.AddModelError(string.Empty, "Server Error. Please contact administration.");
+            
 
             return View(model);
         }

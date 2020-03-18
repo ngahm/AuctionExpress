@@ -96,6 +96,8 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "PutProduct", new { id = Model.ProductId }) |
-    @Html.ActionLink("Back to List", "GetProduct") |
-    @Html.ActionLink("Bid On Product", "CreateBid", "BidView", new { id = Model.ProductId }, htmlAttributes: new { @class = "btn"}) |
+    @Html.ActionLink("Delete", "DeleteProduct", new { id = Model.ProductId }) |
+    @Html.ActionLink("Bid", "CreateBid", "BidView", new { id = Model.ProductId }, htmlAttributes: new { @class = "btn" }) |
+    @Html.ActionLink("My Products", "GetProduct") |
+    @Html.ActionLink("All Open Products", "GetOpenProduct") |
 </p>

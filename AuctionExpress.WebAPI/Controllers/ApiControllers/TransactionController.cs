@@ -10,6 +10,7 @@ using System.Web.Http;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
+   // [Authorize(Roles = "ActiveUser")]
     public class TransactionController : ApiController
     {
 
@@ -38,6 +39,7 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="transaction"></param>
         /// <returns></returns>
+        [Authorize(Roles ="ActiveUser")]
         public IHttpActionResult Post(TransactionCreate transaction)
         {
             if (!ModelState.IsValid)
@@ -47,7 +49,6 @@ namespace AuctionExpress.WebAPI.Controllers
             var prodDetail = prodService.ValidateAuctionStatus(transaction.ProductId);
             if (prodDetail == "Auction is closed")
             {
-
                 var service = CreateTransactionService();
 
                 if (!service.CreateTransaction(transaction))
@@ -58,11 +59,12 @@ namespace AuctionExpress.WebAPI.Controllers
             return BadRequest("BadRequest" + prodDetail);
         }
 
-        //GET POSTS
+        //GET My Transactions
         /// <summary>
         /// Get all transactions where the user is the auction winner.
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles ="ActiveUser, Admin")]
         public IHttpActionResult Get()
         {
             var service = CreateTransactionService();
@@ -70,12 +72,30 @@ namespace AuctionExpress.WebAPI.Controllers
             return Ok(transactions);
         }
 
-        //GET POSTS BY IT
+        //GET All Transactions
+        /// <summary>
+        /// Get all transactions.
+        /// </summary>
+        /// <returns></returns>
+
+        [Route("Transaction/GetAllTransactions")]
+        //[OverrideAuthentication]
+        [Authorize(Roles = "Admin")]
+        public IHttpActionResult GetAllTransactions()
+        {
+            TransactionService transactionService = CreateTransactionService();
+            var transactions = transactionService.GetAllTransactions();
+            return Ok(transactions);
+        }
+
+
+        //GET Transactions BY ID
         /// <summary>
         /// Get a specific transaction by referencing the transaction id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize(Roles = "ActiveUser, Admin")]
         public IHttpActionResult Get(int id)
         {
             var service = CreateTransactionService();
@@ -83,12 +103,13 @@ namespace AuctionExpress.WebAPI.Controllers
             return Ok(transaction);
         }
 
-        //EDIT POST
+        //EDIT Transaction
         /// <summary>
         /// Update the status of a transaction.
         /// </summary>
         /// <param name="transaction"></param>
         /// <returns></returns>
+        [Authorize(Roles = "ActiveUser, Admin")]
         public IHttpActionResult Put(TransactionEdit transaction)
         {
             if (!ModelState.IsValid)
@@ -106,14 +127,15 @@ namespace AuctionExpress.WebAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize(Roles = "ActiveUser, Admin")]
         public IHttpActionResult Delete(int id)
         {
             var service = CreateTransactionService();
+            string deleteResponse = service.DeleteTransaction(id);
+            if (deleteResponse == "Transaction successfully deleted")
+                return Ok(deleteResponse);
 
-            if (!service.DeleteTransaction(id))
-                return InternalServerError();
-
-            return Ok();
+            return InternalServerError();
         }
     }
 }

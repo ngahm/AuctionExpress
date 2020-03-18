@@ -38,13 +38,47 @@ namespace AuctionExpress.WebAPI.Controllers
                 {         //log response status here.
                     transactionViewer = Enumerable.Empty<TransactionListItem>();
 
-                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
 
                 }
 
             }
             return View(transactionViewer);
         }
+
+        public ActionResult GetAllTransactions()
+        {
+            IEnumerable<TransactionListItem> transactionViewer = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                var responseTask = client.GetAsync("Transaction/GetAllTransactions");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<TransactionListItem>>();
+                    readTask.Wait();
+
+                    transactionViewer = readTask.Result;
+                }
+                else      //web api sent error response
+                {         //log response status here.
+                    transactionViewer = Enumerable.Empty<TransactionListItem>();
+
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
+
+                }
+
+            }
+            return View(transactionViewer);
+        }
+
 
 
         public ActionResult PostTransaction()
@@ -70,8 +104,9 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetTransaction");
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
-            ModelState.AddModelError(string.Empty, "Server Error. Please contact administration.");
+            
 
             return View(model);
 
@@ -100,10 +135,9 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     model = readTask.Result;
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Server Error.Please contact administration.");
-                }
+
+                    else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
+                
             }
 
             return View(model);
@@ -131,6 +165,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     model = readTask.Result;
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
 
             return View(model);
@@ -156,29 +191,35 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetTransaction");
                 }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
                 return View(model);
             }
         }
 
-        //public ActionResult Delete(int id)
-        //{
-        //    using (var client = new HttpClient())
-        //    {
-        //        client.BaseAddress = new Uri("http://localhost:44320/api/");
+        public ActionResult DeleteTransaction(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-        //        //HTTP Delete
-        //        var deleteTask = client.DeleteAsync("transaction/" + id.ToString());
-        //        deleteTask.Wait();
+                //HTTP DELETE
+                var deleteTask = client.DeleteAsync("transaction/" + id.ToString());
+                deleteTask.Wait();
 
-        //        var result = deleteTask.Result;
-        //        if (result.IsSuccessStatusCode)
-        //        {
-        //            return RedirectToAction("GetTransaction");
-        //        }
+                var result = deleteTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
 
-        //    }
-        //    return RedirectToAction("GetTransaction");
-        //}
+                    return RedirectToAction("GetTransaction");
+                }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
+            }
+
+            return RedirectToAction("GetTransaction");
+        }
         #region Helper
         private HttpCookie CreateCookie(string token)
         {

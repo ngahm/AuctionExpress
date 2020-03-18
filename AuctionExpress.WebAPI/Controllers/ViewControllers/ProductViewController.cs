@@ -39,13 +39,47 @@ namespace AuctionExpress.WebAPI.Controllers
                 {         //log response status here.
                     productViewer = Enumerable.Empty<ProductListItem>();
 
-                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
 
                 }
 
             }
             return View(productViewer);
         }
+
+        public ActionResult GetAllProduct()
+        {
+            IEnumerable<ProductListItem> productViewer = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                var responseTask = client.GetAsync("Product/GetAllAuctions");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<ProductListItem>>();
+                    readTask.Wait();
+
+                    productViewer = readTask.Result;
+                }
+                else      //web api sent error response
+                {         //log response status here.
+                    productViewer = Enumerable.Empty<ProductListItem>();
+
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
+
+                }
+
+            }
+            return View(productViewer);
+        }
+
 
         public ActionResult GetOpenProduct()
         {
@@ -72,7 +106,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {         //log response status here.
                     productViewer = Enumerable.Empty<ProductListItem>();
 
-                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
 
                 }
 
@@ -105,7 +139,7 @@ namespace AuctionExpress.WebAPI.Controllers
                 {         //log response status here.
                     productViewer = Enumerable.Empty<ProductListItem>();
 
-                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+                    ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result);
 
                 }
 
@@ -137,8 +171,8 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetProduct");
                 }
+            else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
             }
-            ModelState.AddModelError(string.Empty, "Server Error. Please contact administration.");
 
             return View(product);
 
@@ -200,9 +234,13 @@ namespace AuctionExpress.WebAPI.Controllers
 
                     product = readTask.Result;
                 }
+
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
+
+                return View(product);
+
             }
 
-            return View(product);
         }
 
         [HttpPost]
@@ -227,8 +265,34 @@ namespace AuctionExpress.WebAPI.Controllers
                 {
                     return RedirectToAction("GetProduct");
                 }
+
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
                 return View(product);
             }
+        }
+
+        public ActionResult DeleteProduct(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                //HTTP DELETE
+                var deleteTask = client.DeleteAsync("product/" + id.ToString());
+                deleteTask.Wait();
+
+                var result = deleteTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("GetProduct");
+                }
+                else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
+            }
+                return RedirectToAction("GetProduct");
+
         }
 
 

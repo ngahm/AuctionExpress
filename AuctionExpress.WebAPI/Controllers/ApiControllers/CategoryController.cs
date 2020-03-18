@@ -10,10 +10,12 @@ using System.Web.Http;
 
 namespace AuctionExpress.WebAPI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CategoryController : ApiController
     {
         private CategoryService CreateCategoryService()
         {
+
             Guid userId = new Guid();
             if (!User.Identity.IsAuthenticated)
             { userId = Guid.Parse("00000000-0000-0000-0000-000000000000"); }
@@ -21,22 +23,6 @@ namespace AuctionExpress.WebAPI.Controllers
             { userId = Guid.Parse(User.Identity.GetUserId()); }
             var categoryService = new CategoryService(userId);
             return categoryService;
-        }
-
-
-
-
-
-        //GET ALL
-        /// <summary>
-        /// Get a list of all available categories.
-        /// </summary>
-        /// <returns></returns>
-        public IHttpActionResult Get()
-        {
-            CategoryService categoryService = CreateCategoryService();
-            var category = categoryService.GetCategory();
-            return Ok(category);
         }
 
         //POST
@@ -58,12 +44,28 @@ namespace AuctionExpress.WebAPI.Controllers
             return Ok("Category successfully added.");
         }
 
+        //GET ALL
+        /// <summary>
+        /// Get a list of all available categories.
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [Authorize(Roles = "ActiveUser")]
+        public IHttpActionResult Get()
+        {
+            CategoryService categoryService = CreateCategoryService();
+            var category = categoryService.GetCategory();
+            return Ok(category);
+        }
+
         //GET BY ID
         /// <summary>
         /// Get a specific category by refencing the category id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [AllowAnonymous]
+        [Authorize(Roles = "ActiveUser")]
         public IHttpActionResult Get(int id)
         {
             CategoryService categoryService = CreateCategoryService();
@@ -100,11 +102,12 @@ namespace AuctionExpress.WebAPI.Controllers
         public IHttpActionResult Delete(int id)
         {
             var service = CreateCategoryService();
-
-            if (!service.DeleteCategory(id))
+            string deleteResponse = service.DeleteCategory(id);
+            if (deleteResponse == "Category successfully deleted")
+                return Ok(deleteResponse);
+            
                 return InternalServerError();
 
-            return Ok();
         }
     }
 }
