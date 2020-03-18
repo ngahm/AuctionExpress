@@ -271,7 +271,7 @@ When an auction ends, the product owner can create and administer a transaction 
 <!-- CONTACT -->
 ## Contact
 
-- Aaron Barchet - 
+- Aaron Barchet - https://github.com/ambarchet
 - Nick Gahm
 - Jeremy Hansen - https://github.com/jhansen1344
 
