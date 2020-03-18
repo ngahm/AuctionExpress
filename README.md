@@ -47,7 +47,7 @@ https://github.com/ngahm/AuctionExpress
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-AuctionExpress is a .Net Entity Framework WebAPI utilizing an n-tier architecture. built during the BlueBadge phase of the Jan.-April 2020 Full-time Software Development bootcamp at ElevenFifty Academy.
+AuctionExpress is a .Net Entity Framework WebAPI utilizing an n-tier architecture built during the BlueBadge phase of the Jan.-April 2020 Full-time Software Development bootcamp at ElevenFifty Academy.
 
 Through the Api, registered users can post products for sale in an online auction format, as well as bid on currently open auctions.  Once the auctions are over, the products sellers can create transactions, simulating a third-party service that would handle credit card transactions.
 
@@ -78,10 +78,9 @@ git clone https://github.com/ngahm/AuctionExpress.git
 Need to include command line for restoring
 ```
 3. Database Setup
-Update Database connection if needed.
-Enable and add a migration
-Update database to populate database with seed content.
-
+- Update Database connection if needed.
+- Enable and add a migration
+- Update database to populate database with seed content.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -89,8 +88,58 @@ Update database to populate database with seed content.
 Account Registration and Tokens
 Using the Account/Register api endpoint, a user can register and gain access to user-specific endpoints.  A list of endpoint access restrictions can be found in the Roles section.
 
-Tokens can be requested through /token and sending a registered user name and password.  The included front-end requests a token through the "Login" button and stores it as a cookie for use while the user is "signed in."  Clicking "Logout"  sets the cookie expiration to the previous day.
+Tokens can be requested through /token and sending a registered user name and password.  The included front-end requests a token through the "Login" button and stores it as a cookie for use while the user is "signed in."  
+```sh
+public ActionResult Login(LoginBindingModel model, string returnUrl)
+        {
+                var pairs = new List<KeyValuePair<string, string>>
+                    {
+                        new KeyValuePair<string, string>( "grant_type", "password" ),
+                        new KeyValuePair<string, string>( "username", model.UserName ),
+                        new KeyValuePair<string, string> ( "Password", model.Password )
+                    };
+                var content = new FormUrlEncodedContent(pairs);
+                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/");
+                var response = client.PostAsync("token", content).Result;
+                var token= response.Content.ReadAsStringAsync().Result;
+                Response.Cookies.Add(CreateCookie(token));
+                //Response.Flush();
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("GetOpenProduct", "ProductView");
+                }
+                ModelState.AddModelError(string.Empty, response.Content.ReadAsStringAsync().Result);
 
+                return View();
+            }
+```
+
+Example of including stored token during api requests.
+```sh
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44320/api/");
+                string token = DeserializeToken();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                var responseTask = client.GetAsync("product");
+                responseTask.Wait();
+
+```
+Clicking "Logout"  sets the cookie expiration to the previous day.
+```sh
+public ActionResult LogOff()
+        {
+            if (Request.Cookies["UserToken"] != null)
+            {
+                Response.Cookies["UserToken"].Expires = DateTime.Now.AddDays(-1);
+            }
+            return RedirectToAction("Login","AccountView");
+        }
+```
 ### Roles
 There are three important user roles that the api uses to grant/restrict access to api endpoints:Admin, ActiveUser, InActiveUser.  
 
@@ -219,9 +268,9 @@ When an auction ends, the product owner can create and administer a transaction 
 <!-- CONTACT -->
 ## Contact
 
-Aaron Barchet - 
-Nick Gahm
-Jeremy Hansen - https://github.com/jhansen1344
+- Aaron Barchet - 
+- Nick Gahm
+- Jeremy Hansen - https://github.com/jhansen1344
 
 Project Link: [https://github.com/ngahm/AuctionExpress]
 
