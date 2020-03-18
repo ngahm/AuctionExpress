@@ -268,7 +268,7 @@ namespace AuctionExpress.WebAPI.Controllers
 
                 else { ModelState.AddModelError(string.Empty, result.Content.ReadAsStringAsync().Result); }
                 return View(product);
-
+            }
         }
 
         public ActionResult DeleteProduct(int id)
