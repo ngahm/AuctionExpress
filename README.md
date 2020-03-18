@@ -165,6 +165,8 @@ Admin
 - Post new category
 - Update Category
 - Delete Category
+- GetAllTransactions
+- GetAllBids
 
 ActiveUser
 - DeactivateUser
@@ -174,6 +176,7 @@ ActiveUser
 - DeleteProduct
 - All Bid endpoints
 - All Transaction endpoints
+- GetAllProducts
 
 ### Products
 Users can post products they want to sell with the following information.
