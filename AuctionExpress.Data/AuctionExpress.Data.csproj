@@ -86,38 +86,6 @@
   <ItemGroup>
     <Compile Include="Category.cs" />
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\202003180311002_TestSeed.cs" />
-    <Compile Include="Migrations\202003180311002_TestSeed.Designer.cs">
-      <DependentUpon>202003180311002_TestSeed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003180313070_TestIsActiveFalse.cs" />
-    <Compile Include="Migrations\202003180313070_TestIsActiveFalse.Designer.cs">
-      <DependentUpon>202003180313070_TestIsActiveFalse.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003181419430_TestAddCategory.cs" />
-    <Compile Include="Migrations\202003181419430_TestAddCategory.Designer.cs">
-      <DependentUpon>202003181419430_TestAddCategory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003181546242_TestAddProduct.cs" />
-    <Compile Include="Migrations\202003181546242_TestAddProduct.Designer.cs">
-      <DependentUpon>202003181546242_TestAddProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003181548537_TestProductSeed2.cs" />
-    <Compile Include="Migrations\202003181548537_TestProductSeed2.Designer.cs">
-      <DependentUpon>202003181548537_TestProductSeed2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003181702343_AddingMoreProducts.cs" />
-    <Compile Include="Migrations\202003181702343_AddingMoreProducts.Designer.cs">
-      <DependentUpon>202003181702343_AddingMoreProducts.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003182217325_TestAddRole.cs" />
-    <Compile Include="Migrations\202003182217325_TestAddRole.Designer.cs">
-      <DependentUpon>202003182217325_TestAddRole.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003182231214_TestAddToRole.cs" />
-    <Compile Include="Migrations\202003182231214_TestAddToRole.Designer.cs">
-      <DependentUpon>202003182231214_TestAddToRole.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -127,32 +95,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202003180311002_TestSeed.resx">
-      <DependentUpon>202003180311002_TestSeed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003180313070_TestIsActiveFalse.resx">
-      <DependentUpon>202003180313070_TestIsActiveFalse.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003181419430_TestAddCategory.resx">
-      <DependentUpon>202003181419430_TestAddCategory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003181546242_TestAddProduct.resx">
-      <DependentUpon>202003181546242_TestAddProduct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003181548537_TestProductSeed2.resx">
-      <DependentUpon>202003181548537_TestProductSeed2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003181702343_AddingMoreProducts.resx">
-      <DependentUpon>202003181702343_AddingMoreProducts.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003182217325_TestAddRole.resx">
-      <DependentUpon>202003182217325_TestAddRole.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003182231214_TestAddToRole.resx">
-      <DependentUpon>202003182231214_TestAddToRole.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
